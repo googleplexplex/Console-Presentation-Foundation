@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buttons.hpp" />
+    <ClInclude Include="congetter.hpp" />
     <ClInclude Include="graphics.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

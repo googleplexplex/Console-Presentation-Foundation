@@ -1,11 +1,13 @@
 #pragma once
+#include <iostream>
+#include "congetter.hpp"
 
 #define setConsoleTitle(x) SetConsoleTitle(x)
 #define setCursorBegin() setTo(0, 0)
 #define setWinTo(x, y) SetWindowPos(consoleWindow, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER)
 
 typedef enum symbolColor {
-	null = 0,
+	null = -1,
 	black = 0,
 	blue,
 	green,
@@ -35,15 +37,14 @@ HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND  consoleHWND = (HWND)consoleHandle;
 HINSTANCE consoleInstance = (HINSTANCE)GetWindowLong(consoleHWND, -6);
 
-void editConsoleSize(int intCols, int intLines)
+POINT inline toPoint(COORD coord)
+{
+	return { coord.X, coord.Y };
+}
+
+void editConsoleSize(int x, int y)
 {
 	//...
-}
-POINT getConsoleSize()
-{
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	return { csbi.srWindow.Right - csbi.srWindow.Left + 1, csbi.srWindow.Bottom - csbi.srWindow.Top + 1 };
 }
 void inline setTo(short x, short y)
 {
@@ -51,24 +52,49 @@ void inline setTo(short x, short y)
 }
 bool getTo(POINT consoleSize, int x, int y)
 {
-	if (x < 0 || y < 0 || x > consoleSize.x - 1 || y > consoleSize.y - 1)
+	if (x < 0 || y < 0 || x >= consoleSize.x || y >= consoleSize.y)
 		return false;
 	return true;
 }
 bool getTo(int x, int y)
 {
-	return getTo(getConsoleSize(), x, y);
+	return getTo(toPoint(getConsoleSize()), x, y);
+}
+POINT getConsoleCursorPosition()
+{
+	CONSOLE_SCREEN_BUFFER_INFO bi;
+	GetConsoleScreenBufferInfo(consoleHandle, &bi);
+	return toPoint(bi.dwCursorPosition);
+}
+
+
+symbolColor presentTextAttribute = white;
+void ConsolePrintCharset(char printedCharset) //TOFIX
+{
+	POINT consoleCursorPosition = getConsoleCursorPosition();
+	CHAR_INFO symbolPrintedHere = getc_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y);
+	
+	if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
+	{
+		if (printedCharset != symbolPrintedHere.Char.AsciiChar || presentTextAttribute != symbolPrintedHere.Attributes)
+		{
+			std::cout << printedCharset;
+		}
+	}
 }
 
 void inline setSymbolFullColor(symbolColor color)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color + (color * 16));
+	presentTextAttribute = symbolColor(color + (color * 16));
+	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
 }
 void inline setSymbolColor(symbolColor text, symbolColor bg)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), text + (bg * 16));
+	presentTextAttribute = symbolColor(text + (bg * 16));
+	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
 }
 void inline setStandartSymbolsMode()
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
+	presentTextAttribute = white;
+	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
 }

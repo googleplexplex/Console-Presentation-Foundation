@@ -1,14 +1,12 @@
 #pragma once
-#include <iostream>
 #include <windows.h>
-#include <io.h>
 #include <atltypes.h>
 #include "graphics.hpp"
 using namespace std;
 
 #define moreThanNull(x) (x > 0)
 #define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
-#define getBorder(x, y, z) ((y) <= (x) && (x) <= (z))
+#define getBorder(pos, min, max) ((min) <= (pos) && (pos) <= (max))
 
 #define mouseLeftButtonState (GetAsyncKeyState(VK_LBUTTON) == 0 ? false : true )
 #define mouseRightButtonState (GetAsyncKeyState(VK_RBUTTON) == 0 ? false : true )
@@ -59,18 +57,18 @@ class buttonPress {
 	POINT size;
 	char *text;
 	int textLength;
+	void(*onClick_Delegate)(POINT);
 	symbolColor textColor;
 	symbolColor foneColor;
-	bool frame;
 	symbolColor frameColor;
-	void(*onClick_Delegate)(POINT);
+	//orientationEnum orientation;
 public:
 	void callOnClick_Delegate(POINT arg)
 	{
 		onClick_Delegate(arg);
 	}
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
-	buttonPress(POINT _pos, POINT _size, void(*_onClick)(POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, bool _frame = false, symbolColor _frameColor = null)
+	buttonPress(POINT _pos, POINT _size, void(*_onClick)(POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{
 		pos = _pos;
 		size = _size;
@@ -79,7 +77,6 @@ public:
 		text = stringCopy(_text, textLength);
 		foneColor = _foneColor;
 		textColor = _textColor;
-		frame = _frame;
 		frameColor = _frameColor;
 	}
 	~buttonPress()
@@ -89,13 +86,13 @@ public:
 
 	void Draw()
 	{
-		if (frame)
+		if (hasFrame())
 		{
 			setTo(pos.x, pos.y);
 			setSymbolFullColor(frameColor);
 			for (int i = 0; i < size.x; i++)
 			{
-				cout << filledCharacter_1_5;
+				ConsolePrintCharset(filledCharacter_1_5);
 			}
 
 			for (int i = 1; i < size.y - 1; i++)
@@ -103,23 +100,23 @@ public:
 				setTo(pos.x, pos.y + i);
 
 				setSymbolFullColor(frameColor);
-				cout << filledCharacter_1_5;
+				ConsolePrintCharset(filledCharacter_1_5);
 
 				setSymbolColor(textColor, foneColor);
 				for (int i = 1; i < size.x - 1; i++)
 				{
-					cout << 'B'; //TODO OUTPUT TEXT
+					ConsolePrintCharset(filledCharacter_5_5); //TODO OUTPUT TEXT
 				}
 
 				setSymbolFullColor(frameColor);
-				cout << filledCharacter_1_5;
+				ConsolePrintCharset(filledCharacter_1_5);
 			}
 
 			setTo(pos.x, pos.y + size.y - 1);
 			setSymbolFullColor(frameColor);
 			for (int i = 0; i < size.x; i++)
 			{
-				cout << filledCharacter_1_5;
+				ConsolePrintCharset(filledCharacter_1_5);
 			}
 
 			setStandartSymbolsMode();
@@ -131,11 +128,20 @@ public:
 				setTo(pos.x, pos.y + i);
 				for (int j = 0; j < size.x; j++)
 				{
-					cout << filledCharacter_1_5;
+					ConsolePrintCharset(filledCharacter_1_5);
 				}
 			}
 			setStandartSymbolsMode();
 		}
+	}
+	bool entersTheArea(int x, int y)
+	{
+		return getBorder(x, pos.x, pos.x + size.x)
+			&& getBorder(y, pos.y, pos.y + size.y);
+	}
+	bool entersTheArea(POINT point)
+	{
+		return entersTheArea(point.x, point.y);
 	}
 
 	symbolColor getTextColor()
@@ -154,9 +160,9 @@ public:
 	{
 		return size;
 	}
-	bool getFrame()
+	bool hasFrame()
 	{
-		return frame;
+		return (frameColor != null);
 	}
 	symbolColor getFrameColor()
 	{
