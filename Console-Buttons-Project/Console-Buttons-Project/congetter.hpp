@@ -255,7 +255,7 @@ wchar_t* gets_fromConsoleU(short x, short y, short xsize)
 CHAR_INFO getc_fromConsole(short x, short y)
 {
 	SMALL_RECT srctReadRect;
-	CHAR_INFO* charBuffer = new CHAR_INFO[1];
+	CHAR_INFO* charBuffer = new CHAR_INFO[2];
 	COORD coordBufSize;
 
 	srctReadRect.Top = y;

@@ -2,9 +2,7 @@
 #include <iostream>
 #include "congetter.hpp"
 
-#define setConsoleTitle(x) SetConsoleTitle(x)
 #define setCursorBegin() setTo(0, 0)
-#define setWinTo(x, y) SetWindowPos(consoleWindow, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER)
 
 typedef enum symbolColor {
 	null = -1,
@@ -35,11 +33,14 @@ typedef enum symbolColor {
 
 HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND  consoleHWND = (HWND)consoleHandle;
-HINSTANCE consoleInstance = (HINSTANCE)GetWindowLong(consoleHWND, -6);
 
 POINT inline toPoint(COORD coord)
 {
 	return { coord.X, coord.Y };
+}
+COORD inline toCoord(POINT coord)
+{
+	return { short(coord.x), short(coord.y) }; //TOFIX
 }
 
 void editConsoleSize(int x, int y)
@@ -50,6 +51,10 @@ void inline setTo(short x, short y)
 {
 	SetConsoleCursorPosition(consoleHandle, { x, y });
 }
+void inline setTo(POINT point)
+{
+	SetConsoleCursorPosition(consoleHandle, toCoord(point));
+}
 bool getTo(POINT consoleSize, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= consoleSize.x || y >= consoleSize.y)
@@ -59,6 +64,10 @@ bool getTo(POINT consoleSize, int x, int y)
 bool getTo(int x, int y)
 {
 	return getTo(toPoint(getConsoleSize()), x, y);
+}
+bool getTo(POINT point)
+{
+	return getTo(toPoint(getConsoleSize()), point.x, point.y);
 }
 POINT getConsoleCursorPosition()
 {
@@ -93,7 +102,7 @@ void inline setSymbolColor(symbolColor text, symbolColor bg)
 	presentTextAttribute = symbolColor(text + (bg * 16));
 	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
 }
-void inline setStandartSymbolsMode()
+void inline setStandartSymbolsColor()
 {
 	presentTextAttribute = white;
 	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);

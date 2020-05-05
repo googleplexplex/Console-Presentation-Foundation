@@ -129,6 +129,7 @@
     <ClInclude Include="buttons.hpp" />
     <ClInclude Include="congetter.hpp" />
     <ClInclude Include="graphics.hpp" />
+    <ClInclude Include="interactionShell.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

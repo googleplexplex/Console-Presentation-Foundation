@@ -2,44 +2,10 @@
 #include <windows.h>
 #include <atltypes.h>
 #include "graphics.hpp"
-using namespace std;
 
 #define moreThanNull(x) (x > 0)
 #define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
 #define getBorder(pos, min, max) ((min) <= (pos) && (pos) <= (max))
-
-#define mouseLeftButtonState (GetAsyncKeyState(VK_LBUTTON) == 0 ? false : true )
-#define mouseRightButtonState (GetAsyncKeyState(VK_RBUTTON) == 0 ? false : true )
-
-POINT getMousePos() //TOREF
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	return pt;
-}
-POINT getWindowPos(HWND gettedWindow) //TOREF
-{
-	CRect rect;
-	GetWindowRect(gettedWindow, rect);
-	return POINT({ rect.left, rect.top + 30 + 1 });
-}
-POINT getFontSize(HANDLE gettedHandle) //TOREF
-{
-	CONSOLE_FONT_INFO GETFONT;
-	GetCurrentConsoleFont(gettedHandle, FALSE, &GETFONT);
-	COORD FontSize = GetConsoleFontSize(gettedHandle, GETFONT.nFont);
-
-	return POINT({ FontSize.X, FontSize.Y });
-}
-POINT getMouseCon() //TOREF
-{
-	POINT fontSize = getFontSize(consoleHandle);
-	POINT mousePos = getMousePos();
-	POINT windowPos = getWindowPos(consoleHWND);
-	fontSize.y--;
-	POINT ret = { (mousePos.x - windowPos.x) / fontSize.x - 1, ((mousePos.y - windowPos.y) / fontSize.y) };
-	return ret;
-}
 
 char* stringCopy(char* string, int stringSize)
 {
@@ -52,23 +18,23 @@ char* stringCopy(const char* string, int stringSize)
 	return stringCopy((char*)string, stringSize);
 }
 
-class buttonPress {
+class button {
 	POINT pos;
 	POINT size;
 	char *text;
 	int textLength;
-	void(*onClick_Delegate)(POINT);
+	void(*onClick_Delegate)(POINT); //The delegate should look like this "void onClick(POINT clickedPoint)"
 	symbolColor textColor;
 	symbolColor foneColor;
 	symbolColor frameColor;
 	//orientationEnum orientation;
 public:
-	void callOnClick_Delegate(POINT arg)
+	void click(POINT arg)
 	{
 		onClick_Delegate(arg);
 	}
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
-	buttonPress(POINT _pos, POINT _size, void(*_onClick)(POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+	button(POINT _pos, POINT _size, void(*_onClick)(POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{
 		pos = _pos;
 		size = _size;
@@ -79,7 +45,7 @@ public:
 		textColor = _textColor;
 		frameColor = _frameColor;
 	}
-	~buttonPress()
+	~button()
 	{
 		delete[textLength] text;
 	}
@@ -102,10 +68,10 @@ public:
 				setSymbolFullColor(frameColor);
 				ConsolePrintCharset(filledCharacter_1_5);
 
-				setSymbolColor(textColor, foneColor);
+				setSymbolFullColor(foneColor);
 				for (int i = 1; i < size.x - 1; i++)
 				{
-					ConsolePrintCharset(filledCharacter_5_5); //TODO OUTPUT TEXT
+					ConsolePrintCharset(filledCharacter_5_5);
 				}
 
 				setSymbolFullColor(frameColor);
@@ -118,11 +84,9 @@ public:
 			{
 				ConsolePrintCharset(filledCharacter_1_5);
 			}
-
-			setStandartSymbolsMode();
 		}
 		else {
-			setSymbolColor(textColor, foneColor);
+			setSymbolFullColor(foneColor);
 			for (int i = 0; i < size.y; i++)
 			{
 				setTo(pos.x, pos.y + i);
@@ -131,8 +95,16 @@ public:
 					ConsolePrintCharset(filledCharacter_1_5);
 				}
 			}
-			setStandartSymbolsMode();
 		}
+
+		setSymbolColor(textColor, foneColor);
+		POINT textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
+		if (getTo(textPos))
+		{
+			setTo(textPos);
+			std::cout << text; //TOUP
+		}
+		setStandartSymbolsColor();
 	}
 	bool entersTheArea(int x, int y)
 	{
@@ -144,6 +116,10 @@ public:
 		return entersTheArea(point.x, point.y);
 	}
 
+	char* getText()
+	{
+		return stringCopy(text, textLength);
+	}
 	symbolColor getTextColor()
 	{
 		return textColor;
