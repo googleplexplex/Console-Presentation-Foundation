@@ -31,8 +31,6 @@ typedef enum symbolColor {
 #define filledCharacter_4_5 (char)176
 #define filledCharacter_5_5 (char)32
 
-HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-HWND  consoleHWND = (HWND)consoleHandle;
 
 POINT inline toPoint(COORD coord)
 {
@@ -49,11 +47,11 @@ void editConsoleSize(int x, int y)
 }
 void inline setTo(short x, short y)
 {
-	SetConsoleCursorPosition(consoleHandle, { x, y });
+	SetConsoleCursorPosition(stdHandle, { x, y });
 }
 void inline setTo(POINT point)
 {
-	SetConsoleCursorPosition(consoleHandle, toCoord(point));
+	SetConsoleCursorPosition(stdHandle, toCoord(point));
 }
 bool getTo(POINT consoleSize, int x, int y)
 {

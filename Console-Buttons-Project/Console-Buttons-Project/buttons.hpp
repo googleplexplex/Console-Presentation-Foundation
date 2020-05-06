@@ -1,6 +1,5 @@
 #pragma once
 #include <windows.h>
-#include <atltypes.h>
 #include "graphics.hpp"
 
 #define moreThanNull(x) (x > 0)
