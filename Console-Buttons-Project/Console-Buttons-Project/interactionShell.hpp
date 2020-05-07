@@ -1,4 +1,5 @@
 #pragma once
+#include <windows.h>
 
 #define setConsoleTitle(x) SetConsoleTitle(x)
 #define setWinTo(x, y) SetWindowPos(consoleWindow, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER)
@@ -26,26 +27,17 @@ POINT getConsoleFontSize() //TOREF
 	return POINT({ FontSize.X, FontSize.Y });
 }
 #define debug_ShowPoint(point) std::cout << #point << " - " << point.x << ", " << point.y << std::endl
+const int windowUpFrameSize = 30;
+const int calibrationValue = 8;
 POINT getMouseConsolePos() //TOREF
 {
 	POINT windowGlobalPos_px = getWindowGlobalPos();
-	debug_ShowPoint(windowGlobalPos_px);
 	POINT mouseGlobalPosition_px = getMouseGlobalPos();
-	debug_ShowPoint(mouseGlobalPosition_px);
 	POINT consoleFontSize_px = getConsoleFontSize();
-	debug_ShowPoint(consoleFontSize_px);
-	POINT mousePositionRelativeToTheConsole_px = { mouseGlobalPosition_px.x - windowGlobalPos_px.x,
-		mouseGlobalPosition_px.y - windowGlobalPos_px.y};
-	debug_ShowPoint(mousePositionRelativeToTheConsole_px);
+	POINT mousePositionRelativeToTheConsole_px = { mouseGlobalPosition_px.x - windowGlobalPos_px.x - calibrationValue,
+		mouseGlobalPosition_px.y - windowGlobalPos_px.y - windowUpFrameSize };
 	POINT mousePositionRelativeToTheConsole_sym = { mousePositionRelativeToTheConsole_px.x / consoleFontSize_px.x,
 							mousePositionRelativeToTheConsole_px.y / consoleFontSize_px.y };
-	debug_ShowPoint(mousePositionRelativeToTheConsole_sym);
-
-	if (getTo(mousePositionRelativeToTheConsole_sym))
-	{
-		setTo(mousePositionRelativeToTheConsole_sym);
-		std::cout << (char)219;
-	}
 
 	return mousePositionRelativeToTheConsole_sym;
 }

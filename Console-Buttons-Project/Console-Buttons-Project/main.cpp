@@ -19,12 +19,6 @@ void onButtonClicked(POINT clickedPos)
 
 int main(void)
 {
-	while (true)
-	{
-		system("cls");
-		getMouseConsolePos();
-	}
-
 	button buttonTest({ 1, 1 }, { 3, 3 }, &onButtonClicked, (char*)"Bton", blue, red);
 	buttonTest.Draw();
 

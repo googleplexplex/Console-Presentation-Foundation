@@ -70,7 +70,7 @@ bool getTo(POINT point)
 POINT getConsoleCursorPosition()
 {
 	CONSOLE_SCREEN_BUFFER_INFO bi;
-	GetConsoleScreenBufferInfo(consoleHandle, &bi);
+	GetConsoleScreenBufferInfo(stdHandle, &bi);
 	return toPoint(bi.dwCursorPosition);
 }
 
@@ -93,15 +93,15 @@ void ConsolePrintCharset(char printedCharset) //TOFIX
 void inline setSymbolFullColor(symbolColor color)
 {
 	presentTextAttribute = symbolColor(color + (color * 16));
-	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
+	SetConsoleTextAttribute(stdHandle, presentTextAttribute);
 }
 void inline setSymbolColor(symbolColor text, symbolColor bg)
 {
 	presentTextAttribute = symbolColor(text + (bg * 16));
-	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
+	SetConsoleTextAttribute(stdHandle, presentTextAttribute);
 }
 void inline setStandartSymbolsColor()
 {
 	presentTextAttribute = white;
-	SetConsoleTextAttribute(consoleHandle, presentTextAttribute);
+	SetConsoleTextAttribute(stdHandle, presentTextAttribute);
 }

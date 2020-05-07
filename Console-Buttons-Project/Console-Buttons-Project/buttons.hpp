@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include "graphics.hpp"
+#include "controlElement.hpp"
 
 #define moreThanNull(x) (x > 0)
 #define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
@@ -17,12 +18,9 @@ char* stringCopy(const char* string, int stringSize)
 	return stringCopy((char*)string, stringSize);
 }
 
-class button {
-	POINT pos;
-	POINT size;
+class button : controlElement {
 	char *text;
 	int textLength;
-	void(*onClick_Delegate)(POINT); //The delegate should look like this "void onClick(POINT clickedPoint)"
 	symbolColor textColor;
 	symbolColor foneColor;
 	symbolColor frameColor;
