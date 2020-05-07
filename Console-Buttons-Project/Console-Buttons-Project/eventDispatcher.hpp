@@ -10,7 +10,7 @@ void eventDispatcher_LeftButtonClick(POINT clickedPos)
 	for (int i = 0; i < controlElementsInClickedPos.count; i++)
 	{
 		controlElement* presentElementPtr = getControlElement(i);
-		presentElementPtr->onClick_Delegate(clickedPos);
+		presentElementPtr->click(clickedPos);
 	}
 }
 void eventDispatcher_RightButtonClick(POINT clickedPos)
@@ -20,7 +20,7 @@ void eventDispatcher_RightButtonClick(POINT clickedPos)
 	for (int i = 0; i < controlElementsInClickedPos.count; i++)
 	{
 		controlElement* presentElementPtr = getControlElement(i);
-		presentElementPtr->onClick_Delegate(clickedPos);
+		presentElementPtr->click(clickedPos);
 	}
 }
 void eventDispatcherMainLoop()
@@ -28,8 +28,18 @@ void eventDispatcherMainLoop()
 	while (true)
 	{
 		if (mouseLeftButtonState)
-			eventDispatcher_LeftButtonClick(getMouseGlobalPos());
+		{
+			POINT mouseConsolePos = getMouseConsolePos();
+			eventDispatcher_LeftButtonClick(mouseConsolePos);
+		}
 		if (mouseRightButtonState)
-			eventDispatcher_RightButtonClick(getMouseGlobalPos());
+		{
+			POINT mouseConsolePos = getMouseConsolePos();
+			eventDispatcher_RightButtonClick(mouseConsolePos);
+		}
+
+		system("cls");
+		showCursor();
+		drawAllElements();
 	}
 }

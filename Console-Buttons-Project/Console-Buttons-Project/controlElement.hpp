@@ -2,8 +2,6 @@
 //#include <windows.h>
 //#include "eventDispatcher.hpp"
 #include "dynamicArray.hpp"
-#include "interactionShell.hpp"
-#include "controlElement.hpp"
 
 dynamicArray<void*> controlElements; //TOHIDE
 
@@ -13,6 +11,10 @@ public:
 	POINT pos;
 	POINT size;
 	void(*onClick_Delegate)(POINT); //The delegate should look like this "void onClick(POINT clickedPoint)"
+	void click(POINT clickPos)
+	{
+		onClick_Delegate(clickPos);
+	}
 
 	controlElement()
 	{
@@ -47,4 +49,12 @@ dynamicArray<controlElement*> getControlElementIn(POINT foundedPoint)
 inline controlElement* getControlElement(unsigned int index)
 {
 	return (controlElement*)(controlElements[index]);
+}
+
+void drawAllElements()
+{
+	for (int i = 0; i < controlElements.count; i++)
+	{
+		getControlElement(i)->Draw();
+	}
 }

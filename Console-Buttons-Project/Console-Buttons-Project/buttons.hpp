@@ -26,10 +26,6 @@ class button : controlElement {
 	symbolColor frameColor;
 	//orientationEnum orientation;
 public:
-	void click(POINT arg)
-	{
-		onClick_Delegate(arg);
-	}
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
 	button(POINT _pos, POINT _size, void(*_onClick)(POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{

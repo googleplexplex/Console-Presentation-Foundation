@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "congetter.hpp"
+#include "interactionShell.hpp"
 
 #define setCursorBegin() setTo(0, 0)
 
@@ -104,4 +105,41 @@ void inline setStandartSymbolsColor()
 {
 	presentTextAttribute = white;
 	SetConsoleTextAttribute(stdHandle, presentTextAttribute);
+}
+
+struct consoleCursorInfo
+{
+	POINT pos;
+	symbolColor color;
+
+	void get()
+	{
+		pos = getConsoleCursorPosition();
+		color = presentTextAttribute;
+	}
+	void getAndReset()
+	{
+		get();
+		setStandartSymbolsColor();
+	}
+	void apply()
+	{
+		setTo(pos);
+		SetConsoleTextAttribute(stdHandle, color);
+	}
+};
+
+void showCursor()
+{
+	POINT mousePositionRelativeToTheConsole = getMouseConsolePos();
+	if (getTo(mousePositionRelativeToTheConsole))
+	{
+		consoleCursorInfo save;
+		save.getAndReset();
+
+		setTo(mousePositionRelativeToTheConsole);
+		std::cout << filledCharacter_1_5;
+
+		save.apply();
+	}
 }
