@@ -24,7 +24,6 @@ class button : controlElement {
 	symbolColor textColor;
 	symbolColor foneColor;
 	symbolColor frameColor;
-	//orientationEnum orientation;
 public:
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
 	button(POINT _pos, POINT _size, void(*_onClick)(void*, POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
@@ -45,7 +44,10 @@ public:
 
 	void Draw()
 	{
-		if (hasFrame())
+		consoleCursorInfo save;
+		save.getAndReset();
+
+		if (hasFrame()) //bg output
 		{
 			setTo(pos.x, pos.y);
 			setSymbolFullColor(frameColor);
@@ -90,14 +92,15 @@ public:
 			}
 		}
 
-		setSymbolColor(textColor, foneColor);
+		setSymbolColor(textColor, foneColor); //Text in button output
 		POINT textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
 		if (getTo(textPos))
 		{
 			setTo(textPos);
 			std::cout << text; //TOUP
 		}
-		setStandartSymbolsColor();
+
+		save.apply();
 	}
 	bool entersTheArea(int x, int y)
 	{
@@ -107,6 +110,38 @@ public:
 	bool entersTheArea(POINT point)
 	{
 		return entersTheArea(point.x, point.y);
+	}
+
+	void setText(char* _text)
+	{
+		textLength = strlen(_text);
+		text = stringCopy(_text, textLength);
+	}
+	void setTextColor(symbolColor _textColor)
+	{
+		textColor = _textColor;
+	}
+	void setFoneColor(symbolColor _textFone)
+	{
+		foneColor = _textFone;
+	}
+	void setPos(int x, int y)
+	{
+		pos.x = x;
+		pos.y = y;
+	}
+	void setSize(int x, int y)
+	{
+		size.x = x;
+		size.y = y;
+	}
+	void setFrame(symbolColor _frameColor)
+	{
+		frameColor = _frameColor;
+	}
+	void setFrameColor(symbolColor _frameColor)
+	{
+		frameColor = _frameColor;
 	}
 
 	char* getText()

@@ -128,11 +128,16 @@
   <ItemGroup>
     <ClInclude Include="buttons.hpp" />
     <ClInclude Include="congetter.hpp" />
+    <ClInclude Include="datePicker.hpp" />
     <ClInclude Include="dynamicArray.hpp" />
     <ClInclude Include="eventDispatcher.hpp" />
     <ClInclude Include="graphics.hpp" />
     <ClInclude Include="controlElement.hpp" />
     <ClInclude Include="interactionShell.hpp" />
+    <ClInclude Include="label.hpp" />
+    <ClInclude Include="listBox.hpp" />
+    <ClInclude Include="slider.hpp" />
+    <ClInclude Include="textBox.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

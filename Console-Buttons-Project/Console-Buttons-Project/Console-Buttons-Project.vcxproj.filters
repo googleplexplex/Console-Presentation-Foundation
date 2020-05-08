@@ -53,5 +53,20 @@
     <ClInclude Include="dynamicArray.hpp">
       <Filter>Файлы заголовков\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="label.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="listBox.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="textBox.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="slider.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="datePicker.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
