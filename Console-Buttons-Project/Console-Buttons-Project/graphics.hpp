@@ -25,12 +25,12 @@ typedef enum symbolColor {
 	brightWhite,
 };
 
-//If we use enum, then filledCharacter_1_5 ((char)219) will be perceived as (int)219 and we will not be able to use "cout << filledCharacter_1_5"
-#define filledCharacter_1_5 (char)219
-#define filledCharacter_2_5 (char)178
+//If we use enum, then filledCharacter_5_5 ((char)219) will be perceived as (int)219 and we will not be able to use "cout << filledCharacter_5_5"
+#define filledCharacter_5_5 (char)219
+#define filledCharacter_4_5 (char)178
 #define filledCharacter_3_5 (char)177
-#define filledCharacter_4_5 (char)176
-#define filledCharacter_5_5 (char)32
+#define filledCharacter_2_5 (char)176
+#define filledCharacter_1_5 (char)32
 
 
 POINT inline toPoint(COORD coord)
@@ -138,7 +138,7 @@ void showCursor()
 		save.getAndReset();
 
 		setTo(mousePositionRelativeToTheConsole);
-		std::cout << filledCharacter_1_5;
+		std::cout << filledCharacter_5_5;
 
 		save.apply();
 	}

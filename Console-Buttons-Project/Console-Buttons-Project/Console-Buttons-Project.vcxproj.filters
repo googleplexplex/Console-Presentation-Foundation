@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\core">
+      <UniqueIdentifier>{d0b0d506-5bd6-4fc2-8ff1-6bb641c5eac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\shell">
+      <UniqueIdentifier>{07631ef5-03bb-4918-a9af-c1f36b113e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\elements">
+      <UniqueIdentifier>{d9630864-948e-480c-af54-0375faeb6968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\helpers">
+      <UniqueIdentifier>{4ad4425c-f0c7-4012-b8c9-755024ca8fe8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -20,26 +32,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graphics.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="interactionShell.hpp">
+      <Filter>Файлы заголовков\shell</Filter>
     </ClInclude>
-    <ClInclude Include="buttons.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="graphics.hpp">
+      <Filter>Файлы заголовков\shell</Filter>
     </ClInclude>
     <ClInclude Include="congetter.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="eventDispatcher.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="interactionShell.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\shell</Filter>
     </ClInclude>
     <ClInclude Include="controlElement.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\core</Filter>
+    </ClInclude>
+    <ClInclude Include="eventDispatcher.hpp">
+      <Filter>Файлы заголовков\core</Filter>
+    </ClInclude>
+    <ClInclude Include="buttons.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
     </ClInclude>
     <ClInclude Include="dynamicArray.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

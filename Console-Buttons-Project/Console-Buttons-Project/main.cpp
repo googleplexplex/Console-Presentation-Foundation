@@ -15,16 +15,28 @@ using namespace std;
 #define printBool(x) (x)?printf("true "):printf("false")
 
 int clickCount = 0;
-void onButtonClicked(POINT clickedPos)
+void onButtonClicked(void* obj, POINT clickedPos)
 {
-	//cout << "Click was in " << clickedPos.x << " " << clickedPos.y << endl;
 	clickCount++;
+}
+
+void onMyButtonClicked(void* objPtr, POINT clickedPos);
+class myButton : public button
+{
+public:
+	unsigned int clicksCount = 0;
+	myButton(POINT _pos, POINT _size, char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+		: button(_pos, _size, &onMyButtonClicked, _text, _textColor, _foneColor, _frameColor) {}
+};
+void onMyButtonClicked(void* objPtr, POINT clickedPos)
+{
+	myButton* obj = (myButton*)(objPtr);
+	obj->clicksCount++;
 }
 
 int main(void)
 {
-
-	button buttonTest({ 1, 1 }, { 3, 3 }, &onButtonClicked, (char*)"Bton", blue, red);
+	myButton buttonTest({ 1, 1 }, { 3, 3 }, (char*)"Bop", blue, red);
 	buttonTest.Draw();
 
 	eventDispatcherMainLoop();

@@ -3,6 +3,8 @@
 #include "interactionShell.hpp"
 #include "controlElement.hpp"
 
+const unsigned int eventDispatcherDelay = 10;
+
 void eventDispatcher_LeftButtonClick(POINT clickedPos)
 {
 	dynamicArray<controlElement*> controlElementsInClickedPos = getControlElementIn(clickedPos);
@@ -10,7 +12,8 @@ void eventDispatcher_LeftButtonClick(POINT clickedPos)
 	for (int i = 0; i < controlElementsInClickedPos.count; i++)
 	{
 		controlElement* presentElementPtr = getControlElement(i);
-		presentElementPtr->click(clickedPos);
+		POINT presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		presentElementPtr->click(presentElementClickPos);
 	}
 }
 void eventDispatcher_RightButtonClick(POINT clickedPos)
@@ -41,5 +44,6 @@ void eventDispatcherMainLoop()
 		system("cls");
 		showCursor();
 		drawAllElements();
+		Sleep(eventDispatcherDelay);
 	}
 }

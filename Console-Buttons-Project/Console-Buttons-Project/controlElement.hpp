@@ -10,10 +10,10 @@ class controlElement
 public:
 	POINT pos;
 	POINT size;
-	void(*onClick_Delegate)(POINT); //The delegate should look like this "void onClick(POINT clickedPoint)"
+	void(*onClick_Delegate)(void*, POINT); //The delegate should look like this "void onClick(void* obj, POINT clickedPoint)"
 	void click(POINT clickPos)
 	{
-		onClick_Delegate(clickPos);
+		onClick_Delegate(this, clickPos);
 	}
 
 	controlElement()

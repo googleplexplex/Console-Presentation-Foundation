@@ -27,7 +27,7 @@ class button : controlElement {
 	//orientationEnum orientation;
 public:
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
-	button(POINT _pos, POINT _size, void(*_onClick)(POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+	button(POINT _pos, POINT _size, void(*_onClick)(void*, POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{
 		pos = _pos;
 		size = _size;
@@ -51,7 +51,7 @@ public:
 			setSymbolFullColor(frameColor);
 			for (int i = 0; i < size.x; i++)
 			{
-				ConsolePrintCharset(filledCharacter_1_5);
+				ConsolePrintCharset(filledCharacter_5_5);
 			}
 
 			for (int i = 1; i < size.y - 1; i++)
@@ -59,23 +59,23 @@ public:
 				setTo(pos.x, pos.y + i);
 
 				setSymbolFullColor(frameColor);
-				ConsolePrintCharset(filledCharacter_1_5);
+				ConsolePrintCharset(filledCharacter_5_5);
 
 				setSymbolFullColor(foneColor);
 				for (int i = 1; i < size.x - 1; i++)
 				{
-					ConsolePrintCharset(filledCharacter_5_5);
+					ConsolePrintCharset(filledCharacter_1_5);
 				}
 
 				setSymbolFullColor(frameColor);
-				ConsolePrintCharset(filledCharacter_1_5);
+				ConsolePrintCharset(filledCharacter_5_5);
 			}
 
 			setTo(pos.x, pos.y + size.y - 1);
 			setSymbolFullColor(frameColor);
 			for (int i = 0; i < size.x; i++)
 			{
-				ConsolePrintCharset(filledCharacter_1_5);
+				ConsolePrintCharset(filledCharacter_5_5);
 			}
 		}
 		else {
@@ -85,7 +85,7 @@ public:
 				setTo(pos.x, pos.y + i);
 				for (int j = 0; j < size.x; j++)
 				{
-					ConsolePrintCharset(filledCharacter_1_5);
+					ConsolePrintCharset(filledCharacter_5_5);
 				}
 			}
 		}
@@ -101,8 +101,8 @@ public:
 	}
 	bool entersTheArea(int x, int y)
 	{
-		return getBorder(x, pos.x, pos.x + size.x)
-			&& getBorder(y, pos.y, pos.y + size.y);
+		return getBorder(x, pos.x, pos.x + size.x - 1)
+			&& getBorder(y, pos.y, pos.y + size.y - 1);
 	}
 	bool entersTheArea(POINT point)
 	{
