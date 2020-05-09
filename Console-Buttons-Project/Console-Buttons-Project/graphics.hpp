@@ -101,7 +101,7 @@ void consolePrintStr(char* printedStr, int size) //TOFIX
 		{
 			if (printedStr[i] != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
 			{
-				std::cout << strPrintedHere[i].Char.AsciiChar;
+				std::cout << printedStr[i];
 			}
 		}
 	}

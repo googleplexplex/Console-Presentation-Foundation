@@ -17,8 +17,8 @@ public:
 	label(POINT _pos, char* _text = (char*)"Label", POINT _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
 		pos = _pos;
-		text = stringCopy(_text, textLength);
 		textLength = strlen(_text);
+		text = stringCopy(_text, textLength);
 		size = _size;
 		orientationX = _orientationX;
 		orientationY = _orientationY;
@@ -133,15 +133,15 @@ public:
 
 		if (orientationY == up)
 		{
-			result.x = pos.y;
+			result.y = pos.y;
 		}
 		else if (orientationY == centerY)
 		{
-			result.x = pos.y + int(size.y / 2);
+			result.y = pos.y + int(size.y / 2);
 		}
 		else if (orientationY == down)
 		{
-			result.x = pos.y + size.y - 1;
+			result.y = pos.y + size.y - 1;
 		}
 
 		return result;
