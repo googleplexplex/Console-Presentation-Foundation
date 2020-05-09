@@ -133,6 +133,7 @@
     <ClInclude Include="eventDispatcher.hpp" />
     <ClInclude Include="graphics.hpp" />
     <ClInclude Include="controlElement.hpp" />
+    <ClInclude Include="helpFunctions.hpp" />
     <ClInclude Include="interactionShell.hpp" />
     <ClInclude Include="label.hpp" />
     <ClInclude Include="listBox.hpp" />

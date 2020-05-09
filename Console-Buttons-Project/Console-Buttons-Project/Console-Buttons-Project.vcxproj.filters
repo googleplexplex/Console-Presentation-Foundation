@@ -68,5 +68,8 @@
     <ClInclude Include="datePicker.hpp">
       <Filter>Файлы заголовков\elements</Filter>
     </ClInclude>
+    <ClInclude Include="helpFunctions.hpp">
+      <Filter>Файлы заголовков\helpers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

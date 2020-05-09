@@ -1,22 +1,9 @@
 #pragma once
 #include <windows.h>
+#include "helpFunctions.hpp"
 #include "graphics.hpp"
 #include "controlElement.hpp"
 
-#define moreThanNull(x) (x > 0)
-#define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
-#define getBorder(pos, min, max) ((min) <= (pos) && (pos) <= (max))
-
-char* stringCopy(char* string, int stringSize)
-{
-	char* result = new char[stringSize + 1];
-	memcpy(result, string, stringSize + 1);
-	return result;
-}
-char* stringCopy(const char* string, int stringSize)
-{
-	return stringCopy((char*)string, stringSize);
-}
 
 class button : controlElement {
 	char *text;
@@ -26,7 +13,7 @@ class button : controlElement {
 	symbolColor frameColor;
 public:
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
-	button(POINT _pos, POINT _size, void(*_onClick)(void*, POINT), char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+	button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{
 		pos = _pos;
 		size = _size;
@@ -39,7 +26,7 @@ public:
 	}
 	~button()
 	{
-		delete[textLength] text;
+		delete[] text;
 	}
 
 	void Draw()
@@ -172,26 +159,4 @@ public:
 	{
 		return frameColor;
 	}
-	/*friend bool getButton(button_press *bt);
-	friend void addFrame(button_press *bt, int bash);
-	friend void eriseFrame(button_press *bt);
-	friend void _unsafeCleanText(button_press *bt);
-	friend void cleanText(button_press *bt);
-	friend void editButtonText(button_press *bt, const char _text[], int _newTextBash);
-	friend void editButtonText(button_press *bt, const char _text[]);
-	friend void editButtonText(button_press *bt, int _intText, int _newTextBash);
-	friend void editButtonText(button_press *bt, int _intText);
-	friend void editButtonText(button_press *bt, char _charText, int _newTextBash);
-	friend void editButtonText(button_press *bt, char _charText);
-	friend void editButtonFone(button_press *bt, int _newFoneBash);
-	friend void editButton(button_press *bt, char text[], int _newTextBash, int _newFoneBash);
-	friend void editButton(button_press *bt, char text[], int _newTextBash, int _newFoneBash, int _newFrameBash);
-	friend void setX(button_press *bt, int _newx);
-	friend void setY(button_press *bt, int _newy);
-	friend void setXY(button_press *bt, int _newx, int _newy);
-	friend void setXSize(button_press *bt, int _newxsize);
-	friend void setYSize(button_press *bt, int _newysize);
-	friend void setXYSize(button_press *bt, int _newxsize, int _newysize);
-	friend void setPropSize(button_press *bt, int _newsize);*/
-	//...
 };
