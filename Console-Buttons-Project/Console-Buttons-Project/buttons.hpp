@@ -40,7 +40,7 @@ public:
 			setSymbolFullColor(frameColor);
 			for (int i = 0; i < size.x; i++)
 			{
-				ConsolePrintCharset(filledCharacter_5_5);
+				consolePrintCharset(filledCharacter_5_5);
 			}
 
 			for (int i = 1; i < size.y - 1; i++)
@@ -48,23 +48,23 @@ public:
 				setTo(pos.x, pos.y + i);
 
 				setSymbolFullColor(frameColor);
-				ConsolePrintCharset(filledCharacter_5_5);
+				consolePrintCharset(filledCharacter_5_5);
 
 				setSymbolFullColor(foneColor);
 				for (int i = 1; i < size.x - 1; i++)
 				{
-					ConsolePrintCharset(filledCharacter_1_5);
+					consolePrintCharset(filledCharacter_1_5);
 				}
 
 				setSymbolFullColor(frameColor);
-				ConsolePrintCharset(filledCharacter_5_5);
+				consolePrintCharset(filledCharacter_5_5);
 			}
 
 			setTo(pos.x, pos.y + size.y - 1);
 			setSymbolFullColor(frameColor);
 			for (int i = 0; i < size.x; i++)
 			{
-				ConsolePrintCharset(filledCharacter_5_5);
+				consolePrintCharset(filledCharacter_5_5);
 			}
 		}
 		else {
@@ -74,7 +74,7 @@ public:
 				setTo(pos.x, pos.y + i);
 				for (int j = 0; j < size.x; j++)
 				{
-					ConsolePrintCharset(filledCharacter_5_5);
+					consolePrintCharset(filledCharacter_5_5);
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public:
 		if (getTo(textPos))
 		{
 			setTo(textPos);
-			std::cout << text; //TOUP
+			consolePrintStr(text, textLength);
 		}
 
 		save.apply();

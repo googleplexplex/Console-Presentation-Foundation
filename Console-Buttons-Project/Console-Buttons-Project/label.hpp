@@ -8,6 +8,7 @@
 class label : controlElement {
 	char *text;
 	int textLength;
+	POINT textPos;
 	symbolColor textColor;
 	symbolColor foneColor;
 	orientationXEnum orientationX;
@@ -38,7 +39,20 @@ public:
 		consoleCursorInfo save;
 		save.getAndReset();
 
-		//...
+		setSymbolFullColor(foneColor);
+		for (int i = 0; i < size.y; i++)
+		{
+			setTo(pos.x, pos.y + i);
+			for (int j = 0; j < size.x; j++)
+			{
+				consolePrintCharset(filledCharacter_5_5);
+			}
+		}
+
+		textPos = getTextPos();
+		setTo(textPos);
+		setSymbolColor(textColor, foneColor);
+		consolePrintStr(text, textLength);
 
 		save.apply();
 	}
@@ -99,6 +113,38 @@ public:
 	symbolColor getTextColor()
 	{
 		return textColor;
+	}
+	POINT getTextPos()
+	{
+		POINT result;
+
+		if(orientationX == right)
+		{
+			result.x = pos.x;
+		}
+		else if (orientationX == centerX)
+		{
+			result.x = pos.x + int(size.x / 2) - textLength / 2;
+		}
+		else if (orientationX == left)
+		{
+			result.x = pos.x + size.x - textLength;
+		}
+
+		if (orientationY == up)
+		{
+			result.x = pos.y;
+		}
+		else if (orientationY == centerY)
+		{
+			result.x = pos.y + int(size.y / 2);
+		}
+		else if (orientationY == down)
+		{
+			result.x = pos.y + size.y - 1;
+		}
+
+		return result;
 	}
 	symbolColor getFoneColor()
 	{

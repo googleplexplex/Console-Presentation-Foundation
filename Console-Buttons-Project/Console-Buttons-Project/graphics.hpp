@@ -77,16 +77,32 @@ POINT getConsoleCursorPosition()
 
 
 symbolColor presentTextAttribute = white;
-void ConsolePrintCharset(char printedCharset) //TOFIX
+void consolePrintCharset(char printedCharset) //TOFIX
 {
 	POINT consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO symbolPrintedHere = getc_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y);
-	
+
 	if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
 	{
 		if (printedCharset != symbolPrintedHere.Char.AsciiChar || presentTextAttribute != symbolPrintedHere.Attributes)
 		{
 			std::cout << printedCharset;
+		}
+	}
+}
+void consolePrintStr(char* printedStr, int size) //TOFIX
+{
+	POINT consoleCursorPosition = getConsoleCursorPosition();
+	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
+	
+	for (int i = 0; i < size; i++)
+	{
+		if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
+		{
+			if (printedStr[i] != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
+			{
+				std::cout << strPrintedHere[i].Char.AsciiChar;
+			}
 		}
 	}
 }
