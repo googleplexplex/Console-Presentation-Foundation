@@ -126,23 +126,22 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="buttons.hpp" />
-    <ClInclude Include="canvas.hpp" />
+    <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Canvas.hpp" />
     <ClInclude Include="congetter.hpp" />
-    <ClInclude Include="datePicker.hpp" />
+    <ClInclude Include="DatePicker.hpp" />
     <ClInclude Include="dynamicArray.hpp" />
     <ClInclude Include="eventDispatcher.hpp" />
     <ClInclude Include="graphics.hpp" />
     <ClInclude Include="controlElement.hpp" />
-    <ClInclude Include="grid.hpp" />
+    <ClInclude Include="Grid.hpp" />
     <ClInclude Include="helpFunctions.hpp" />
     <ClInclude Include="interactionShell.hpp" />
-    <ClInclude Include="label.hpp" />
-    <ClInclude Include="listBox.hpp" />
-    <ClInclude Include="slider.hpp" />
-    <ClInclude Include="stackPanel.hpp" />
-    <ClInclude Include="textBlock.hpp" />
-    <ClInclude Include="textBox.hpp" />
+    <ClInclude Include="Label.hpp" />
+    <ClInclude Include="ListBox.hpp" />
+    <ClInclude Include="StackPanel.hpp" />
+    <ClInclude Include="TextBlock.hpp" />
+    <ClInclude Include="TextBox.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

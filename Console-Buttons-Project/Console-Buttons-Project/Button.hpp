@@ -5,7 +5,7 @@
 #include "controlElement.hpp"
 
 
-class button : controlElement {
+class Button : controlElement {
 	char *text;
 	int textLength;
 	symbolColor textColor;
@@ -13,7 +13,7 @@ class button : controlElement {
 	symbolColor frameColor;
 public:
 	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
-	button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+	Button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{
 		pos = _pos;
 		size = _size;
@@ -24,7 +24,7 @@ public:
 		textColor = _textColor;
 		frameColor = _frameColor;
 	}
-	~button()
+	~Button()
 	{
 		delete[] text;
 	}

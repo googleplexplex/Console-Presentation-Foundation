@@ -21,12 +21,12 @@ void onButtonClicked(void* obj, POINT clickedPos)
 }
 
 void onMyButtonClicked(void* objPtr, POINT clickedPos);
-class myButton : public button
+class myButton : public Button
 {
 public:
 	unsigned int clicksCount = 0;
 	myButton(POINT _pos, POINT _size, char* _text = (char*)"Button", symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
-		: button(_pos, _size, _text, &onMyButtonClicked, _textColor, _foneColor, _frameColor) {}
+		: Button(_pos, _size, _text, &onMyButtonClicked, _textColor, _foneColor, _frameColor) {}
 };
 void onMyButtonClicked(void* objPtr, POINT clickedPos)
 {
@@ -36,7 +36,7 @@ void onMyButtonClicked(void* objPtr, POINT clickedPos)
 
 int main(void)
 {
-	label testLabel({ 1, 1 });
+	Label testLabel({ 1, 1 });
 	testLabel.Draw();
 
 	eventDispatcherMainLoop();

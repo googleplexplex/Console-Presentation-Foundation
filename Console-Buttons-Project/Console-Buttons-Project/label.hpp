@@ -5,14 +5,14 @@
 #include "controlElement.hpp"
 
 
-class label : controlElement {
+class Label : controlElement {
 	char *text;
 	int textLength;
 	POINT textPos;
 	symbolColor textColor;
 	symbolColor foneColor;
 public:
-	label(POINT _pos, char* _text = (char*)"label", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
+	Label(POINT _pos, char* _text = (char*)"Label", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -22,7 +22,7 @@ public:
 		foneColor = _foneColor;
 		textColor = _textColor;
 	}
-	~label()
+	~Label()
 	{
 		delete[] text;
 	}

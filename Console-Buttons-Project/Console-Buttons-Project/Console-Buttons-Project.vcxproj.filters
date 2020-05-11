@@ -50,41 +50,38 @@
     <ClInclude Include="eventDispatcher.hpp">
       <Filter>Файлы заголовков\core</Filter>
     </ClInclude>
-    <ClInclude Include="buttons.hpp">
-      <Filter>Файлы заголовков\elements</Filter>
-    </ClInclude>
     <ClInclude Include="dynamicArray.hpp">
       <Filter>Файлы заголовков\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="label.hpp">
-      <Filter>Файлы заголовков\elements</Filter>
-    </ClInclude>
-    <ClInclude Include="listBox.hpp">
-      <Filter>Файлы заголовков\elements</Filter>
-    </ClInclude>
-    <ClInclude Include="textBox.hpp">
-      <Filter>Файлы заголовков\elements</Filter>
-    </ClInclude>
-    <ClInclude Include="slider.hpp">
-      <Filter>Файлы заголовков\elements</Filter>
-    </ClInclude>
-    <ClInclude Include="datePicker.hpp">
-      <Filter>Файлы заголовков\elements</Filter>
     </ClInclude>
     <ClInclude Include="helpFunctions.hpp">
       <Filter>Файлы заголовков\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="grid.hpp">
-      <Filter>Файлы заголовков\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="stackPanel.hpp">
-      <Filter>Файлы заголовков\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="canvas.hpp">
-      <Filter>Файлы заголовков\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="textBlock.hpp">
+    <ClInclude Include="Button.hpp">
       <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="DatePicker.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.hpp">
+      <Filter>Файлы заголовков\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="StackPanel.hpp">
+      <Filter>Файлы заголовков\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="ListBox.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBlock.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.hpp">
+      <Filter>Файлы заголовков\containers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
