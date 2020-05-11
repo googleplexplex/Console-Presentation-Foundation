@@ -11,23 +11,16 @@ class label : controlElement {
 	POINT textPos;
 	symbolColor textColor;
 	symbolColor foneColor;
-	orientationXEnum orientationX;
-	orientationYEnum orientationY;
 public:
-	label(POINT _pos, char* _text = (char*)"Label", POINT _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
+	label(POINT _pos, char* _text = (char*)"label", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
-		size = _size;
-		orientationX = _orientationX;
-		orientationY = _orientationY;
+		size = { textLength, 1 };
 		onClick_Delegate = _onClick;
 		foneColor = _foneColor;
 		textColor = _textColor;
-
-		size.x = (_size.x > 0) ? (_size.x) : (textLength);
-		size.y = (_size.y > 0) ? (_size.y) : (1);
 	}
 	~label()
 	{
@@ -39,18 +32,7 @@ public:
 		consoleCursorInfo save;
 		save.getAndReset();
 
-		setSymbolFullColor(foneColor);
-		for (int i = 0; i < size.y; i++)
-		{
-			setTo(pos.x, pos.y + i);
-			for (int j = 0; j < size.x; j++)
-			{
-				consolePrintCharset(filledCharacter_5_5);
-			}
-		}
-
-		textPos = getTextPos();
-		setTo(textPos);
+		setTo(pos.x, pos.y);
 		setSymbolColor(textColor, foneColor);
 		consolePrintStr(text, textLength);
 
@@ -70,6 +52,7 @@ public:
 	{
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
+		size.x = textLength;
 	}
 	void setTextColor(symbolColor _textColor)
 	{
@@ -83,19 +66,6 @@ public:
 	{
 		pos.x = x;
 		pos.y = y;
-	}
-	void setSize(int x, int y)
-	{
-		size.x = x;
-		size.y = y;
-	}
-	void setOrientationX(orientationXEnum newOrientation)
-	{
-		orientationX = newOrientation;
-	}
-	void setOrientationY(orientationYEnum newOrientation)
-	{
-		orientationY = newOrientation;
 	}
 
 	POINT getPos()
@@ -114,48 +84,8 @@ public:
 	{
 		return textColor;
 	}
-	POINT getTextPos()
-	{
-		POINT result;
-
-		if(orientationX == right)
-		{
-			result.x = pos.x;
-		}
-		else if (orientationX == centerX)
-		{
-			result.x = pos.x + int(size.x / 2) - textLength / 2;
-		}
-		else if (orientationX == left)
-		{
-			result.x = pos.x + size.x - textLength;
-		}
-
-		if (orientationY == up)
-		{
-			result.y = pos.y;
-		}
-		else if (orientationY == centerY)
-		{
-			result.y = pos.y + int(size.y / 2);
-		}
-		else if (orientationY == down)
-		{
-			result.y = pos.y + size.y - 1;
-		}
-
-		return result;
-	}
 	symbolColor getFoneColor()
 	{
 		return foneColor;
-	}
-	orientationXEnum getOrientationX()
-	{
-		return orientationX;
-	}
-	orientationYEnum getOrientationY()
-	{
-		return orientationY;
 	}
 };

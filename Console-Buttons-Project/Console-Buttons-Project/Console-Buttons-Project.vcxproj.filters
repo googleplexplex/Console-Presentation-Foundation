@@ -25,6 +25,9 @@
     <Filter Include="Файлы заголовков\helpers">
       <UniqueIdentifier>{4ad4425c-f0c7-4012-b8c9-755024ca8fe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\containers">
+      <UniqueIdentifier>{d364f59b-6d4f-4097-a80b-084498d7ebc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -70,6 +73,18 @@
     </ClInclude>
     <ClInclude Include="helpFunctions.hpp">
       <Filter>Файлы заголовков\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="grid.hpp">
+      <Filter>Файлы заголовков\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="stackPanel.hpp">
+      <Filter>Файлы заголовков\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="canvas.hpp">
+      <Filter>Файлы заголовков\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="textBlock.hpp">
+      <Filter>Файлы заголовков\elements</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
