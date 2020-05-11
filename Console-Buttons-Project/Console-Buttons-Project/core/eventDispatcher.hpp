@@ -1,7 +1,7 @@
 #pragma once
-#include "dynamicArray.hpp"
-#include "interactionShell.hpp"
-#include "controlElement.hpp"
+#include "helpers\dynamicArray.hpp"
+#include "shell\interactionShell.hpp"
+#include "core\controlElement.hpp"
 
 const unsigned int eventDispatcherDelay = 10;
 

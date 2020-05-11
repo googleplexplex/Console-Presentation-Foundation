@@ -6,10 +6,11 @@ HWND consoleHWND = GetConsoleWindow();
 HANDLE consoleHandle = (HANDLE)consoleHandle;
 HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND stdHWND = (HWND)stdHandle;
-#include "buttons.hpp"
-#include "label.hpp"
-#include "interactionShell.hpp"
-#include "eventDispatcher.hpp"
+#include "elements\Button.hpp"
+#include "elements\Label.hpp"
+#include "shell\InteractionShell.hpp"
+#include "core\EventDispatcher.hpp"
+#include "shell\graphics.hpp"
 using namespace std;
 
 #define printBool(x) (x)?printf("true "):printf("false")
