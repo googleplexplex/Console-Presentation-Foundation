@@ -12,7 +12,6 @@ class Button : controlElement {
 	symbolColor foneColor;
 	symbolColor frameColor;
 public:
-	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
 	Button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
 	{
 		pos = _pos;

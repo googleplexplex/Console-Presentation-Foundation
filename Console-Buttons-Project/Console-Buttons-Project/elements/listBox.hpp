@@ -1,32 +1,32 @@
 #pragma once
 #include <windows.h>
-#include "helpFunctions.hpp"
-#include "graphics.hpp"
-#include "controlElement.hpp"
+#include "helpers\helpFunctions.hpp"
+#include "shell\graphics.hpp"
+#include "core\controlElement.hpp"
+#include "helpers\dynamicArray.hpp"
 
+
+void listBox_onClick(void* listBoxPtr, POINT clickedPos);
 
 class ListBox : controlElement {
-	char *text;
-	int textLength;
-	symbolColor textColor;
-	symbolColor foneColor;
-	symbolColor frameColor;
+	dynamicArray<char*> items;
+	int selectedItem = -1;
+	symbolColor itemTextColor;
+	symbolColor itemFoneColor;
+	symbolColor selectedItemTextColor;
+	symbolColor selectedItemFoneColor;
+	symbolColor backgroundColor;
 public:
-	//TODO CONSTRUCTORS FOR FRAME/NOT FRAME
-	ListBox(POINT _pos, POINT _size, char* _text = (char*)"ListBox", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+	ListBox(POINT _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black)
 	{
 		pos = _pos;
-		size = _size;
-		onClick_Delegate = _onClick;
-		textLength = strlen(_text);
-		text = stringCopy(_text, textLength);
-		foneColor = _foneColor;
-		textColor = _textColor;
-		frameColor = _frameColor;
-	}
-	~ListBox()
-	{
-		delete[] text;
+		size = { _sizex, _elementsCount };
+		onClick_Delegate = &listBox_onClick;
+		itemTextColor = _itemTextColor;
+		itemFoneColor = _itemFoneColor;
+		selectedItemTextColor = _selectedItemTextColor;
+		selectedItemFoneColor = _selectedItemFoneColor;
+		backgroundColor = _backgroundColor;
 	}
 
 	void Draw()
@@ -34,57 +34,32 @@ public:
 		consoleCursorInfo save;
 		save.getAndReset();
 
-		if (hasFrame()) //bg output
+		for (int i = 0; i < items.count; i++)
 		{
-			setTo(pos.x, pos.y);
-			setSymbolFullColor(frameColor);
-			for (int i = 0; i < size.x; i++)
+			setTo(pos.x, pos.y + i);
+			int itemLenght = strlen(items[i]);
+
+			if (i != selectedItem)
+				setSymbolColor(itemTextColor, itemFoneColor);
+			else
+				setSymbolColor(selectedItemTextColor, selectedItemFoneColor);
+
+			if (itemLenght > size.x)
 			{
-				consolePrintCharset(filledCharacter_5_5);
+				consolePrintStr(items[i], itemLenght - 3);
+				consolePrintStr((char*)"...", 3);
 			}
-
-			for (int i = 1; i < size.y - 1; i++)
-			{
-				setTo(pos.x, pos.y + i);
-
-				setSymbolFullColor(frameColor);
-				consolePrintCharset(filledCharacter_5_5);
-
-				setSymbolFullColor(foneColor);
-				for (int i = 1; i < size.x - 1; i++)
-				{
-					consolePrintCharset(filledCharacter_1_5);
-				}
-
-				setSymbolFullColor(frameColor);
-				consolePrintCharset(filledCharacter_5_5);
-			}
-
-			setTo(pos.x, pos.y + size.y - 1);
-			setSymbolFullColor(frameColor);
-			for (int i = 0; i < size.x; i++)
-			{
-				consolePrintCharset(filledCharacter_5_5);
-			}
-		}
-		else {
-			setSymbolFullColor(foneColor);
-			for (int i = 0; i < size.y; i++)
-			{
-				setTo(pos.x, pos.y + i);
-				for (int j = 0; j < size.x; j++)
-				{
-					consolePrintCharset(filledCharacter_5_5);
-				}
+			else {
+				consolePrintStr(items[i], itemLenght);
+				consolePrintLine(size.x - itemLenght, filledCharacter_1_5);
 			}
 		}
 
-		setSymbolColor(textColor, foneColor); //Text in button output
-		POINT textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
-		if (getTo(textPos))
+		setSymbolFullColor(backgroundColor);
+		for (int i = items.count; i < size.y; i++)
 		{
-			setTo(textPos);
-			consolePrintStr(text, textLength);
+			setTo(pos.x, pos.y + i);
+			consolePrintLine(size.x, filledCharacter_5_5);
 		}
 
 		save.apply();
@@ -99,64 +74,47 @@ public:
 		return entersTheArea(point.x, point.y);
 	}
 
-	void setText(char* _text)
+	void addItem(char* item)
 	{
-		textLength = strlen(_text);
-		text = stringCopy(_text, textLength);
+		items.add(item);
 	}
-	void setTextColor(symbolColor _textColor)
+	void deleteItem(char* item)
 	{
-		textColor = _textColor;
+		items.delElement(item);
 	}
-	void setFoneColor(symbolColor _textFone)
+	void popItem()
 	{
-		foneColor = _textFone;
+		items.delLast();
 	}
+	void clearItems()
+	{
+		items.clean();
+	}
+
 	void setPos(int x, int y)
 	{
 		pos.x = x;
 		pos.y = y;
 	}
-	void setSize(int x, int y)
-	{
-		size.x = x;
-		size.y = y;
-	}
-	void setFrame(symbolColor _frameColor)
-	{
-		frameColor = _frameColor;
-	}
-	void setFrameColor(symbolColor _frameColor)
-	{
-		frameColor = _frameColor;
-	}
 
-	char* getText()
-	{
-		return stringCopy(text, textLength);
-	}
-	symbolColor getTextColor()
-	{
-		return textColor;
-	}
-	symbolColor getFoneColor()
-	{
-		return foneColor;
-	}
 	POINT getPos()
 	{
 		return pos;
 	}
-	POINT getSize()
+	unsigned int getItemsCount()
 	{
-		return size;
+		return items.count;
 	}
-	bool hasFrame()
-	{
-		return (frameColor != null);
-	}
-	symbolColor getFrameColor()
-	{
-		return frameColor;
-	}
+
+	friend void listBox_onClick(void* listBoxPtr, POINT clickedPos);
 };
+
+void listBox_onClick(void* listBoxPtr, POINT clickedPos)
+{
+	ListBox* listBox = (ListBox*)listBoxPtr;
+
+	if (clickedPos.y < listBox->items.count)
+	{
+		listBox->selectedItem = clickedPos.y;
+	}
+}

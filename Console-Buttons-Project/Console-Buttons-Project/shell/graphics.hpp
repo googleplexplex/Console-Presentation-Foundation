@@ -103,6 +103,27 @@ void consolePrintStr(char* printedStr, int size) //TOFIX
 			{
 				std::cout << printedStr[i];
 			}
+			else {
+				setTo(consoleCursorPosition.x + 1, consoleCursorPosition.y);
+			}
+			consoleCursorPosition.x++;
+		}
+	}
+}
+void consolePrintLine(int size, char lineCharset = filledCharacter_5_5)
+{
+	POINT consoleCursorPosition = getConsoleCursorPosition();
+	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
+
+	for (int i = 0; i < size; i++)
+	{
+		if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
+		{
+			if (lineCharset != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
+			{
+				std::cout << lineCharset;
+			}
+			consoleCursorPosition.x++;
 		}
 	}
 }
@@ -158,4 +179,29 @@ void showCursor()
 
 		save.apply();
 	}
+}
+
+void ConsoleClear()
+{
+	CHAR_INFO* allConsoleInfo = getAll_fromConsole();
+	CHAR_INFO emptyCharset = { WCHAR(' '), white };
+	COORD consoleSize = getConsoleSize();
+
+	consoleCursorInfo save;
+	save.getAndReset();
+	setSymbolFullColor(black);
+
+	for (short i = 0; i < consoleSize.Y; i++)
+	{
+		for (short j = 0; j < consoleSize.X; j++)
+		{
+			if (allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar != emptyCharset.Char.AsciiChar || allConsoleInfo[i * consoleSize.X + j].Attributes != emptyCharset.Attributes)
+			{
+				setTo(j, i);
+				std::cout << filledCharacter_5_5;
+			}
+		}
+	}
+
+	save.apply();
 }

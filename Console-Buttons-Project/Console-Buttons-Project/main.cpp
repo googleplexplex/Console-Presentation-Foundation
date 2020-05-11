@@ -7,19 +7,9 @@ HANDLE consoleHandle = (HANDLE)consoleHandle;
 HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND stdHWND = (HWND)stdHandle;
 #include "elements\Button.hpp"
-#include "elements\Label.hpp"
-#include "shell\InteractionShell.hpp"
+#include "elements\ListBox.hpp"
 #include "core\EventDispatcher.hpp"
-#include "shell\graphics.hpp"
 using namespace std;
-
-#define printBool(x) (x)?printf("true "):printf("false")
-
-int clickCount = 0;
-void onButtonClicked(void* obj, POINT clickedPos)
-{
-	clickCount++;
-}
 
 void onMyButtonClicked(void* objPtr, POINT clickedPos);
 class myButton : public Button
@@ -37,7 +27,14 @@ void onMyButtonClicked(void* objPtr, POINT clickedPos)
 
 int main(void)
 {
-	Label testLabel({ 1, 1 });
+	ListBox testLabel({ 1, 1 }, 10, 5);
+
+	testLabel.Draw();
+	testLabel.addItem((char*)"Item1");
+	testLabel.Draw();
+	testLabel.addItem((char*)"Item2");
+	testLabel.Draw();
+	testLabel.addItem((char*)"Item3");
 	testLabel.Draw();
 
 	eventDispatcherMainLoop();

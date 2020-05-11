@@ -41,7 +41,7 @@ void eventDispatcherMainLoop()
 			eventDispatcher_RightButtonClick(mouseConsolePos);
 		}
 
-		system("cls");
+		ConsoleClear();
 		showCursor();
 		drawAllElements();
 		Sleep(eventDispatcherDelay);

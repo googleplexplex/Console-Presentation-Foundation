@@ -81,7 +81,7 @@ public:
 		if (count != 0)
 			count--;
 	}
-	void delElement(A element) //TOTEST
+	void delElement(A element)
 	{
 		for (int i = 0; i < count; i++)
 		{
