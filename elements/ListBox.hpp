@@ -17,16 +17,19 @@ class ListBox : controlElement {
 	symbolColor selectedItemFoneColor;
 	symbolColor backgroundColor;
 public:
-	ListBox(POINT _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black)
+	ListBox(POINT _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };
-		onClick_Delegate = &listBox_onClick;
 		itemTextColor = _itemTextColor;
 		itemFoneColor = _itemFoneColor;
 		selectedItemTextColor = _selectedItemTextColor;
 		selectedItemFoneColor = _selectedItemFoneColor;
 		backgroundColor = _backgroundColor;
+
+		onClick_Delegate = &listBox_onClick;
+		onFocus_Delegate = _onFocus;
+		onFocusLost_Delegate = _onFocusLost;
 	}
 
 	void Draw()

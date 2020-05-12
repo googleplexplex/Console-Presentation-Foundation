@@ -14,20 +14,21 @@ class textBlock : controlElement {
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
-	textBlock(POINT _pos, char* _text = (char*)"TextBlock", POINT _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
+	textBlock(POINT _pos, char* _text = (char*)"TextBlock", POINT _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
-		size = _size;
+		size.x = (_size.x > 0) ? (_size.x) : (textLength);
+		size.y = (_size.y > 0) ? (_size.y) : (1);
 		orientationX = _orientationX;
 		orientationY = _orientationY;
-		onClick_Delegate = _onClick;
 		foneColor = _foneColor;
 		textColor = _textColor;
 
-		size.x = (_size.x > 0) ? (_size.x) : (textLength);
-		size.y = (_size.y > 0) ? (_size.y) : (1);
+		onClick_Delegate = _onClick;
+		onFocus_Delegate = _onFocus;
+		onFocusLost_Delegate = _onFocusLost;
 	}
 	~textBlock()
 	{

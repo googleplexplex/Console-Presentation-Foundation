@@ -12,15 +12,18 @@ class Label : controlElement {
 	symbolColor textColor;
 	symbolColor foneColor;
 public:
-	Label(POINT _pos, char* _text = (char*)"Label", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black)
+	Label(POINT _pos, char* _text = (char*)"Label", void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
 		size = { textLength, 1 };
-		onClick_Delegate = _onClick;
 		foneColor = _foneColor;
 		textColor = _textColor;
+
+		onClick_Delegate = _onClick;
+		onFocus_Delegate = _onFocus;
+		onFocusLost_Delegate = _onFocusLost;
 	}
 	~Label()
 	{

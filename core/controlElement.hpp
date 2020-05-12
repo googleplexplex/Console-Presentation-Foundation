@@ -9,10 +9,9 @@ public:
 	POINT pos;
 	POINT size;
 	void(*onClick_Delegate)(void*, POINT); //The delegate should look like this "void onClick(void* obj, POINT clickedPoint)"
-	void click(POINT clickPos)
-	{
-		onClick_Delegate(this, clickPos);
-	}
+	//void(*onLeftButtonClick_Delegate)(void*, POINT);
+	void(*onFocus_Delegate)(void*);
+	void(*onFocusLost_Delegate)(void*);
 
 	controlElement()
 	{

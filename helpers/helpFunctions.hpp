@@ -30,7 +30,15 @@ typedef enum orientationYEnum
 	down
 };
 
-void emptyEvent(void*, POINT)
+void OnClick_emptyEvent(void*, POINT)
+{
+	return;
+}
+void onFocus_emptyEvent(void*)
+{
+	return;
+}
+void onFocusLost_emptyEvent(void*)
 {
 	return;
 }

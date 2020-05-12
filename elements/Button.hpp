@@ -12,16 +12,19 @@ class Button : controlElement {
 	symbolColor foneColor;
 	symbolColor frameColor;
 public:
-	Button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null)
+	Button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		size = _size;
-		onClick_Delegate = _onClick;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
 		foneColor = _foneColor;
 		textColor = _textColor;
 		frameColor = _frameColor;
+
+		onClick_Delegate = _onClick;
+		onFocus_Delegate = _onFocus;
+		onFocusLost_Delegate = _onFocusLost;
 	}
 	~Button()
 	{
