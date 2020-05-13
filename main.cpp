@@ -7,7 +7,7 @@ HANDLE consoleHandle = (HANDLE)consoleHandle;
 HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND stdHWND = (HWND)stdHandle;
 #include "elements\Button.hpp"
-#include "elements\ListBox.hpp"
+#include "elements\CheckBox.hpp"
 #include "core\EventDispatcher.hpp"
 using namespace std;
 
@@ -27,14 +27,7 @@ void onMyButtonClicked(void* objPtr, POINT clickedPos)
 
 int main(void)
 {
-	ListBox testLabel({ 1, 1 }, 10, 5);
-
-	testLabel.Draw();
-	testLabel.addItem((char*)"Item1");
-	testLabel.Draw();
-	testLabel.addItem((char*)"Item2");
-	testLabel.Draw();
-	testLabel.addItem((char*)"Item3");
+	CheckBox testLabel({ 1, 1 });
 	testLabel.Draw();
 
 	eventDispatcherMainLoop();
