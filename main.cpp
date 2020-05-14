@@ -6,6 +6,7 @@ HWND consoleHWND = GetConsoleWindow();
 HANDLE consoleHandle = (HANDLE)consoleHandle;
 HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND stdHWND = (HWND)stdHandle;
+#include "core\event.hpp"
 #include "elements\Button.hpp"
 #include "elements\CheckBox.hpp"
 #include "core\EventDispatcher.hpp"
@@ -25,10 +26,23 @@ void onMyButtonClicked(void* objPtr, POINT clickedPos)
 	obj->clicksCount++;
 }
 
+void testFunc1(int arg)
+{
+	return;
+}
+void testFunc2(int arg)
+{
+	return;
+}
+void testFunc3(int arg)
+{
+	return;
+}
+
 int main(void)
 {
-	CheckBox testLabel({ 1, 1 });
-	testLabel.Draw();
+	event<int> eventTest;
+	eventTest += eventTest;
 
 	eventDispatcherMainLoop();
 
