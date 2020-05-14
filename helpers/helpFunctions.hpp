@@ -1,5 +1,4 @@
 #pragma once
-#include <windows.h>
 
 #define moreThanNull(x) (x > 0)
 #define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
@@ -16,7 +15,6 @@ char* stringCopy(const char* string, int stringSize)
 	return stringCopy((char*)string, stringSize);
 }
 
-
 typedef enum orientationXEnum
 {
 	left = 0,
@@ -30,7 +28,12 @@ typedef enum orientationYEnum
 	down
 };
 
-void OnClick_emptyEvent(void*, POINT)
+struct point
+{
+	int x, y;
+};
+
+void OnClick_emptyEvent(void*, point)
 {
 	return;
 }

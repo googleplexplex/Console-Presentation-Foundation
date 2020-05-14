@@ -1,5 +1,4 @@
 #pragma once
-#include <windows.h>
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
@@ -12,7 +11,7 @@ class Button : controlElement {
 	symbolColor foneColor;
 	symbolColor frameColor;
 public:
-	Button(POINT _pos, POINT _size, char* _text = (char*)"Button", void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	Button(point _pos, point _size, char* _text = (char*)"Button", void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		size = _size;
@@ -82,7 +81,7 @@ public:
 		}
 
 		setSymbolColor(textColor, foneColor); //Text in button output
-		POINT textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
+		point textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
 		if (getTo(textPos))
 		{
 			setTo(textPos);
@@ -96,7 +95,7 @@ public:
 		return getBorder(x, pos.x, pos.x + size.x - 1)
 			&& getBorder(y, pos.y, pos.y + size.y - 1);
 	}
-	bool entersTheArea(POINT point)
+	bool entersTheArea(point point)
 	{
 		return entersTheArea(point.x, point.y);
 	}
@@ -145,11 +144,11 @@ public:
 	{
 		return foneColor;
 	}
-	POINT getPos()
+	point getPos()
 	{
 		return pos;
 	}
-	POINT getSize()
+	point getSize()
 	{
 		return size;
 	}

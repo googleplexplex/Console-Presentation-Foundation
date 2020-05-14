@@ -1,14 +1,15 @@
 #pragma once
 #include "helpers\dynamicArray.hpp"
+#include "helpers\helpFunctions.hpp"
 
 dynamicArray<void*> controlElements; //TOHIDE
 
 class controlElement
 {
 public:
-	POINT pos;
-	POINT size;
-	void(*onClick_Delegate)(void*, POINT); //The delegate should look like this "void onClick(void* obj, POINT clickedPoint)"
+	point pos;
+	point size;
+	void(*onClick_Delegate)(void*, point); //The delegate should look like this "void onClick(void* obj, POINT clickedPoint)"
 	//void(*onLeftButtonClick_Delegate)(void*, POINT);
 	void(*onFocus_Delegate)(void*);
 	void(*onFocusLost_Delegate)(void*);
@@ -23,10 +24,10 @@ public:
 	}
 
 	virtual void Draw() = 0;
-	virtual bool entersTheArea(POINT point) = 0;
+	virtual bool entersTheArea(point point) = 0;
 };
 
-dynamicArray<controlElement*> getControlElementIn(POINT foundedPoint)
+dynamicArray<controlElement*> getControlElementIn(point foundedPoint)
 {
 	dynamicArray<controlElement*> result;
 

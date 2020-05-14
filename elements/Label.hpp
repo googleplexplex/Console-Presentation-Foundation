@@ -1,5 +1,4 @@
 #pragma once
-#include <windows.h>
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
@@ -8,11 +7,11 @@
 class Label : controlElement {
 	char *text;
 	int textLength;
-	POINT textPos;
+	point textPos;
 	symbolColor textColor;
 	symbolColor foneColor;
 public:
-	Label(POINT _pos, char* _text = (char*)"Label", void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	Label(point _pos, char* _text = (char*)"Label", void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -71,11 +70,11 @@ public:
 		pos.y = y;
 	}
 
-	POINT getPos()
+	point getPos()
 	{
 		return pos;
 	}
-	POINT getSize()
+	point getSize()
 	{
 		return size;
 	}

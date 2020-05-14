@@ -1,17 +1,16 @@
 #pragma once
-#include <windows.h>
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
 
-void CheckBox_onClick(void* checkBoxPtr, POINT clickedPos);
+void CheckBox_onClick(void* checkBoxPtr, point clickedPos);
 
 class CheckBox : controlElement {
 	bool checked;
 	symbolColor checkedColor;
 	symbolColor notCheckedColor;
 public:
-	CheckBox(POINT _pos, void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	CheckBox(point _pos, void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		size = { 1, 1 };
@@ -64,11 +63,11 @@ public:
 		notCheckedColor = settedColor;
 	}
 
-	POINT getPos()
+	point getPos()
 	{
 		return pos;
 	}
-	POINT getSize()
+	point getSize()
 	{
 		return size;
 	}
@@ -86,7 +85,7 @@ public:
 	}
 };
 
-void CheckBox_onClick(void* checkBoxPtr, POINT clickedPos)
+void CheckBox_onClick(void* checkBoxPtr, point clickedPos)
 {
 	CheckBox* checkBox = (CheckBox*)checkBoxPtr;
 	checkBox->setState(!(checkBox->isChecked()));

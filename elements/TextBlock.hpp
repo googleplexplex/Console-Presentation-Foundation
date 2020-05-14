@@ -1,21 +1,20 @@
 #pragma once
-#include <windows.h>
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
 #include "helpers\dynamicArray.hpp"
 
 
-class textBlock : controlElement {
+class TextBlock : controlElement {
 	char *text;
 	int textLength;
-	POINT textPos;
+	point textPos;
 	symbolColor textColor;
 	symbolColor foneColor;
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
-	textBlock(POINT _pos, char* _text = (char*)"TextBlock", POINT _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, void(*_onClick)(void*, POINT) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -31,7 +30,7 @@ public:
 		onFocus_Delegate = _onFocus;
 		onFocusLost_Delegate = _onFocusLost;
 	}
-	~textBlock()
+	~TextBlock()
 	{
 		delete[] text;
 	}
@@ -100,11 +99,11 @@ public:
 		orientationY = newOrientation;
 	}
 
-	POINT getPos()
+	point getPos()
 	{
 		return pos;
 	}
-	POINT getSize()
+	point getSize()
 	{
 		return size;
 	}
@@ -116,9 +115,9 @@ public:
 	{
 		return textColor;
 	}
-	POINT getTextPos()
+	point getTextPos()
 	{
-		POINT result;
+		point result;
 
 		if (orientationX == right)
 		{

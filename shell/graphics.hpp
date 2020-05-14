@@ -33,13 +33,31 @@ typedef enum symbolColor {
 #define filledCharacter_1_5 (char)32
 
 
-POINT inline toPoint(COORD coord)
+POINT inline toWinPoint(COORD coord) //TODEL
 {
 	return { coord.X, coord.Y };
 }
-COORD inline toCoord(POINT coord)
+POINT inline toWinPoint(point point) //TODEL
 {
-	return { short(coord.x), short(coord.y) }; //TOFIX
+	return { point.x, point.y };
+}
+
+COORD inline toCoord(POINT point) //TODEL
+{
+	return { short(point.x), short(point.y) };
+}
+COORD inline toCoord(point point) //TODEL
+{
+	return { short(point.x), short(point.y) };
+}
+
+point inline toPoint(POINT point) //TODEL
+{
+	return { point.x, point.y };
+}
+point inline toPoint(COORD coord) //TODEL
+{
+	return { coord.X, coord.Y };
 }
 
 void editConsoleSize(int x, int y)
@@ -50,11 +68,11 @@ void inline setTo(short x, short y)
 {
 	SetConsoleCursorPosition(stdHandle, { x, y });
 }
-void inline setTo(POINT point)
+void inline setTo(point point)
 {
 	SetConsoleCursorPosition(stdHandle, toCoord(point));
 }
-bool getTo(POINT consoleSize, int x, int y)
+bool getTo(point consoleSize, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= consoleSize.x || y >= consoleSize.y)
 		return false;
@@ -64,11 +82,11 @@ bool getTo(int x, int y)
 {
 	return getTo(toPoint(getConsoleSize()), x, y);
 }
-bool getTo(POINT point)
+bool getTo(point point)
 {
 	return getTo(toPoint(getConsoleSize()), point.x, point.y);
 }
-POINT getConsoleCursorPosition()
+point getConsoleCursorPosition()
 {
 	CONSOLE_SCREEN_BUFFER_INFO bi;
 	GetConsoleScreenBufferInfo(stdHandle, &bi);
@@ -79,7 +97,7 @@ POINT getConsoleCursorPosition()
 symbolColor presentTextAttribute = white;
 void consolePrintCharset(char printedCharset) //TOFIX
 {
-	POINT consoleCursorPosition = getConsoleCursorPosition();
+	point consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO symbolPrintedHere = getc_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y);
 
 	if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
@@ -92,7 +110,7 @@ void consolePrintCharset(char printedCharset) //TOFIX
 }
 void consolePrintStr(char* printedStr, int size) //TOFIX
 {
-	POINT consoleCursorPosition = getConsoleCursorPosition();
+	point consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
 	
 	for (int i = 0; i < size; i++)
@@ -112,7 +130,7 @@ void consolePrintStr(char* printedStr, int size) //TOFIX
 }
 void consolePrintLine(int size, char lineCharset = filledCharacter_5_5)
 {
-	POINT consoleCursorPosition = getConsoleCursorPosition();
+	point consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
 
 	for (int i = 0; i < size; i++)
@@ -146,7 +164,7 @@ void inline setStandartSymbolsColor()
 
 struct consoleCursorInfo
 {
-	POINT pos;
+	point pos;
 	symbolColor color;
 
 	void get()
@@ -168,7 +186,7 @@ struct consoleCursorInfo
 
 void showCursor()
 {
-	POINT mousePositionRelativeToTheConsole = getMouseConsolePos();
+	point mousePositionRelativeToTheConsole = toPoint(getMouseConsolePos());
 	if (getTo(mousePositionRelativeToTheConsole))
 	{
 		consoleCursorInfo save;

@@ -1,12 +1,11 @@
 #pragma once
-#include <windows.h>
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
 #include "helpers\dynamicArray.hpp"
 
 
-void listBox_onClick(void* listBoxPtr, POINT clickedPos);
+void listBox_onClick(void* listBoxPtr, point clickedPos);
 
 class ListBox : controlElement {
 	dynamicArray<char*> items;
@@ -17,7 +16,7 @@ class ListBox : controlElement {
 	symbolColor selectedItemFoneColor;
 	symbolColor backgroundColor;
 public:
-	ListBox(POINT _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };
@@ -100,7 +99,7 @@ public:
 		pos.y = y;
 	}
 
-	POINT getPos()
+	point getPos()
 	{
 		return pos;
 	}
@@ -109,10 +108,10 @@ public:
 		return items.count;
 	}
 
-	friend void listBox_onClick(void* listBoxPtr, POINT clickedPos);
+	friend void listBox_onClick(void* listBoxPtr, point clickedPos);
 };
 
-void listBox_onClick(void* listBoxPtr, POINT clickedPos)
+void listBox_onClick(void* listBoxPtr, point clickedPos)
 {
 	ListBox* listBox = (ListBox*)listBoxPtr;
 

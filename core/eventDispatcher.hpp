@@ -14,21 +14,21 @@ void eventDispatcherSend_Focus(dynamicArray<controlElement*>& elements)
 		presentElementPtr->onFocus_Delegate(presentElementPtr);
 	}
 }
-void eventDispatcherSend_LeftButtonClick(POINT clickedPos, dynamicArray<controlElement*>& elements)
+void eventDispatcherSend_LeftButtonClick(point clickedPos, dynamicArray<controlElement*>& elements)
 {
 	for (int i = 0; i < elements.count; i++)
 	{
 		controlElement* presentElementPtr = (controlElement*)elements[i];
-		POINT presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
 		presentElementPtr->onClick_Delegate(presentElementPtr, presentElementClickPos);
 	}
 }
-void eventDispatcherSend_RightButtonClick(POINT clickedPos, dynamicArray<controlElement*>& elements)
+void eventDispatcherSend_RightButtonClick(point clickedPos, dynamicArray<controlElement*>& elements)
 {
 	for (int i = 0; i < elements.count; i++)
 	{
 		controlElement* presentElementPtr = (controlElement*)elements[i];
-		POINT presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
 		presentElementPtr->onClick_Delegate(presentElementPtr, presentElementClickPos); //TOFIX
 	}
 }
@@ -36,7 +36,7 @@ void eventDispatcherMainLoop()
 {
 	while (true)
 	{
-		POINT mouseConsolePos = getMouseConsolePos();
+		point mouseConsolePos = toPoint(getMouseConsolePos());
 		dynamicArray<controlElement*> controlElementsInClickedPos = getControlElementIn(mouseConsolePos);
 
 		eventDispatcherSend_Focus(controlElementsInClickedPos);
