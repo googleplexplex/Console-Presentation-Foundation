@@ -1,8 +1,9 @@
 #pragma once
 #include <windows.h>
-#include "helpFunctions.hpp"
-#include "graphics.hpp"
-#include "controlElement.hpp"
+#include "helpers\helpFunctions.hpp"
+#include "shell\graphics.hpp"
+#include "core\controlElement.hpp"
+#include "helpers\dynamicArray.hpp"
 
 
 class textBlock : controlElement {

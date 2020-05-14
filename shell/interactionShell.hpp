@@ -1,6 +1,11 @@
 #pragma once
 #include <windows.h>
 
+HWND consoleHWND = GetConsoleWindow();
+HANDLE consoleHandle = (HANDLE)consoleHandle;
+HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+HWND stdHWND = (HWND)stdHandle;
+
 #define setConsoleTitle(x) SetConsoleTitle(x)
 #define setWinTo(x, y) SetWindowPos(consoleWindow, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER)
 #define mouseLeftButtonState (GetAsyncKeyState(VK_LBUTTON) == 0 ? false : true )

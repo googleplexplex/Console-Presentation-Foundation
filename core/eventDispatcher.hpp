@@ -2,6 +2,7 @@
 #include "helpers\dynamicArray.hpp"
 #include "shell\interactionShell.hpp"
 #include "core\controlElement.hpp"
+#include "shell\graphics.hpp"
 
 const unsigned int eventDispatcherDelay = 10;
 
