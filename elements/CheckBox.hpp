@@ -1,7 +1,8 @@
 #pragma once
-#include "helpers\helpFunctions.hpp"
-#include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
+#include "core\event.hpp"
+#include "shell\graphics.hpp"
+#include "helpers\helpFunctions.hpp"
 
 void CheckBox_onClick(void* checkBoxPtr, point clickedPos);
 
@@ -10,14 +11,18 @@ class CheckBox : controlElement {
 	symbolColor checkedColor;
 	symbolColor notCheckedColor;
 public:
-	CheckBox(point _pos, void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	CheckBox(point _pos, onClick_DelegateType _onClick = NULL, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
 		pos = _pos;
 		size = { 1, 1 };
 		checkedColor = _checkedColor;
 		notCheckedColor = _notCheckedColor;
 
-		onClickEvent += &CheckBox_onClick; //TODO
+		onClickSystemDelegate = &CheckBox_onClick;
+		onFocusSystemDelegate = NULL;
+		onFocusLostSystemDelegate = NULL;
+
+		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;
 		onFocusLostEvent += _onFocusLost;
 	}

@@ -5,12 +5,13 @@
 class event_args_voidptr;
 class event_args_voidptr_point;
 
-typedef void(*onFocusEvent_DelegateType)(void*);
-typedef void(*onClickEvent_DelegateType)(void*, point);
+typedef void(*onFocus_DelegateType)(void*);
+typedef void(*onFocusLost_DelegateType)(void*);
+typedef void(*onClick_DelegateType)(void*, point);
 
-typedef event_args_voidptr			onFocusEvent;
-typedef event_args_voidptr			onFocusLostEvent;
-typedef event_args_voidptr_point	onClickEvent;
+typedef event_args_voidptr			onFocus_EventType;
+typedef event_args_voidptr			onFocusLost_EventType;
+typedef event_args_voidptr_point	onClick_EventType;
 
 
 class event_args_voidptr
@@ -31,7 +32,8 @@ public:
 };
 void operator+=(event_args_voidptr& left, void(*right)(void*))
 {
-	left.delegates.add(right);
+	if (right != NULL)
+		left.delegates.add(right);
 }
 void operator-=(event_args_voidptr& left, void(*right)(void*))
 {
@@ -56,7 +58,8 @@ public:
 };
 void operator+=(event_args_voidptr_point& left, void(*right)(void*, point))
 {
-	left.delegates.add(right);
+	if(right != NULL)
+		left.delegates.add(right);
 }
 void operator-=(event_args_voidptr_point& left, void(*right)(void*, point))
 {

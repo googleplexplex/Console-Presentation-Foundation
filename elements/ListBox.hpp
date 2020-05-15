@@ -1,7 +1,8 @@
 #pragma once
-#include "helpers\helpFunctions.hpp"
-#include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
+#include "core\event.hpp"
+#include "shell\graphics.hpp"
+#include "helpers\helpFunctions.hpp"
 #include "helpers\dynamicArray.hpp"
 
 
@@ -16,7 +17,7 @@ class ListBox : controlElement {
 	symbolColor selectedItemFoneColor;
 	symbolColor backgroundColor;
 public:
-	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black, onFocus_DelegateType _onFocus = NULL, onFocus_DelegateType _onFocusLost = NULL, onClick_DelegateType _onClick = NULL)
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };
@@ -26,7 +27,11 @@ public:
 		selectedItemFoneColor = _selectedItemFoneColor;
 		backgroundColor = _backgroundColor;
 
-		onClickEvent += &listBox_onClick; //TODO
+		onClickSystemDelegate = &listBox_onClick;
+		onFocusSystemDelegate = NULL;
+		onFocusLostSystemDelegate = NULL;
+
+		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;
 		onFocusLostEvent += _onFocusLost;
 	}

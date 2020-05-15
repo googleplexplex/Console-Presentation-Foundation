@@ -10,12 +10,17 @@ class controlElement
 public:
 	point pos;
 	point size;
+
 	//The delegate of on click event should look like "void onClick(void* obj, point clickedPoint)"
-	onClickEvent onClickEvent;
+	onClick_EventType onClickEvent;
 	//void(*onLeftButtonClick_Delegate)(void*, point); //TODO
 	//The delegate of on focus events should look like "void onFocus(void* obj)"
-	onFocusEvent onFocusEvent;
-	onFocusLostEvent onFocusLostEvent;
+	onFocus_EventType onFocusEvent;
+	onFocusLost_EventType onFocusLostEvent;
+
+	onClick_DelegateType onClickSystemDelegate;
+	onFocus_DelegateType onFocusSystemDelegate;
+	onFocusLost_DelegateType onFocusLostSystemDelegate;
 
 	controlElement()
 	{

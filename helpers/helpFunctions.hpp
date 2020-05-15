@@ -32,16 +32,3 @@ struct point
 {
 	int x, y;
 };
-
-void OnClick_emptyEvent(void*, point)
-{
-	return;
-}
-void onFocus_emptyEvent(void*)
-{
-	return;
-}
-void onFocusLost_emptyEvent(void*)
-{
-	return;
-}

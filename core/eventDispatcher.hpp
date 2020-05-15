@@ -11,7 +11,17 @@ void eventDispatcherSend_Focus(dynamicArray<controlElement*>& elements)
 	for (int i = 0; i < elements.count; i++)
 	{
 		controlElement* presentElementPtr = (controlElement*)elements[i];
+		presentElementPtr->onFocusSystemDelegate(presentElementPtr);
 		presentElementPtr->onFocusEvent.call(presentElementPtr);
+	}
+}
+void eventDispatcherSend_FocusLost(dynamicArray<controlElement*>& elements)
+{
+	for (int i = 0; i < elements.count; i++)
+	{
+		controlElement* presentElementPtr = (controlElement*)elements[i];
+		presentElementPtr->onFocusLostSystemDelegate(presentElementPtr);
+		presentElementPtr->onFocusLostEvent.call(presentElementPtr);
 	}
 }
 void eventDispatcherSend_LeftButtonClick(point clickedPos, dynamicArray<controlElement*>& elements)
@@ -20,6 +30,7 @@ void eventDispatcherSend_LeftButtonClick(point clickedPos, dynamicArray<controlE
 	{
 		controlElement* presentElementPtr = (controlElement*)elements[i];
 		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		presentElementPtr->onClickSystemDelegate(presentElementPtr, presentElementClickPos);
 		presentElementPtr->onClickEvent.call(presentElementPtr, presentElementClickPos);
 	}
 }
@@ -29,7 +40,8 @@ void eventDispatcherSend_RightButtonClick(point clickedPos, dynamicArray<control
 	{
 		controlElement* presentElementPtr = (controlElement*)elements[i];
 		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
-		presentElementPtr->onClickEvent.call(presentElementPtr, presentElementClickPos); //TOFIX
+		presentElementPtr->onClickSystemDelegate(presentElementPtr, presentElementClickPos);
+		presentElementPtr->onClickEvent.call(presentElementPtr, presentElementClickPos); //TODO
 	}
 }
 void eventDispatcherMainLoop()

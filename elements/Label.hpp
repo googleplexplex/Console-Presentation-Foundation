@@ -1,7 +1,8 @@
 #pragma once
-#include "helpers\helpFunctions.hpp"
-#include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
+#include "core\event.hpp"
+#include "shell\graphics.hpp"
+#include "helpers\helpFunctions.hpp"
 
 
 class Label : controlElement {
@@ -11,7 +12,7 @@ class Label : controlElement {
 	symbolColor textColor;
 	symbolColor foneColor;
 public:
-	Label(point _pos, char* _text = (char*)"Label", void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	Label(point _pos, char* _text = (char*)"Label", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -19,6 +20,10 @@ public:
 		size = { textLength, 1 };
 		foneColor = _foneColor;
 		textColor = _textColor;
+
+		onClickSystemDelegate = NULL;
+		onFocusSystemDelegate = NULL;
+		onFocusLostSystemDelegate = NULL;
 
 		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;

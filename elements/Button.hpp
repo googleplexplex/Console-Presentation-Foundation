@@ -1,7 +1,8 @@
 #pragma once
-#include "helpers\helpFunctions.hpp"
-#include "shell\graphics.hpp"
 #include "core\controlElement.hpp"
+#include "core\event.hpp"
+#include "shell\graphics.hpp"
+#include "helpers\helpFunctions.hpp"
 
 
 class Button : controlElement {
@@ -11,7 +12,7 @@ class Button : controlElement {
 	symbolColor foneColor;
 	symbolColor frameColor;
 public:
-	Button(point _pos, point _size, char* _text = (char*)"Button", void(*_onClick)(void*, point) = &OnClick_emptyEvent, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null, void(*_onFocus)(void*) = &onFocus_emptyEvent, void(*_onFocusLost)(void*) = &onFocusLost_emptyEvent)
+	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black, symbolColor _frameColor = null, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
 		pos = _pos;
 		size = _size;
@@ -20,6 +21,10 @@ public:
 		foneColor = _foneColor;
 		textColor = _textColor;
 		frameColor = _frameColor;
+
+		onClickSystemDelegate = NULL;
+		onFocusSystemDelegate = NULL;
+		onFocusLostSystemDelegate = NULL;
 
 		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;
