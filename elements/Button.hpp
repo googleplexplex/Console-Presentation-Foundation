@@ -21,9 +21,9 @@ public:
 		textColor = _textColor;
 		frameColor = _frameColor;
 
-		onClick_Delegate = _onClick;
-		onFocus_Delegate = _onFocus;
-		onFocusLost_Delegate = _onFocusLost;
+		onClickEvent += _onClick;
+		onFocusEvent += _onFocus;
+		onFocusLostEvent += _onFocusLost;
 	}
 	~Button()
 	{

@@ -1,12 +1,12 @@
 #pragma once
 #include "helpers\dynamicArray.hpp"
-#include <windows.h>
+#include "helpers\helpFunctions.hpp"
 
 class event_args_voidptr;
 class event_args_voidptr_point;
 
 typedef void(*onFocusEvent_DelegateType)(void*);
-typedef void(*onClickEvent_DelegateType)(void*, POINT);
+typedef void(*onClickEvent_DelegateType)(void*, point);
 
 typedef event_args_voidptr			onFocusEvent;
 typedef event_args_voidptr			onFocusLostEvent;
@@ -41,9 +41,9 @@ void operator-=(event_args_voidptr& left, void(*right)(void*))
 class event_args_voidptr_point
 {
 public:
-	dynamicArray<void(*)(void*, POINT)> delegates;
+	dynamicArray<void(*)(void*, point)> delegates;
 
-	void call(void* arg1, POINT arg2)
+	void call(void* arg1, point arg2)
 	{
 		for (int i = 0; i < delegates.count; i++)
 		{
@@ -51,14 +51,14 @@ public:
 		}
 	}
 
-	friend void operator+=(event_args_voidptr_point& left, void(*right)(void*, POINT));
-	friend void operator-=(event_args_voidptr_point& left, void(*right)(void*, POINT));
+	friend void operator+=(event_args_voidptr_point& left, void(*right)(void*, point));
+	friend void operator-=(event_args_voidptr_point& left, void(*right)(void*, point));
 };
-void operator+=(event_args_voidptr_point& left, void(*right)(void*, POINT))
+void operator+=(event_args_voidptr_point& left, void(*right)(void*, point))
 {
 	left.delegates.add(right);
 }
-void operator-=(event_args_voidptr_point& left, void(*right)(void*, POINT))
+void operator-=(event_args_voidptr_point& left, void(*right)(void*, point))
 {
 	left.delegates.delElement(right);
 }

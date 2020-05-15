@@ -20,9 +20,9 @@ public:
 		foneColor = _foneColor;
 		textColor = _textColor;
 
-		onClick_Delegate = _onClick;
-		onFocus_Delegate = _onFocus;
-		onFocusLost_Delegate = _onFocusLost;
+		onClickEvent += _onClick;
+		onFocusEvent += _onFocus;
+		onFocusLostEvent += _onFocusLost;
 	}
 	~Label()
 	{
@@ -45,7 +45,7 @@ public:
 		return getBorder(x, pos.x, pos.x + size.x - 1)
 			&& getBorder(y, pos.y, pos.y + size.y - 1);
 	}
-	bool entersTheArea(POINT point)
+	bool entersTheArea(point point)
 	{
 		return entersTheArea(point.x, point.y);
 	}

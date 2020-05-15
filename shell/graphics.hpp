@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "congetter.hpp"
-#include "interactionShell.hpp"
+#include "shell/congetter.hpp"
+#include "shell/interactionShell.hpp"
 
 #define setCursorBegin() setTo(0, 0)
 

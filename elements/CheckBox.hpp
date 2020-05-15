@@ -17,9 +17,9 @@ public:
 		checkedColor = _checkedColor;
 		notCheckedColor = _notCheckedColor;
 
-		onClick_Delegate = &CheckBox_onClick;
-		onFocus_Delegate = _onFocus;
-		onFocusLost_Delegate = _onFocusLost;
+		onClickEvent += &CheckBox_onClick; //TODO
+		onFocusEvent += _onFocus;
+		onFocusLostEvent += _onFocusLost;
 	}
 
 	void Draw()
@@ -40,7 +40,7 @@ public:
 	{
 		return (pos.x == x && pos.y == y);
 	}
-	bool entersTheArea(POINT point)
+	bool entersTheArea(point point)
 	{
 		return entersTheArea(point.x, point.y);
 	}

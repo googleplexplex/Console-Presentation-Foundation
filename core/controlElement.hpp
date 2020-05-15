@@ -1,6 +1,7 @@
 #pragma once
 #include "helpers\dynamicArray.hpp"
 #include "helpers\helpFunctions.hpp"
+#include "core\event.hpp"
 
 dynamicArray<void*> controlElements; //TOHIDE
 
@@ -9,10 +10,12 @@ class controlElement
 public:
 	point pos;
 	point size;
-	void(*onClick_Delegate)(void*, point); //The delegate should look like this "void onClick(void* obj, POINT clickedPoint)"
-	//void(*onLeftButtonClick_Delegate)(void*, POINT);
-	void(*onFocus_Delegate)(void*);
-	void(*onFocusLost_Delegate)(void*);
+	//The delegate of on click event should look like "void onClick(void* obj, point clickedPoint)"
+	onClickEvent onClickEvent;
+	//void(*onLeftButtonClick_Delegate)(void*, point); //TODO
+	//The delegate of on focus events should look like "void onFocus(void* obj)"
+	onFocusEvent onFocusEvent;
+	onFocusLostEvent onFocusLostEvent;
 
 	controlElement()
 	{
