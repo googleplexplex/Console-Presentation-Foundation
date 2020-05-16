@@ -10,11 +10,10 @@ class TextBlock : controlElement {
 	int textLength;
 	point textPos;
 	symbolColor textColor;
-	symbolColor foneColor;
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
-	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
+	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -23,7 +22,7 @@ public:
 		size.y = (_size.y > 0) ? (_size.y) : (1);
 		orientationX = _orientationX;
 		orientationY = _orientationY;
-		foneColor = _foneColor;
+		background = _background;
 		textColor = _textColor;
 
 		onClickSystemDelegate = NULL;
@@ -46,7 +45,7 @@ public:
 		consoleCursorInfo save;
 		save.getAndReset();
 
-		setSymbolFullColor(foneColor);
+		setSymbolFullColor(background);
 		for (int i = 0; i < size.y; i++)
 		{
 			setTo(pos.x, pos.y + i);
@@ -58,19 +57,15 @@ public:
 
 		textPos = getTextPos();
 		setTo(textPos);
-		setSymbolColor(textColor, foneColor);
+		setSymbolColor(textColor, background);
 		consolePrintStr(text, textLength);
 
 		save.apply();
 	}
-	bool entersTheArea(int x, int y)
-	{
-		return getBorder(x, pos.x, pos.x + size.x - 1)
-			&& getBorder(y, pos.y, pos.y + size.y - 1);
-	}
 	bool entersTheArea(point point)
 	{
-		return entersTheArea(point.x, point.y);
+		return getBorder(point.x, pos.x, pos.x + size.x - 1)
+			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
 	void setText(char* _text)
@@ -82,20 +77,6 @@ public:
 	{
 		textColor = _textColor;
 	}
-	void setFoneColor(symbolColor _textFone)
-	{
-		foneColor = _textFone;
-	}
-	void setPos(int x, int y)
-	{
-		pos.x = x;
-		pos.y = y;
-	}
-	void setSize(int x, int y)
-	{
-		size.x = x;
-		size.y = y;
-	}
 	void setOrientationX(orientationXEnum newOrientation)
 	{
 		orientationX = newOrientation;
@@ -105,14 +86,6 @@ public:
 		orientationY = newOrientation;
 	}
 
-	point getPos()
-	{
-		return pos;
-	}
-	point getSize()
-	{
-		return size;
-	}
 	char* getText()
 	{
 		return stringCopy(text, textLength);
@@ -152,10 +125,6 @@ public:
 		}
 
 		return result;
-	}
-	symbolColor getFoneColor()
-	{
-		return foneColor;
 	}
 	orientationXEnum getOrientationX()
 	{

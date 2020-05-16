@@ -11,11 +11,10 @@ class controlElement
 public:
 	point pos;
 	point size;
+	symbolColor background;
 
-	//The delegate of on click event should look like "void onClick(void* element, point clickedPoint)"
 	onClick_EventType onClickEvent;
 	//void(*onLeftButtonClick_Delegate)(void*, point); //TODO
-	//The delegate of on focus events should look like "void onFocus(void* element)"
 	onFocus_EventType onFocusEvent;
 	onFocusLost_EventType onFocusLostEvent;
 
@@ -38,6 +37,34 @@ public:
 
 	virtual void Draw() = 0;
 	virtual bool entersTheArea(point point) = 0;
+
+	void setPos(int x, int y)
+	{
+		pos.x = x;
+		pos.y = y;
+	}
+	void setSize(int x, int y)
+	{
+		size.x = x;
+		size.y = y;
+	}
+	void setBackground(symbolColor _textFone)
+	{
+		background = _textFone;
+	}
+
+	point getPos()
+	{
+		return pos;
+	}
+	point getSize()
+	{
+		return size;
+	}
+	symbolColor getBackground()
+	{
+		return background;
+	}
 };
 
 dynamicArray<controlElement*> getControlElementIn(point foundedPoint)

@@ -209,6 +209,30 @@ void consoleClearElements()
 
 	save.apply();
 }
+void consoleClearAll()
+{
+	CHAR_INFO* allConsoleInfo = getAll_fromConsole();
+	CHAR_INFO emptyCharset = { WCHAR(' '), black };
+	COORD consoleSize = getConsoleSize();
+
+	consoleCursorInfo save;
+	save.getAndReset();
+	setSymbolFullColor(black);
+
+	for (short i = 0; i < consoleSize.Y; i++)
+	{
+		for (short j = 0; j < consoleSize.X; j++)
+		{
+			if (allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar != emptyCharset.Char.AsciiChar || allConsoleInfo[i * consoleSize.X + j].Attributes != emptyCharset.Attributes)
+			{
+				setTo(j, i);
+				std::cout << emptyCharset.Char.AsciiChar;
+			}
+		}
+	}
+
+	save.apply();
+}
 
 void showCursor()
 {

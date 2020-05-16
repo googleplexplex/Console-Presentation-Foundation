@@ -5,20 +5,20 @@
 #include "helpers\helpFunctions.hpp"
 
 
+//setSize/getSize fix
 class Label : controlElement {
 	char *text;
 	int textLength;
 	point textPos;
 	symbolColor textColor;
-	symbolColor foneColor;
 public:
-	Label(point _pos, char* _text = (char*)"Label", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
+	Label(point _pos, char* _text = (char*)"Label", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
 		size = { textLength, 1 };
-		foneColor = _foneColor;
+		background = _background;
 		textColor = _textColor;
 
 		onClickSystemDelegate = NULL;
@@ -42,19 +42,15 @@ public:
 		save.getAndReset();
 
 		setTo(pos.x, pos.y);
-		setSymbolColor(textColor, foneColor);
+		setSymbolColor(textColor, background);
 		consolePrintStr(text, textLength);
 
 		save.apply();
 	}
-	bool entersTheArea(int x, int y)
-	{
-		return getBorder(x, pos.x, pos.x + size.x - 1)
-			&& getBorder(y, pos.y, pos.y + size.y - 1);
-	}
 	bool entersTheArea(point point)
 	{
-		return entersTheArea(point.x, point.y);
+		return getBorder(point.x, pos.x, pos.x + size.x - 1)
+			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
 	void setText(char* _text)
@@ -67,24 +63,7 @@ public:
 	{
 		textColor = _textColor;
 	}
-	void setFoneColor(symbolColor _textFone)
-	{
-		foneColor = _textFone;
-	}
-	void setPos(int x, int y)
-	{
-		pos.x = x;
-		pos.y = y;
-	}
 
-	point getPos()
-	{
-		return pos;
-	}
-	point getSize()
-	{
-		return size;
-	}
 	char* getText()
 	{
 		return stringCopy(text, textLength);
@@ -92,9 +71,5 @@ public:
 	symbolColor getTextColor()
 	{
 		return textColor;
-	}
-	symbolColor getFoneColor()
-	{
-		return foneColor;
 	}
 };

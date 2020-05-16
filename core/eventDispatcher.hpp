@@ -57,8 +57,9 @@ void eventDispatcherMainLoop()
 		if (mouseRightButtonState)
 			eventDispatcherSend_RightButtonClick(mouseConsolePos, controlElementsInClickedPos);
 
-		consoleClearElements();
-		//showCursor();
+		//consoleClearElements();
+		consoleClearAll();
+		showCursor();
 		drawAllElements();
 		Sleep(eventDispatcherDelay);
 	}

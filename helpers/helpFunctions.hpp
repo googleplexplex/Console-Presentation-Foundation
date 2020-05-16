@@ -42,3 +42,10 @@ struct rectangle
 		return { secondPos.x - firstPos.x, secondPos.y - firstPos.y };
 	}
 };
+struct marginType
+{
+	int up;
+	int down;
+	int left;
+	int right;
+};

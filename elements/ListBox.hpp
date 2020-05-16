@@ -15,9 +15,8 @@ class ListBox : controlElement {
 	symbolColor itemFoneColor;
 	symbolColor selectedItemTextColor;
 	symbolColor selectedItemFoneColor;
-	symbolColor backgroundColor;
 public:
-	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _backgroundColor = black, onFocus_DelegateType _onFocus = NULL, onFocus_DelegateType _onFocusLost = NULL, onClick_DelegateType _onClick = NULL)
+	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocus_DelegateType _onFocusLost = NULL, onClick_DelegateType _onClick = NULL)
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };
@@ -26,7 +25,7 @@ public:
 		itemFoneColor = _itemFoneColor;
 		selectedItemTextColor = _selectedItemTextColor;
 		selectedItemFoneColor = _selectedItemFoneColor;
-		backgroundColor = _backgroundColor;
+		background = _background;
 
 		onClickSystemDelegate = &listBox_onClick;
 		onFocusSystemDelegate = NULL;
@@ -65,7 +64,7 @@ public:
 			}
 		}
 
-		setSymbolFullColor(backgroundColor);
+		setSymbolFullColor(background);
 		for (int i = items.count; i < size.y; i++)
 		{
 			setTo(pos.x, pos.y + i);
@@ -74,14 +73,10 @@ public:
 
 		save.apply();
 	}
-	bool entersTheArea(int x, int y)
-	{
-		return getBorder(x, pos.x, pos.x + size.x - 1)
-			&& getBorder(y, pos.y, pos.y + size.y - 1);
-	}
 	bool entersTheArea(point point)
 	{
-		return entersTheArea(point.x, point.y);
+		return getBorder(point.x, pos.x, pos.x + size.x - 1)
+			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
 	void addItem(char* item)
@@ -100,20 +95,14 @@ public:
 	{
 		items.clean();
 	}
-
-	void setPos(int x, int y)
-	{
-		pos.x = x;
-		pos.y = y;
-	}
-
-	point getPos()
-	{
-		return pos;
-	}
+	
 	unsigned int getItemsCount()
 	{
 		return items.count;
+	}
+	char* getElement(int index)
+	{
+		return items[index];
 	}
 
 	friend void listBox_onClick(void* listBoxPtr, point clickedPos);

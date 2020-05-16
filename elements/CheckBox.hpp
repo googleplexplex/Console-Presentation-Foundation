@@ -43,41 +43,24 @@ public:
 
 		save.apply();
 	}
-	bool entersTheArea(int x, int y)
-	{
-		return (pos.x == x && pos.y == y);
-	}
 	bool entersTheArea(point point)
 	{
-		return entersTheArea(point.x, point.y);
+		return (pos.x == point.x && pos.y == point.y);
 	}
 
-	void setPos(int x, int y)
-	{
-		pos.x = x;
-		pos.y = y;
-	}
 	void setState(bool settedState)
 	{
 		checked = settedState;
 	}
-	void getCheckedColor(symbolColor settedColor)
+	void setCheckedColor(symbolColor settedColor)
 	{
 		checkedColor = settedColor;
 	}
-	void getNotCheckedColor(symbolColor settedColor)
+	void setNotCheckedColor(symbolColor settedColor)
 	{
 		notCheckedColor = settedColor;
 	}
 
-	point getPos()
-	{
-		return pos;
-	}
-	point getSize()
-	{
-		return size;
-	}
 	bool isChecked()
 	{
 		return checked;
