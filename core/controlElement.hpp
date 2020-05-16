@@ -2,6 +2,7 @@
 #include "helpers\dynamicArray.hpp"
 #include "helpers\helpFunctions.hpp"
 #include "core\event.hpp"
+#include "shell\graphics.hpp"
 
 dynamicArray<void*> controlElements; //TOHIDE
 
@@ -25,6 +26,10 @@ public:
 	controlElement()
 	{
 		controlElements.add((void*)this);
+	}
+	void registerElement()
+	{
+		addElementZone({ pos, { pos.x + size.x, pos.y + size.y } });
 	}
 	~controlElement()
 	{

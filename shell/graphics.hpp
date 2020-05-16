@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
-#include "shell/congetter.hpp"
-#include "shell/interactionShell.hpp"
+#include "shell\congetter.hpp"
+#include "shell\interactionShell.hpp"
+#include "helpers\helpFunctions.hpp"
+#include "helpers\dynamicArray.hpp"
 
 #define setCursorBegin() setTo(0, 0)
 
@@ -184,6 +186,30 @@ struct consoleCursorInfo
 	}
 };
 
+dynamicArray<rectangle> elementsZones; //TOHIDE
+void addElementZone(rectangle elementZone)
+{
+	elementsZones.add(elementZone); //TOUP
+}
+void consoleClearElements()
+{
+	consoleCursorInfo save;
+	save.getAndReset();
+	setSymbolFullColor(black);
+
+	for (int i = 0; i < elementsZones.count; i++)
+	{
+		point presentElementZoneSize = elementsZones[i].getSize();
+		for (int j = 0; j < presentElementZoneSize.y; j++)
+		{
+			setTo(elementsZones[i].firstPos.x, elementsZones[i].firstPos.y + j);
+			consolePrintLine(presentElementZoneSize.x, filledCharacter_1_5);
+		}
+	}
+
+	save.apply();
+}
+
 void showCursor()
 {
 	point mousePositionRelativeToTheConsole = toPoint(getMouseConsolePos());
@@ -197,29 +223,4 @@ void showCursor()
 
 		save.apply();
 	}
-}
-
-void ConsoleClear()
-{
-	CHAR_INFO* allConsoleInfo = getAll_fromConsole();
-	CHAR_INFO emptyCharset = { WCHAR(' '), white };
-	COORD consoleSize = getConsoleSize();
-
-	consoleCursorInfo save;
-	save.getAndReset();
-	setSymbolFullColor(black);
-
-	for (short i = 0; i < consoleSize.Y; i++)
-	{
-		for (short j = 0; j < consoleSize.X; j++)
-		{
-			if (allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar != emptyCharset.Char.AsciiChar || allConsoleInfo[i * consoleSize.X + j].Attributes != emptyCharset.Attributes)
-			{
-				setTo(j, i);
-				std::cout << filledCharacter_5_5;
-			}
-		}
-	}
-
-	save.apply();
 }

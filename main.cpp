@@ -19,7 +19,7 @@ void onMyButtonClicked(void* objPtr, point clickedPos)
 
 int main(void)
 {
-	ListBox test({ 1, 1 }, 15, 5);
+	ListBox test({ 1, 1 }, 15, 5, white, red);
 	test.addItem((char*)"Item1");
 	test.addItem((char*)"Item2");
 	test.addItem((char*)"Item3");

@@ -4,7 +4,7 @@
 #include "core\controlElement.hpp"
 #include "shell\graphics.hpp"
 
-const unsigned int eventDispatcherDelay = 10;
+const unsigned int eventDispatcherDelay = 50;
 
 void eventDispatcherSend_Focus(dynamicArray<controlElement*>& elements)
 {
@@ -57,8 +57,8 @@ void eventDispatcherMainLoop()
 		if (mouseRightButtonState)
 			eventDispatcherSend_RightButtonClick(mouseConsolePos, controlElementsInClickedPos);
 
-		ConsoleClear();
-		showCursor();
+		consoleClearElements();
+		//showCursor();
 		drawAllElements();
 		Sleep(eventDispatcherDelay);
 	}

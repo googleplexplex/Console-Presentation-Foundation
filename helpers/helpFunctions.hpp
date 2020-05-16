@@ -32,3 +32,13 @@ struct point
 {
 	int x, y;
 };
+struct rectangle
+{
+	point firstPos;
+	point secondPos;
+
+	point getSize()
+	{
+		return { secondPos.x - firstPos.x, secondPos.y - firstPos.y };
+	}
+};

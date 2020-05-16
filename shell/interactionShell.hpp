@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include "helpers\helpFunctions.hpp"
 
 HWND consoleHWND = GetConsoleWindow();
 HANDLE consoleHandle = (HANDLE)consoleHandle;
@@ -32,22 +33,17 @@ POINT getConsoleFontSize()
 	return POINT({ FontSize.X, FontSize.Y });
 }
 
-#ifdef DEBUG
-	#define debug_ShowPoint(point) std::cout << #point << " - " << point.x << ", " << point.y << std::endl
-#else
-	#define debug_ShowPoint(point)
-#endif
-const int windowUpFrameSize = 30;
-const int calibrationValue = 8;
+const int windowUpFrameSize_px = 30;
+const int calibrationValue_px = 8;
 POINT getMouseConsolePos()
 {
-	POINT windowGlobalPos_px = getWindowGlobalPos(); debug_ShowPoint(windowGlobalPos_px);
-	POINT mouseGlobalPosition_px = getMouseGlobalPos(); debug_ShowPoint(mouseGlobalPosition_px);
-	POINT consoleFontSize_px = getConsoleFontSize(); debug_ShowPoint(consoleFontSize_px);
-	POINT mousePositionRelativeToTheConsole_px = { mouseGlobalPosition_px.x - windowGlobalPos_px.x - calibrationValue,
-		mouseGlobalPosition_px.y - windowGlobalPos_px.y - windowUpFrameSize }; debug_ShowPoint(mousePositionRelativeToTheConsole_px);
+	POINT windowGlobalPos_px = getWindowGlobalPos();
+	POINT mouseGlobalPosition_px = getMouseGlobalPos();
+	POINT consoleFontSize_px = getConsoleFontSize();
+	POINT mousePositionRelativeToTheConsole_px = { mouseGlobalPosition_px.x - windowGlobalPos_px.x - calibrationValue_px,
+		mouseGlobalPosition_px.y - windowGlobalPos_px.y - windowUpFrameSize_px };
 	POINT mousePositionRelativeToTheConsole_sym = { mousePositionRelativeToTheConsole_px.x / consoleFontSize_px.x,
-							mousePositionRelativeToTheConsole_px.y / consoleFontSize_px.y }; debug_ShowPoint(mousePositionRelativeToTheConsole_sym);
+							mousePositionRelativeToTheConsole_px.y / consoleFontSize_px.y };
 
 	return mousePositionRelativeToTheConsole_sym;
 }

@@ -10,7 +10,7 @@ void listBox_onClick(void* listBoxPtr, point clickedPos);
 
 class ListBox : controlElement {
 	dynamicArray<char*> items;
-	int selectedItem = -1;
+	int selectedItem;
 	symbolColor itemTextColor;
 	symbolColor itemFoneColor;
 	symbolColor selectedItemTextColor;
@@ -21,6 +21,7 @@ public:
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };
+		selectedItem = -1;
 		itemTextColor = _itemTextColor;
 		itemFoneColor = _itemFoneColor;
 		selectedItemTextColor = _selectedItemTextColor;
@@ -34,6 +35,8 @@ public:
 		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;
 		onFocusLostEvent += _onFocusLost;
+
+		registerElement();
 	}
 
 	void Draw()

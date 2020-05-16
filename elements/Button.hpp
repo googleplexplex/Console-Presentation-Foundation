@@ -29,6 +29,8 @@ public:
 		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;
 		onFocusLostEvent += _onFocusLost;
+
+		registerElement();
 	}
 	~Button()
 	{
