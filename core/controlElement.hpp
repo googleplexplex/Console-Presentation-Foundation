@@ -11,10 +11,10 @@ public:
 	point pos;
 	point size;
 
-	//The delegate of on click event should look like "void onClick(void* obj, point clickedPoint)"
+	//The delegate of on click event should look like "void onClick(void* element, point clickedPoint)"
 	onClick_EventType onClickEvent;
 	//void(*onLeftButtonClick_Delegate)(void*, point); //TODO
-	//The delegate of on focus events should look like "void onFocus(void* obj)"
+	//The delegate of on focus events should look like "void onFocus(void* element)"
 	onFocus_EventType onFocusEvent;
 	onFocusLost_EventType onFocusLostEvent;
 

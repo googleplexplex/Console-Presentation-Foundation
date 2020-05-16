@@ -13,6 +13,16 @@ typedef event_args_voidptr			onFocus_EventType;
 typedef event_args_voidptr			onFocusLost_EventType;
 typedef event_args_voidptr_point	onClick_EventType;
 
+void callDelegate(void(*_delegate)(void*), void* delegateArg)
+{
+	if (_delegate != NULL)
+		_delegate(delegateArg);
+}
+void callDelegate(void(*_delegate)(void*, point), void* firstDelegateArg, point secondDelegateArg)
+{
+	if (_delegate != NULL)
+		_delegate(firstDelegateArg, secondDelegateArg);
+}
 
 class event_args_voidptr
 {
