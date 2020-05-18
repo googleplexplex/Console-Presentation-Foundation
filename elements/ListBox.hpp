@@ -83,9 +83,17 @@ public:
 	{
 		items.add(item);
 	}
+	void addItem(const char* item)
+	{
+		items.add((char*)item);
+	}
 	void deleteItem(char* item)
 	{
 		items.delElement(item);
+	}
+	void deleteItem(const char* item)
+	{
+		items.delElement((char*)item);
 	}
 	void popItem()
 	{

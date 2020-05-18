@@ -5,10 +5,13 @@ using namespace std;
 
 int main(void)
 {
-	ListBox test({ 1, 1 }, 15, 5, white, red);
-	test.addItem((char*)"Item1");
-	test.addItem((char*)"Item2");
-	test.addItem((char*)"Item3");
+	TextBlock test1({ 20, 1 });
+	test1.setText("aa1");
+
+	ListBox test2({ 1, 1 }, 15, 5, white, red);
+	test2.addItem("Item1");
+	test2.addItem("Item2");
+	test2.addItem("Item3");
 
 	eventDispatcherMainLoop();
 

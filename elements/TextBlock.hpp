@@ -2,14 +2,11 @@
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
+#include "helpers\textModule.hpp"
 #include "helpers\helpFunctions.hpp"
 
 
-class TextBlock : controlElement {
-	char *text;
-	int textLength;
-	point textPos;
-	symbolColor textColor;
+class TextBlock : controlElement, public textModule {
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
@@ -35,10 +32,6 @@ public:
 
 		registerElement();
 	}
-	~TextBlock()
-	{
-		delete[] text;
-	}
 
 	void Draw()
 	{
@@ -55,7 +48,7 @@ public:
 			}
 		}
 
-		textPos = getTextPos();
+		point textPos = getTextPos();
 		setTo(textPos);
 		setSymbolColor(textColor, background);
 		consolePrintStr(text, textLength);
@@ -68,15 +61,6 @@ public:
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
-	void setText(char* _text)
-	{
-		textLength = strlen(_text);
-		text = stringCopy(_text, textLength);
-	}
-	void setTextColor(symbolColor _textColor)
-	{
-		textColor = _textColor;
-	}
 	void setOrientationX(orientationXEnum newOrientation)
 	{
 		orientationX = newOrientation;
@@ -86,14 +70,6 @@ public:
 		orientationY = newOrientation;
 	}
 
-	char* getText()
-	{
-		return stringCopy(text, textLength);
-	}
-	symbolColor getTextColor()
-	{
-		return textColor;
-	}
 	point getTextPos()
 	{
 		point result;

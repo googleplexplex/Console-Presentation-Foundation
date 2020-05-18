@@ -2,15 +2,13 @@
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
+#include "helpers\textModule.hpp"
 #include "helpers\helpFunctions.hpp"
 
 
 //setSize/getSize fix
-class Label : controlElement {
-	char *text;
-	int textLength;
-	point textPos;
-	symbolColor textColor;
+class Label : controlElement, public textModule
+{
 public:
 	Label(point _pos, char* _text = (char*)"Label", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
@@ -31,10 +29,6 @@ public:
 
 		registerElement();
 	}
-	~Label()
-	{
-		delete[] text;
-	}
 
 	void Draw()
 	{
@@ -51,25 +45,5 @@ public:
 	{
 		return getBorder(point.x, pos.x, pos.x + size.x - 1)
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
-	}
-
-	void setText(char* _text)
-	{
-		textLength = strlen(_text);
-		text = stringCopy(_text, textLength);
-		size.x = textLength;
-	}
-	void setTextColor(symbolColor _textColor)
-	{
-		textColor = _textColor;
-	}
-
-	char* getText()
-	{
-		return stringCopy(text, textLength);
-	}
-	symbolColor getTextColor()
-	{
-		return textColor;
 	}
 };

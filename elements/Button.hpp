@@ -2,13 +2,11 @@
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
+#include "helpers\textModule.hpp"
 #include "helpers\helpFunctions.hpp"
 
 
-class Button : controlElement {
-	char *text;
-	int textLength;
-	symbolColor textColor;
+class Button : controlElement, public textModule {
 public:
 	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
@@ -28,10 +26,6 @@ public:
 		onFocusLostEvent += _onFocusLost;
 
 		registerElement();
-	}
-	~Button()
-	{
-		delete[] text;
 	}
 
 	void Draw()
@@ -63,24 +57,5 @@ public:
 	{
 		return getBorder(point.x, pos.x, pos.x + size.x - 1)
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
-	}
-
-	void setText(char* _text)
-	{
-		textLength = strlen(_text);
-		text = stringCopy(_text, textLength);
-	}
-	void setTextColor(symbolColor _textColor)
-	{
-		textColor = _textColor;
-	}
-
-	char* getText()
-	{
-		return stringCopy(text, textLength);
-	}
-	symbolColor getTextColor()
-	{
-		return textColor;
 	}
 };
