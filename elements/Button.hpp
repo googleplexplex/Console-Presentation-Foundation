@@ -8,7 +8,7 @@
 
 class Button : controlElement, public textModule {
 public:
-	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
+	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
 		pos = _pos;
 		size = _size;
@@ -17,13 +17,7 @@ public:
 		background = _foneColor;
 		textColor = _textColor;
 
-		onClickSystemDelegate = NULL;
-		onFocusSystemDelegate = NULL;
-		onFocusLostSystemDelegate = NULL;
-
 		onClickEvent += _onClick;
-		onFocusEvent += _onFocus;
-		onFocusLostEvent += _onFocusLost;
 
 		registerElement();
 	}

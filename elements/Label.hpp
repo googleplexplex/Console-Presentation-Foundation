@@ -10,7 +10,7 @@
 class Label : controlElement, public textModule
 {
 public:
-	Label(point _pos, char* _text = (char*)"Label", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
+	Label(point _pos, char* _text = (char*)"Label", symbolColor _textColor = white, symbolColor _background = black)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -18,14 +18,6 @@ public:
 		size = { textLength, 1 };
 		background = _background;
 		textColor = _textColor;
-
-		onClickSystemDelegate = NULL;
-		onFocusSystemDelegate = NULL;
-		onFocusLostSystemDelegate = NULL;
-
-		onClickEvent += _onClick;
-		onFocusEvent += _onFocus;
-		onFocusLostEvent += _onFocusLost;
 
 		registerElement();
 	}

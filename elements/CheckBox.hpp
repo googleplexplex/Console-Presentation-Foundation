@@ -11,7 +11,7 @@ class CheckBox : controlElement {
 	symbolColor checkedColor;
 	symbolColor notCheckedColor;
 public:
-	CheckBox(point _pos, onClick_DelegateType _onClick = NULL, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
+	CheckBox(point _pos, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white)
 	{
 		pos = _pos;
 		size = { 1, 1 };
@@ -19,12 +19,6 @@ public:
 		notCheckedColor = _notCheckedColor;
 
 		onClickSystemDelegate = &CheckBox_onClick;
-		onFocusSystemDelegate = NULL;
-		onFocusLostSystemDelegate = NULL;
-
-		onClickEvent += _onClick;
-		onFocusEvent += _onFocus;
-		onFocusLostEvent += _onFocusLost;
 
 		registerElement();
 	}

@@ -13,13 +13,13 @@ public:
 	point size;
 	symbolColor background;
 
-	onFocus_DelegateType onFocusSystemDelegate;
-	onFocusLost_DelegateType onFocusLostSystemDelegate;
-	onClick_DelegateType onClickSystemDelegate;
-	onLeftButtonDown_DelegateType onLeftButtonDownSystemDelegate;
-	onLeftButtonUp_DelegateType onLeftButtonUpSystemDelegate;
-	onRightButtonDown_DelegateType onRightButtonDownSystemDelegate;
-	onRightButtonUp_DelegateType onRightButtonUpSystemDelegate;
+	onFocus_DelegateType onFocusSystemDelegate = NULL;
+	onFocusLost_DelegateType onFocusLostSystemDelegate = NULL;
+	onClick_DelegateType onClickSystemDelegate = NULL;
+	onLeftButtonDown_DelegateType onLeftButtonDownSystemDelegate = NULL;
+	onLeftButtonUp_DelegateType onLeftButtonUpSystemDelegate = NULL;
+	onRightButtonDown_DelegateType onRightButtonDownSystemDelegate = NULL;
+	onRightButtonUp_DelegateType onRightButtonUpSystemDelegate = NULL;
 
 	onFocus_EventType onFocusEvent;
 	onFocusLost_EventType onFocusLostEvent;

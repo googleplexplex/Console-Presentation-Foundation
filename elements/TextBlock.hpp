@@ -10,7 +10,7 @@ class TextBlock : controlElement, public textModule {
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
-	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
+	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, symbolColor _textColor = white, symbolColor _background = black)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
@@ -21,14 +21,6 @@ public:
 		orientationY = _orientationY;
 		background = _background;
 		textColor = _textColor;
-
-		onClickSystemDelegate = NULL;
-		onFocusSystemDelegate = NULL;
-		onFocusLostSystemDelegate = NULL;
-
-		onClickEvent += _onClick;
-		onFocusEvent += _onFocus;
-		onFocusLostEvent += _onFocusLost;
 
 		registerElement();
 	}
@@ -75,30 +67,18 @@ public:
 		point result;
 
 		if (orientationX == right)
-		{
 			result.x = pos.x;
-		}
 		else if (orientationX == centerX)
-		{
 			result.x = pos.x + int(size.x / 2) - textLength / 2;
-		}
 		else if (orientationX == left)
-		{
 			result.x = pos.x + size.x - textLength;
-		}
 
 		if (orientationY == up)
-		{
 			result.y = pos.y;
-		}
 		else if (orientationY == centerY)
-		{
 			result.y = pos.y + int(size.y / 2);
-		}
 		else if (orientationY == down)
-		{
 			result.y = pos.y + size.y - 1;
-		}
 
 		return result;
 	}

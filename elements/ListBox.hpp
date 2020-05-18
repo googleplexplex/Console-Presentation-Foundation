@@ -16,7 +16,7 @@ class ListBox : controlElement {
 	symbolColor selectedItemTextColor;
 	symbolColor selectedItemFoneColor;
 public:
-	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black, onFocus_DelegateType _onFocus = NULL, onFocus_DelegateType _onFocusLost = NULL, onClick_DelegateType _onClick = NULL)
+	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };
@@ -28,12 +28,6 @@ public:
 		background = _background;
 
 		onClickSystemDelegate = &listBox_onClick;
-		onFocusSystemDelegate = NULL;
-		onFocusLostSystemDelegate = NULL;
-
-		onClickEvent += _onClick;
-		onFocusEvent += _onFocus;
-		onFocusLostEvent += _onFocusLost;
 
 		registerElement();
 	}
