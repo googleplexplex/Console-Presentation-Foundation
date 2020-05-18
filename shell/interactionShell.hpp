@@ -1,11 +1,7 @@
 #pragma once
 #include <windows.h>
 #include "helpers\helpFunctions.hpp"
-
-HWND consoleHWND = GetConsoleWindow();
-HANDLE consoleHandle = (HANDLE)consoleHandle;
-HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-HWND stdHWND = (HWND)stdHandle;
+#include "shell\graphics.hpp"
 
 #define setConsoleTitle(x) SetConsoleTitle(x)
 #define setWinTo(x, y) SetWindowPos(consoleWindow, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER)

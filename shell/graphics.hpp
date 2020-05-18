@@ -1,9 +1,13 @@
 #pragma once
 #include <iostream>
 #include "shell\congetter.hpp"
-#include "shell\interactionShell.hpp"
 #include "helpers\helpFunctions.hpp"
 #include "helpers\dynamicArray.hpp"
+
+HWND consoleHWND = GetConsoleWindow();
+HANDLE consoleHandle = (HANDLE)consoleHWND;
+HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+HWND stdHWND = (HWND)stdHandle;
 
 #define setCursorBegin() setTo(0, 0)
 
@@ -234,9 +238,9 @@ void consoleClearAll()
 	save.apply();
 }
 
-void showCursor()
+void showCursor(point cursorPos)
 {
-	point mousePositionRelativeToTheConsole = toPoint(getMouseConsolePos());
+	point mousePositionRelativeToTheConsole = cursorPos;
 	if (getTo(mousePositionRelativeToTheConsole))
 	{
 		consoleCursorInfo save;

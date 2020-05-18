@@ -13,14 +13,21 @@ public:
 	point size;
 	symbolColor background;
 
-	onClick_EventType onClickEvent;
-	//void(*onLeftButtonClick_Delegate)(void*, point); //TODO
-	onFocus_EventType onFocusEvent;
-	onFocusLost_EventType onFocusLostEvent;
-
-	onClick_DelegateType onClickSystemDelegate;
 	onFocus_DelegateType onFocusSystemDelegate;
 	onFocusLost_DelegateType onFocusLostSystemDelegate;
+	onClick_DelegateType onClickSystemDelegate;
+	onLeftButtonDown_DelegateType onLeftButtonDownSystemDelegate;
+	onLeftButtonUp_DelegateType onLeftButtonUpSystemDelegate;
+	onRightButtonDown_DelegateType onRightButtonDownSystemDelegate;
+	onRightButtonUp_DelegateType onRightButtonUpSystemDelegate;
+
+	onFocus_EventType onFocusEvent;
+	onFocusLost_EventType onFocusLostEvent;
+	onClick_EventType onClickEvent;
+	onLeftButtonDown_EventType onLeftButtonDownEvent;
+	onLeftButtonUp_EventType onLeftButtonUpEvent;
+	onRightButtonDown_EventType onRightButtonDownEvent;
+	onRightButtonUp_EventType onRightButtonUpEvent;
 
 	controlElement()
 	{

@@ -1,8 +1,7 @@
 #pragma once
-#include "helpers\dynamicArray.hpp"
-#include "shell\interactionShell.hpp"
 #include "core\controlElement.hpp"
-#include "shell\graphics.hpp"
+#include "shell\interactionShell.hpp"
+#include "helpers\dynamicArray.hpp"
 
 const unsigned int eventDispatcherDelay = 50;
 
@@ -24,7 +23,7 @@ void eventDispatcherSend_FocusLost(dynamicArray<controlElement*>& elements)
 		presentElementPtr->onFocusLostEvent.call(presentElementPtr);
 	}
 }
-void eventDispatcherSend_LeftButtonClick(point clickedPos, dynamicArray<controlElement*>& elements)
+void eventDispatcherSend_Click(point clickedPos, dynamicArray<controlElement*>& elements)
 {
 	for (int i = 0; i < elements.count; i++)
 	{
@@ -34,16 +33,47 @@ void eventDispatcherSend_LeftButtonClick(point clickedPos, dynamicArray<controlE
 		presentElementPtr->onClickEvent.call(presentElementPtr, presentElementClickPos);
 	}
 }
-void eventDispatcherSend_RightButtonClick(point clickedPos, dynamicArray<controlElement*>& elements)
+void eventDispatcherSend_LeftButtonDown(point clickedPos, dynamicArray<controlElement*>& elements)
 {
 	for (int i = 0; i < elements.count; i++)
 	{
 		controlElement* presentElementPtr = (controlElement*)elements[i];
 		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
-		callDelegate(presentElementPtr->onClickSystemDelegate, presentElementPtr, presentElementClickPos); //TODO
-		presentElementPtr->onClickEvent.call(presentElementPtr, presentElementClickPos); //TODO
+		callDelegate(presentElementPtr->onLeftButtonDownSystemDelegate, presentElementPtr, presentElementClickPos);
+		presentElementPtr->onLeftButtonDownEvent.call(presentElementPtr, presentElementClickPos);
 	}
 }
+void eventDispatcherSend_LeftButtonUp(point clickedPos, dynamicArray<controlElement*>& elements)
+{
+	for (int i = 0; i < elements.count; i++)
+	{
+		controlElement* presentElementPtr = (controlElement*)elements[i];
+		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		callDelegate(presentElementPtr->onLeftButtonUpSystemDelegate, presentElementPtr, presentElementClickPos);
+		presentElementPtr->onLeftButtonUpEvent.call(presentElementPtr, presentElementClickPos);
+	}
+}
+void eventDispatcherSend_RightButtonDown(point clickedPos, dynamicArray<controlElement*>& elements)
+{
+	for (int i = 0; i < elements.count; i++)
+	{
+		controlElement* presentElementPtr = (controlElement*)elements[i];
+		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		callDelegate(presentElementPtr->onRightButtonDownSystemDelegate, presentElementPtr, presentElementClickPos); //TODO
+		presentElementPtr->onRightButtonDownEvent.call(presentElementPtr, presentElementClickPos);
+	}
+}
+void eventDispatcherSend_RightButtonUp(point clickedPos, dynamicArray<controlElement*>& elements)
+{
+	for (int i = 0; i < elements.count; i++)
+	{
+		controlElement* presentElementPtr = (controlElement*)elements[i];
+		point presentElementClickPos = { clickedPos.x - presentElementPtr->pos.x, clickedPos.y - presentElementPtr->pos.y };
+		callDelegate(presentElementPtr->onRightButtonUpSystemDelegate, presentElementPtr, presentElementClickPos); //TODO
+		presentElementPtr->onRightButtonUpEvent.call(presentElementPtr, presentElementClickPos);
+	}
+}
+
 void eventDispatcherMainLoop()
 {
 	while (true)
@@ -53,13 +83,18 @@ void eventDispatcherMainLoop()
 
 		eventDispatcherSend_Focus(controlElementsInClickedPos);
 		if (mouseLeftButtonState)
-			eventDispatcherSend_LeftButtonClick(mouseConsolePos, controlElementsInClickedPos);
+		{
+			eventDispatcherSend_Click(mouseConsolePos, controlElementsInClickedPos);
+			eventDispatcherSend_LeftButtonDown(mouseConsolePos, controlElementsInClickedPos);
+		}
 		if (mouseRightButtonState)
-			eventDispatcherSend_RightButtonClick(mouseConsolePos, controlElementsInClickedPos);
+		{
+			eventDispatcherSend_RightButtonDown(mouseConsolePos, controlElementsInClickedPos);
+		}
 
 		//consoleClearElements();
 		consoleClearAll();
-		showCursor();
+		showCursor(toPoint(getMouseConsolePos()));
 		drawAllElements();
 		Sleep(eventDispatcherDelay);
 	}

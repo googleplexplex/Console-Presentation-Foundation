@@ -11,7 +11,6 @@ void Canvas_onFocusLost(void* elementPtr);
 
 class Canvas : controlElement {
 	dynamicArray<controlElement*> elements;
-	symbolColor background;
 public:
 	Canvas(point _pos, point _size, symbolColor _background = black, onClick_DelegateType _onClick = NULL, onFocus_DelegateType _onFocus = NULL, onFocusLost_DelegateType _onFocusLost = NULL)
 	{
@@ -19,9 +18,9 @@ public:
 		size = _size;
 		background = _background;
 
-		onClickSystemDelegate = NULL;
-		onFocusSystemDelegate = NULL;
-		onFocusLostSystemDelegate = NULL;
+		onClickSystemDelegate = Canvas_onClick;
+		onFocusSystemDelegate = Canvas_onFocus;
+		onFocusLostSystemDelegate = Canvas_onFocusLost;
 
 		onClickEvent += _onClick;
 		onFocusEvent += _onFocus;

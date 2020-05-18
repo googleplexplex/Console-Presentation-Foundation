@@ -10,10 +10,18 @@ typedef void(*onFocus_DelegateType)(void*);
 typedef void(*onFocusLost_DelegateType)(void*);
 //The delegate of on click event should look like "void onClick(void* element, point clickedPoint)"
 typedef void(*onClick_DelegateType)(void*, point);
+typedef void(*onLeftButtonDown_DelegateType)(void*, point);
+typedef void(*onLeftButtonUp_DelegateType)(void*, point);
+typedef void(*onRightButtonDown_DelegateType)(void*, point);
+typedef void(*onRightButtonUp_DelegateType)(void*, point);
 
 typedef event_args_voidptr			onFocus_EventType;
 typedef event_args_voidptr			onFocusLost_EventType;
 typedef event_args_voidptr_point	onClick_EventType;
+typedef event_args_voidptr_point	onLeftButtonDown_EventType;
+typedef event_args_voidptr_point	onLeftButtonUp_EventType;
+typedef event_args_voidptr_point	onRightButtonDown_EventType;
+typedef event_args_voidptr_point	onRightButtonUp_EventType;
 
 void callDelegate(void(*_delegate)(void*), void* delegateArg)
 {
