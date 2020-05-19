@@ -28,6 +28,12 @@ POINT getConsoleFontSize()
 
 	return POINT({ FontSize.X, FontSize.Y });
 }
+//POINT getConsoleSize()
+//{
+//	CONSOLE_SCREEN_BUFFER_INFO result;
+//	GetConsoleScreenBufferInfo(consoleHandle, &result);
+//	return toWinPoint(result.dwSize);
+//}
 
 const int windowUpFrameSize_px = 30;
 const int calibrationValue_px = 8;
@@ -42,4 +48,13 @@ POINT getMouseConsolePos()
 							mousePositionRelativeToTheConsole_px.y / consoleFontSize_px.y };
 
 	return mousePositionRelativeToTheConsole_sym;
+}
+
+void setConsoleSize(int x, int y)
+{
+	SetConsoleScreenBufferSize(consoleHandle, { short(x), short(y) });
+}
+void setTittle(char* newTittle)
+{
+	SetConsoleTitleA(newTittle);
 }

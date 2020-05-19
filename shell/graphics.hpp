@@ -66,10 +66,6 @@ point inline toPoint(COORD coord) //TODEL
 	return { coord.X, coord.Y };
 }
 
-void editConsoleSize(int x, int y)
-{
-	//...
-}
 void inline setTo(short x, short y)
 {
 	SetConsoleCursorPosition(stdHandle, { x, y });
