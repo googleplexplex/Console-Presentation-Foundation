@@ -8,7 +8,7 @@
 
 void listBox_onClick(void* listBoxPtr, point clickedPos);
 
-class ListBox : controlElement {
+class ListBox : public controlElement {
 	dynamicArray<char*> items;
 	int selectedItem;
 	symbolColor itemTextColor;
@@ -32,7 +32,7 @@ public:
 		registerElement();
 	}
 
-	void Draw()
+	void Draw(rectangle drawFrame)
 	{
 		consoleCursorInfo save;
 		save.getAndReset();
@@ -49,12 +49,12 @@ public:
 
 			if (itemLenght > size.x)
 			{
-				consolePrintStr(items[i], itemLenght - 3);
-				consolePrintStr((char*)"...", 3);
+				consolePrintStr(drawFrame, items[i], itemLenght - 3);
+				consolePrintStr(drawFrame, (char*)"...", 3);
 			}
 			else {
-				consolePrintStr(items[i], itemLenght);
-				consolePrintLine(size.x - itemLenght, filledCharacter_1_5);
+				consolePrintStr(drawFrame, items[i], itemLenght);
+				consolePrintLine(drawFrame, size.x - itemLenght, filledCharacter_1_5);
 			}
 		}
 
@@ -62,7 +62,7 @@ public:
 		for (int i = items.count; i < size.y; i++)
 		{
 			setTo(pos.x, pos.y + i);
-			consolePrintLine(size.x, filledCharacter_5_5);
+			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
 		}
 
 		save.apply();

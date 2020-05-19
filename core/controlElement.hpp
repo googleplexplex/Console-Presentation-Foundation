@@ -4,11 +4,21 @@
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
 
-dynamicArray<void*> controlElements; //TOHIDE
+#define GetterOf(type, element)\
+type get##element()\
+{\
+return element;\
+}
+#define SetterOf(type, element)\
+void set##element(type setted##element)\
+{\
+element = setted##element;\
+}
 
 class controlElement
 {
 public:
+	int zIndex = 0;
 	point pos;
 	point size;
 	symbolColor background;
@@ -29,22 +39,32 @@ public:
 	onRightButtonDown_EventType onRightButtonDownEvent;
 	onRightButtonUp_EventType onRightButtonUpEvent;
 
-	controlElement()
-	{
-		controlElements.add((void*)this);
-	}
+	controlElement* parent;
+	dynamicArray<controlElement*> childs;
+
 	void registerElement()
 	{
 		addElementZone({ pos, { pos.x + size.x, pos.y + size.y } });
 	}
-	~controlElement()
-	{
-		controlElements.delElement((void*)this);
-	}
 
-	virtual void Draw() = 0;
+	virtual void Draw(rectangle drawFrame) = 0;
 	virtual bool entersTheArea(point point) = 0;
 
+	void setParent(controlElement* _parent)
+	{
+		_parent->childs.add(this);
+		parent = _parent;
+	}
+	void addChild(controlElement* addedChild)
+	{
+		childs.add(addedChild);
+		addedChild->parent = this;
+	}
+	void delChild(controlElement* addedChild)
+	{
+		childs.delElement(addedChild);
+		addedChild->parent = this;
+	}
 	void setPos(int x, int y)
 	{
 		pos.x = x;
@@ -60,6 +80,14 @@ public:
 		background = _textFone;
 	}
 
+	controlElement* getParent()
+	{
+		return parent;
+	}
+	controlElement* getChild(int index)
+	{
+		return childs[index];
+	}
 	point getPos()
 	{
 		return pos;
@@ -68,38 +96,26 @@ public:
 	{
 		return size;
 	}
+	rectangle getRect()
+	{
+		return { pos, pos + size };
+	}
 	symbolColor getBackground()
 	{
 		return background;
 	}
 };
 
-dynamicArray<controlElement*> getControlElementIn(point foundedPoint)
+controlElement* mainContainer;
+void setMainContainer(controlElement* newMainContainer)
 {
-	dynamicArray<controlElement*> result;
-
-	for (int i = 0; i < controlElements.count; i++)
-	{
-		controlElement* presentElementPtr = (controlElement*)(controlElements[i]);
-
-		if (presentElementPtr->entersTheArea(foundedPoint))
-		{
-			result.add(presentElementPtr);
-		}
-	}
-
-	return result;
-}
-
-inline controlElement* getControlElement(unsigned int index)
-{
-	return (controlElement*)(controlElements[index]);
+	mainContainer = newMainContainer;
+	mainContainer->pos = { 0, 0 };
+	mainContainer->size = toPoint(getConsoleSize());
+	mainContainer->parent = NULL;
 }
 
 void drawAllElements()
 {
-	for (int i = 0; i < controlElements.count; i++)
-	{
-		getControlElement(i)->Draw();
-	}
+	mainContainer->Draw(mainContainer->getRect());
 }

@@ -6,7 +6,7 @@
 #include "helpers\helpFunctions.hpp"
 
 
-class Button : controlElement, public textModule {
+class Button : public controlElement, public textModule {
 public:
 	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
@@ -22,7 +22,7 @@ public:
 		registerElement();
 	}
 
-	void Draw()
+	void Draw(rectangle drawFrame)
 	{
 		consoleCursorInfo save;
 		save.getAndReset();
@@ -33,16 +33,16 @@ public:
 			setTo(pos.x, pos.y + i);
 			for (int j = 0; j < size.x; j++)
 			{
-				consolePrintCharset(filledCharacter_5_5);
+				consolePrintCharset(drawFrame, filledCharacter_5_5);
 			}
 		}
 
 		setSymbolColor(textColor, background); //Text in button output
 		point textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
-		if (getTo(textPos))
+		if (getTo(drawFrame, textPos))
 		{
 			setTo(textPos);
-			consolePrintStr(text, textLength);
+			consolePrintStr(drawFrame, text, textLength);
 		}
 
 		save.apply();

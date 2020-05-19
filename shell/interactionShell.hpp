@@ -28,6 +28,10 @@ POINT getConsoleFontSize()
 
 	return POINT({ FontSize.X, FontSize.Y });
 }
+rectangle consoleSizeRectangle()
+{
+	return { { 0, 0 }, toPoint(getConsoleSize()) };
+}
 //POINT getConsoleSize()
 //{
 //	CONSOLE_SCREEN_BUFFER_INFO result;

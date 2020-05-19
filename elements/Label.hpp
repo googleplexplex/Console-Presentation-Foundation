@@ -7,7 +7,7 @@
 
 
 //setSize/getSize fix
-class Label : controlElement, public textModule
+class Label : public controlElement, public textModule
 {
 public:
 	Label(point _pos, char* _text = (char*)"Label", symbolColor _textColor = white, symbolColor _background = black)
@@ -22,14 +22,14 @@ public:
 		registerElement();
 	}
 
-	void Draw()
+	void Draw(rectangle drawFrame)
 	{
 		consoleCursorInfo save;
 		save.getAndReset();
 
 		setTo(pos.x, pos.y);
 		setSymbolColor(textColor, background);
-		consolePrintStr(text, textLength);
+		consolePrintStr(drawFrame, text, textLength);
 
 		save.apply();
 	}

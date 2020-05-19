@@ -6,7 +6,7 @@
 #include "helpers\helpFunctions.hpp"
 
 
-class TextBlock : controlElement, public textModule {
+class TextBlock : public controlElement, public textModule {
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
@@ -25,7 +25,7 @@ public:
 		registerElement();
 	}
 
-	void Draw()
+	void Draw(rectangle drawFrame)
 	{
 		consoleCursorInfo save;
 		save.getAndReset();
@@ -36,14 +36,14 @@ public:
 			setTo(pos.x, pos.y + i);
 			for (int j = 0; j < size.x; j++)
 			{
-				consolePrintCharset(filledCharacter_5_5);
+				consolePrintCharset(drawFrame, filledCharacter_5_5);
 			}
 		}
 
 		point textPos = getTextPos();
 		setTo(textPos);
 		setSymbolColor(textColor, background);
-		consolePrintStr(text, textLength);
+		consolePrintStr(drawFrame, text, textLength);
 
 		save.apply();
 	}

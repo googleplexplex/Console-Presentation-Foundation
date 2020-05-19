@@ -5,6 +5,6 @@
 #include "helpers\helpFunctions.hpp"
 
 
-class TextBox : controlElement {
+class TextBox :public  controlElement {
 	//...
 };

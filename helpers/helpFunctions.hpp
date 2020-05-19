@@ -31,6 +31,11 @@ typedef enum orientationYEnum
 struct point
 {
 	int x, y;
+
+	point operator+(point& right)
+	{
+		return { x + right.x, y + right.y };
+	}
 };
 struct rectangle
 {
@@ -44,8 +49,37 @@ struct rectangle
 };
 struct marginType
 {
-	int up;
-	int down;
-	int left;
-	int right;
+	int Left;
+	int Top;
+	int Right;
+	int Down;
+
+	bool operator==(marginType right)
+	{
+		return (Top == right.Top
+			&& Down == right.Down
+			&& Left == right.Left
+			&& Right == right.Right);
+	}
 };
+marginType makeMargin(point _pos, point _size, point _sizeCont)
+{
+	return { _pos.x, _pos.y, _sizeCont.x - _pos.x - _size.x, _sizeCont.y - _pos.y - _size.y };
+}
+template<typename A, typename B>
+struct pair
+{
+	A first;
+	B second;
+
+	bool operator==(pair<A, B>& right)
+	{
+		return ( first == right.first
+			&& second == right.second);
+	}
+};
+template<typename A, typename B>
+pair<A, B> makePair(A first, B second)
+{
+	return pair<A, B>({ first, second });
+}

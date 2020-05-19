@@ -6,7 +6,7 @@
 
 void CheckBox_onClick(void* checkBoxPtr, point clickedPos);
 
-class CheckBox : controlElement {
+class CheckBox : public controlElement {
 	bool checked;
 	symbolColor checkedColor;
 	symbolColor notCheckedColor;
@@ -23,7 +23,7 @@ public:
 		registerElement();
 	}
 
-	void Draw()
+	void Draw(rectangle drawFrame)
 	{
 		consoleCursorInfo save;
 		save.getAndReset();
@@ -33,7 +33,7 @@ public:
 			setSymbolFullColor(checkedColor);
 		else
 			setSymbolFullColor(notCheckedColor);
-		consolePrintCharset(filledCharacter_5_5);
+		consolePrintCharset(drawFrame, filledCharacter_5_5);
 
 		save.apply();
 	}

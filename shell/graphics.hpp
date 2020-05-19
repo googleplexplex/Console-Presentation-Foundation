@@ -66,6 +66,8 @@ point inline toPoint(COORD coord) //TODEL
 	return { coord.X, coord.Y };
 }
 
+rectangle _drawFrame = { {0, 0}, toPoint(getConsoleSize()) };
+
 void inline setTo(short x, short y)
 {
 	SetConsoleCursorPosition(stdHandle, { x, y });
@@ -74,19 +76,15 @@ void inline setTo(point point)
 {
 	SetConsoleCursorPosition(stdHandle, toCoord(point));
 }
-bool getTo(point consoleSize, int x, int y)
+bool getTo(rectangle drawFrame, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= consoleSize.x || y >= consoleSize.y)
+	if (x < drawFrame.firstPos.x || y < drawFrame.firstPos.y || x >= drawFrame.secondPos.x || y >= drawFrame.secondPos.y)
 		return false;
 	return true;
 }
-bool getTo(int x, int y)
+bool getTo(rectangle drawFrame, point point)
 {
-	return getTo(toPoint(getConsoleSize()), x, y);
-}
-bool getTo(point point)
-{
-	return getTo(toPoint(getConsoleSize()), point.x, point.y);
+	return getTo(drawFrame, point.x, point.y);
 }
 point getConsoleCursorPosition()
 {
@@ -97,12 +95,12 @@ point getConsoleCursorPosition()
 
 
 symbolColor presentTextAttribute = white;
-void consolePrintCharset(char printedCharset) //TOFIX
+void consolePrintCharset(rectangle drawFrame, char printedCharset) //TOFIX
 {
 	point consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO symbolPrintedHere = getc_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y);
 
-	if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
+	if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
 	{
 		if (printedCharset != symbolPrintedHere.Char.AsciiChar || presentTextAttribute != symbolPrintedHere.Attributes)
 		{
@@ -110,14 +108,14 @@ void consolePrintCharset(char printedCharset) //TOFIX
 		}
 	}
 }
-void consolePrintStr(char* printedStr, int size) //TOFIX
+void consolePrintStr(rectangle drawFrame, char* printedStr, int size) //TOFIX
 {
 	point consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
 	
 	for (int i = 0; i < size; i++)
 	{
-		if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
+		if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
 		{
 			if (printedStr[i] != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
 			{
@@ -130,14 +128,14 @@ void consolePrintStr(char* printedStr, int size) //TOFIX
 		}
 	}
 }
-void consolePrintLine(int size, char lineCharset = filledCharacter_5_5)
+void consolePrintLine(rectangle drawFrame, int size, char lineCharset = filledCharacter_5_5)
 {
 	point consoleCursorPosition = getConsoleCursorPosition();
 	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
 
 	for (int i = 0; i < size; i++)
 	{
-		if (getTo(consoleCursorPosition.x, consoleCursorPosition.y))
+		if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
 		{
 			if (lineCharset != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
 			{
@@ -191,7 +189,7 @@ void addElementZone(rectangle elementZone)
 {
 	elementsZones.add(elementZone); //TOUP
 }
-void consoleClearElements()
+void consoleClearElements(rectangle drawFrame)
 {
 	consoleCursorInfo save;
 	save.getAndReset();
@@ -203,7 +201,7 @@ void consoleClearElements()
 		for (int j = 0; j < presentElementZoneSize.y; j++)
 		{
 			setTo(elementsZones[i].firstPos.x, elementsZones[i].firstPos.y + j);
-			consolePrintLine(presentElementZoneSize.x, filledCharacter_1_5);
+			consolePrintLine(drawFrame, presentElementZoneSize.x, filledCharacter_1_5);
 		}
 	}
 
@@ -234,10 +232,10 @@ void consoleClearAll()
 	save.apply();
 }
 
-void showCursor(point cursorPos)
+void showCursor(rectangle drawFrame, point cursorPos)
 {
 	point mousePositionRelativeToTheConsole = cursorPos;
-	if (getTo(mousePositionRelativeToTheConsole))
+	if (getTo(drawFrame, mousePositionRelativeToTheConsole))
 	{
 		consoleCursorInfo save;
 		save.getAndReset();
