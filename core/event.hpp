@@ -5,9 +5,9 @@
 class event_args_voidptr;
 class event_args_voidptr_point;
 
-//The delegate of on focus events should look like "void onFocus(void* element)"
-typedef void(*onFocus_DelegateType)(void*);
-typedef void(*onFocusLost_DelegateType)(void*);
+//The delegate of on focus events should look like "void onFocus(void* element, point mousePos)"
+typedef void(*onFocus_DelegateType)(void*, point);
+typedef void(*onFocusLost_DelegateType)(void*, point);
 //The delegate of on click event should look like "void onClick(void* element, point clickedPoint)"
 typedef void(*onClick_DelegateType)(void*, point);
 typedef void(*onLeftButtonDown_DelegateType)(void*, point);

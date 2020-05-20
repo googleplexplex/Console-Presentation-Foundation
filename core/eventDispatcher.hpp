@@ -1,5 +1,6 @@
 #pragma once
 #include "core\controlElement.hpp"
+#include "core\containerElement.hpp"
 #include "shell\interactionShell.hpp"
 #include "helpers\dynamicArray.hpp"
 
@@ -12,7 +13,7 @@ void eventDispatcherMainLoop()
 	{
 		point mouseConsolePos = toPoint(getMouseConsolePos());
 
-		callDelegate(mainContainer->onFocusSystemDelegate, mainContainer);
+		callDelegate(mainContainer->onFocusSystemDelegate, mainContainer, mouseConsolePos);
 		if (mouseLeftButtonState)
 		{
 			callDelegate(mainContainer->onClickSystemDelegate, mainContainer, mouseConsolePos);
@@ -23,7 +24,6 @@ void eventDispatcherMainLoop()
 			callDelegate(mainContainer->onRightButtonDownSystemDelegate, mainContainer, mouseConsolePos);
 		}
 
-		//consoleClearElements();
 		consoleClearAll();
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
 		drawAllElements();

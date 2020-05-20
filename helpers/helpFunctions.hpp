@@ -3,6 +3,16 @@
 #define moreThanNull(x) (x > 0)
 #define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
 #define getBorder(pos, min, max) ((min) <= (pos) && (pos) <= (max))
+#define GetterOf(type, element)\
+type get##element()\
+{\
+return element;\
+}
+#define SetterOf(type, element)\
+void set##element(type setted##element)\
+{\
+element = setted##element;\
+}
 
 char* stringCopy(char* string, int stringSize)
 {
@@ -35,6 +45,10 @@ struct point
 	point operator+(point& right)
 	{
 		return { x + right.x, y + right.y };
+	}
+	point operator-(point& right)
+	{
+		return { x - right.x, y - right.y };
 	}
 };
 struct rectangle

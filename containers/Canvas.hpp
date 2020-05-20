@@ -5,15 +5,15 @@
 #include "helpers\helpFunctions.hpp"
 
 
-void Canvas_onFocus(void* elementPtr);
-void Canvas_onFocusLost(void* elementPtr);
+void Canvas_onFocus(void* elementPtr, point clickedPos);
+void Canvas_onFocusLost(void* elementPtr, point clickedPos);
 void Canvas_onClick(void* elementPtr, point clickedPos);
 void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos);
 void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos);
 
-class Canvas : controlElement {
+class Canvas : containerElement {
 	dynamicArray<controlElement*> elements;
 public:
 	Canvas(point _pos, point _size, symbolColor _background = black)
@@ -69,15 +69,44 @@ public:
 	}
 };
 
+controlElement* getElementsInPos(containerElement* container, point pos)
+{
+	for (int i = 0; i < container->childs.count; i++)
+	{
+		if (container->childs[i]->entersTheArea(pos))
+		{
+			return container->childs[i];
+		}
+	}
+
+	return NULL;
+}
+
 void Canvas_onClick(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onClickSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
-void Canvas_onFocus(void* elementPtr)
+void Canvas_onFocus(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onFocusSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
-void Canvas_onFocusLost(void* elementPtr)
+void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 {
 	//...
 }
