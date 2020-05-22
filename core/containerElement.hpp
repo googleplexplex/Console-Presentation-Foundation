@@ -16,22 +16,22 @@ public:
 		childs.add(addedChild);
 		addedChild->parent = this;
 	}
-	void delChild(controlElement* addedChild)
+	void delChild(controlElement* deleteddChild)
 	{
-		childs.delElement(addedChild);
-		addedChild->parent = this;
+		childs.delElement(deleteddChild);
+		deleteddChild->parent = this;
 	}
-	void delChild(containerElement* addedChild)
+	void delChild(containerElement* deleteddChild)
 	{
-		childs.delElement(addedChild);
-		addedChild->parent = this;
+		childs.delElement(deleteddChild);
+		deleteddChild->parent = this;
 	}
 
 	controlElement* getChild(int index)
 	{
 		return childs[index];
 	}
-};
+}; 
 void _setParent(void* _child, void* _parent)
 {
 	((containerElement*)_parent)->childs.add((controlElement*)_child);

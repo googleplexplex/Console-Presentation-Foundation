@@ -15,8 +15,8 @@ typedef void(*onLeftButtonUp_DelegateType)(void*, point);
 typedef void(*onRightButtonDown_DelegateType)(void*, point);
 typedef void(*onRightButtonUp_DelegateType)(void*, point);
 
-typedef event_args_voidptr			onFocus_EventType;
-typedef event_args_voidptr			onFocusLost_EventType;
+typedef event_args_voidptr_point	onFocus_EventType;
+typedef event_args_voidptr_point	onFocusLost_EventType;
 typedef event_args_voidptr_point	onClick_EventType;
 typedef event_args_voidptr_point	onLeftButtonDown_EventType;
 typedef event_args_voidptr_point	onLeftButtonUp_EventType;

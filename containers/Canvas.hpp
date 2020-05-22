@@ -14,7 +14,6 @@ void Canvas_onRightButtonDown(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos);
 
 class Canvas : containerElement {
-	dynamicArray<controlElement*> elements;
 public:
 	Canvas(point _pos, point _size, symbolColor _background = black)
 	{
@@ -58,18 +57,9 @@ public:
 		return getBorder(point.x, pos.x, pos.x + size.x - 1)
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
-
-	void addControlElement(controlElement* element)
-	{
-		addChild(element);
-	}
-	void delControlElement(controlElement* element)
-	{
-		delChild(element);
-	}
 };
 
-controlElement* getElementsInPos(containerElement* container, point pos)
+controlElement* Canvas_getElementsInPos(containerElement* container, point pos)
 {
 	for (int i = 0; i < container->childs.count; i++)
 	{
@@ -84,7 +74,7 @@ controlElement* getElementsInPos(containerElement* container, point pos)
 
 void Canvas_onClick(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = getElementsInPos((containerElement*)elementPtr, clickedPos);
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (clickedElement != NULL)
 	{
@@ -96,33 +86,73 @@ void Canvas_onClick(void* elementPtr, point clickedPos)
 }
 void Canvas_onFocus(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = getElementsInPos((containerElement*)elementPtr, clickedPos);
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (clickedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
 
 		callDelegate(clickedElement->onFocusSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
+		clickedElement->onFocusEvent.call(clickedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onFocusLostSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onFocusLostEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
 void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onLeftButtonDownSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onLeftButtonDownEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
 void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onLeftButtonUpSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onLeftButtonUpEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onRightButtonDownSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onRightButtonDownEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos)
 {
-	//...
+	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (clickedElement != NULL)
+	{
+		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+
+		callDelegate(clickedElement->onRightButtonUpSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		clickedElement->onRightButtonUpEvent.call(clickedElement, clickedPosRelativeElement);
+	}
 }
