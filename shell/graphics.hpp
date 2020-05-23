@@ -221,7 +221,7 @@ void consoleClearAll()
 	{
 		for (short j = 0; j < consoleSize.X; j++)
 		{
-			if (allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar != emptyCharset.Char.AsciiChar || allConsoleInfo[i * consoleSize.X + j].Attributes != emptyCharset.Attributes)
+			if (!((allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar == emptyCharset.Char.AsciiChar || allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar == -37) && allConsoleInfo[i * consoleSize.X + j].Attributes == emptyCharset.Attributes))
 			{
 				setTo(j, i);
 				std::cout << emptyCharset.Char.AsciiChar;

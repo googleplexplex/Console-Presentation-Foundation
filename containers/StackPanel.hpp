@@ -13,12 +13,22 @@ void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos);
 void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos);
 void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos);
 
-class VerticalStackPanel : public containerElement {
+typedef enum stackPanelOrientationEnum
+{
+	Vertical = 0,
+	Horizontal
+};
+
+class StackPanel : public containerElement {
 public:
-	VerticalStackPanel(point _pos, point _size, symbolColor _background = black)
+	stackPanelOrientationEnum stackPanelOrientation;
+	identifySetterOf(stackPanelOrientation)
+	identifyGetterOf(stackPanelOrientation)
+	StackPanel(point _pos, point _size, stackPanelOrientationEnum _stackPanelOrientation = Vertical, symbolColor _background = black)
 	{
 		pos = _pos;
 		size = _size;
+		stackPanelOrientation = _stackPanelOrientation;
 		background = _background;
 
 		onFocusSystemDelegate = StackPanel_onFocus;
@@ -52,15 +62,33 @@ public:
 
 		save.apply();
 	}
-	bool entersTheArea(point point)
-	{
-		return getBorder(point.x, pos.x, pos.x + size.x - 1)
-			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
-	}
 
+	void updatePositions()
+	{
+		if (stackPanelOrientation == Vertical)
+		{
+			point posPresentChild = pos;
+			for (int i = 0; i < childs.count; i++)
+			{
+				posPresentChild.x = size.x / 2 - childs[i]->size.x / 2;
+				childs[i]->pos = posPresentChild;
+				posPresentChild.y += childs[i]->size.y;
+			}
+		}
+		else { //stackPanelOrientation == Horizontal
+			point posPresentChild = pos;
+			for (int i = 0; i < childs.count; i++)
+			{
+				posPresentChild.y = size.y / 2 - childs[i]->size.y / 2;
+				childs[i]->pos = posPresentChild;
+				posPresentChild.x += childs[i]->size.x;
+			}
+		}
+	}
 	void addControlElement(controlElement* element)
 	{
 		addChild(element);
+		updatePositions();
 	}
 	/*void addEmptyRow()
 	{
@@ -68,7 +96,7 @@ public:
 	}*/
 	void addElement(int rowIndex)
 	{
-		addChild(childs[rowIndex]);
+		addControlElement(childs[rowIndex]);
 	}
 	/*void setElement(controlElement* element, int rowIndex)
 	{
@@ -77,6 +105,7 @@ public:
 	void delControlElement(controlElement* element)
 	{
 		delChild(element);
+		updatePositions();
 	}
 	/*void delRow(int rowIndex)
 	{
@@ -84,7 +113,7 @@ public:
 	}*/
 	void delElement(int rowIndex)
 	{
-		delChild(childs[rowIndex]);
+		delControlElement(childs[rowIndex]);
 	}
 
 	int getRowsCount()

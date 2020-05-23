@@ -3,16 +3,21 @@
 #define moreThanNull(x) (x > 0)
 #define setBorder(x, y, z) if(x < y) { x = y; } if(x > z) { x = z; }
 #define getBorder(pos, min, max) ((min) <= (pos) && (pos) <= (max))
-#define GetterOf(type, element)\
-type get##element()\
-{\
-return element;\
-}
-#define SetterOf(type, element)\
-void set##element(type setted##element)\
+
+
+#define identifySetterOf(element)\
+void set##element(decltype(element) setted##element)\
 {\
 element = setted##element;\
 }
+#define identifyGetterOf(element)\
+decltype(element) get##element()\
+{\
+return element;\
+}
+#define identifySetterAndGetterOf(element)\
+identifySetterOf(element)\
+identifyGetterOf(element)
 
 char* stringCopy(char* string, int stringSize)
 {

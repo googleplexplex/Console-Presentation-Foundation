@@ -5,7 +5,7 @@ using namespace std;
 
 int main(void)
 {
-	Canvas mainCont({ 0, 0 }, { 15, 15 });
+	StackPanel mainCont({ 0, 0 }, { 15, 15 }, Horizontal);
 	setMainContainer((containerElement*)&mainCont);
 
 	TextBlock test1({ 20, 1 });

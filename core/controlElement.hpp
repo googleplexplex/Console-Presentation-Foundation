@@ -32,11 +32,15 @@ public:
 
 	void registerElement()
 	{
-		addElementZone({ pos, { pos.x + size.x, pos.y + size.y } });
+		addElementZone(getRect());
 	}
 
 	virtual void Draw(rectangle drawFrame) = 0;
-	virtual bool entersTheArea(point point) = 0;
+	bool entersTheArea(point point)
+	{
+		return getBorder(point.x, pos.x, pos.x + size.x - 1)
+			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
+	}
 
 	void setPos(int x, int y)
 	{

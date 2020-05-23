@@ -25,6 +25,7 @@ void eventDispatcherMainLoop()
 		}
 
 		consoleClearAll();
+		//consoleClearElements(consoleSizeRectangle());
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
 		drawAllElements();
 		Sleep(eventDispatcherDelay);

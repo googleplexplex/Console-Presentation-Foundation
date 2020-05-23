@@ -52,10 +52,14 @@ public:
 
 		save.apply();
 	}
-	bool entersTheArea(point point)
+
+	void addControlElement(controlElement* element)
 	{
-		return getBorder(point.x, pos.x, pos.x + size.x - 1)
-			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
+		addChild(element);
+	}
+	void delControlElement(controlElement* element)
+	{
+		delChild(element);
 	}
 };
 

@@ -6,6 +6,7 @@ class containerElement : public controlElement
 public:
 	dynamicArray<controlElement*> childs;
 
+	virtual void addControlElement(controlElement* element) = 0;
 	void addChild(controlElement* addedChild)
 	{
 		childs.add(addedChild);
@@ -16,6 +17,7 @@ public:
 		childs.add(addedChild);
 		addedChild->parent = this;
 	}
+	virtual void delControlElement(controlElement* element) = 0;
 	void delChild(controlElement* deleteddChild)
 	{
 		childs.delElement(deleteddChild);
@@ -34,10 +36,10 @@ public:
 }; 
 void _setParent(void* _child, void* _parent)
 {
-	((containerElement*)_parent)->childs.add((controlElement*)_child);
-	((controlElement*)_child)->parent = _parent;
+	containerElement* parent = (containerElement*)_parent;
+	controlElement* child = (controlElement*)_child;
+	parent->addControlElement(child);
 }
-
 
 containerElement* mainContainer;
 void setMainContainer(containerElement* newMainContainer)

@@ -37,10 +37,6 @@ public:
 
 		save.apply();
 	}
-	bool entersTheArea(point point)
-	{
-		return (pos.x == point.x && pos.y == point.y);
-	}
 
 	void setState(bool settedState)
 	{

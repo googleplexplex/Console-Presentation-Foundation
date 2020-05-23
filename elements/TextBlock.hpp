@@ -47,11 +47,6 @@ public:
 
 		save.apply();
 	}
-	bool entersTheArea(point point)
-	{
-		return getBorder(point.x, pos.x, pos.x + size.x - 1)
-			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
-	}
 
 	void setOrientationX(orientationXEnum newOrientation)
 	{
