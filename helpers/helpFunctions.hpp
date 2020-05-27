@@ -29,6 +29,22 @@ char* stringCopy(const char* string, int stringSize)
 {
 	return stringCopy((char*)string, stringSize);
 }
+bool stringCompare(char* firstString, char* secondString)
+{
+	int firstStringLen = strlen(firstString);
+	int secondStringLen = strlen(secondString);
+
+	if (firstStringLen != secondStringLen)
+		return false;
+
+	for (int i = 0; i < firstStringLen; i++)
+	{
+		if (firstString[i] != secondString[i])
+			return false;
+	}
+
+	return true;
+}
 
 typedef enum orientationXEnum
 {

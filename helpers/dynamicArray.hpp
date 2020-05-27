@@ -73,6 +73,7 @@ public:
 	}
 	inline void clean()
 	{
+		delete[] arr;
 		arr = NULL;
 		count = 0;
 	}
@@ -81,7 +82,15 @@ public:
 		if (count != 0)
 			count--;
 	}
-	void delElement(A element)
+	void del(unsigned int index)
+	{
+		for (int i = index + 1; i < count; i++)
+		{
+			arr[i - 1] = arr[i];
+		}
+		count--;
+	}
+	void del(A element)
 	{
 		for (int i = 0; i < count; i++)
 		{
