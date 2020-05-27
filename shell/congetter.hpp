@@ -268,7 +268,9 @@ CHAR_INFO getc_fromConsole(short x, short y)
 
 	ReadConsoleOutput(hStdout, charBuffer, coordBufSize, { 0, 0 }, &srctReadRect);
 
-	return charBuffer[0];
+	CHAR_INFO result = charBuffer[0];
+	delete[] charBuffer;
+	return result;
 }
 char getc_fromConsoleA(short x, short y)
 {

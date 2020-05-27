@@ -20,12 +20,12 @@ public:
 	virtual void delControlElement(controlElement* element) = 0;
 	void delChild(controlElement* deleteddChild)
 	{
-		childs.delElement(deleteddChild);
+		childs.del(deleteddChild);
 		deleteddChild->parent = this;
 	}
 	void delChild(containerElement* deleteddChild)
 	{
-		childs.delElement(deleteddChild);
+		childs.del(deleteddChild);
 		deleteddChild->parent = this;
 	}
 

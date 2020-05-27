@@ -5,7 +5,6 @@
 #include "helpers\textModule.hpp"
 #include "helpers\helpFunctions.hpp"
 
-
 class Button : public controlElement, public textModule {
 public:
 	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)
@@ -16,6 +15,8 @@ public:
 		text = stringCopy(_text, textLength);
 		background = _foneColor;
 		textColor = _textColor;
+
+		onFocusSystemDelegate = Default_System_OnFocus;
 
 		onClickEvent += _onClick;
 
@@ -31,10 +32,7 @@ public:
 		for (int i = 0; i < size.y; i++)
 		{
 			setTo(pos.x, pos.y + i);
-			for (int j = 0; j < size.x; j++)
-			{
-				consolePrintCharset(drawFrame, filledCharacter_5_5);
-			}
+			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
 		}
 
 		setSymbolColor(textColor, background); //Text in button output

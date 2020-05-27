@@ -112,4 +112,11 @@ public:
 	{
 		return arr[elementId];
 	}
+	dynamicArray<A> getCopyOf(dynamicArray<A>& copyedArray)
+	{
+		arr = copy(copyedArray.arr, copyedArray.count * sizeof(A));
+		count = copyedArray.count;
+
+		return result;
+	}
 };

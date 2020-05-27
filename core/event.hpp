@@ -57,7 +57,7 @@ void operator+=(event_args_voidptr& left, void(*right)(void*))
 }
 void operator-=(event_args_voidptr& left, void(*right)(void*))
 {
-	left.delegates.delElement(right);
+	left.delegates.del(right);
 }
 
 class event_args_voidptr_point
@@ -83,5 +83,5 @@ void operator+=(event_args_voidptr_point& left, void(*right)(void*, point))
 }
 void operator-=(event_args_voidptr_point& left, void(*right)(void*, point))
 {
-	left.delegates.delElement(right);
+	left.delegates.del(right);
 }

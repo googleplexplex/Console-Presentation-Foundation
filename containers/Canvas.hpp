@@ -13,7 +13,7 @@ void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos);
 
-class Canvas : containerElement {
+class Canvas : public containerElement {
 public:
 	Canvas(point _pos, point _size, symbolColor _background = black)
 	{
@@ -90,73 +90,75 @@ void Canvas_onClick(void* elementPtr, point clickedPos)
 }
 void Canvas_onFocus(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Default_System_OnFocus(elementPtr, clickedPos);
 
-	if (clickedElement != NULL)
+	controlElement* elementInFocus = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+
+	if (elementInFocus != NULL)
 	{
-		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+		point clickedPosRelativeElement = clickedPos - elementInFocus->pos;
 
-		callDelegate(clickedElement->onFocusSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onFocusEvent.call(clickedElement, clickedPosRelativeElement);
+		callDelegate(elementInFocus->onFocusSystemDelegate, (void*)elementInFocus, clickedPosRelativeElement);
+		elementInFocus->onFocusEvent.call(elementInFocus, clickedPosRelativeElement);
 	}
 }
 void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
-
-	if (clickedElement != NULL)
+	Canvas* canvasPtr = (Canvas*)elementPtr;
+	for (int i = 0; i < canvasPtr->childs.count; i++)
 	{
-		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+		controlElement* presentChild = canvasPtr->childs[i];
+		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-		callDelegate(clickedElement->onFocusLostSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onFocusLostEvent.call(clickedElement, clickedPosRelativeElement);
+		callDelegate(presentChild->onFocusLostSystemDelegate, (void*)presentChild, focusLostPosRelativeElement);
+		presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
 	}
 }
 void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	controlElement* onLeftButtonDownedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
-	if (clickedElement != NULL)
+	if (onLeftButtonDownedElement != NULL)
 	{
-		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+		point clickedPosRelativeElement = clickedPos - onLeftButtonDownedElement->pos;
 
-		callDelegate(clickedElement->onLeftButtonDownSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onLeftButtonDownEvent.call(clickedElement, clickedPosRelativeElement);
+		callDelegate(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, (void*)onLeftButtonDownedElement, clickedPosRelativeElement);
+		onLeftButtonDownedElement->onLeftButtonDownEvent.call(onLeftButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	controlElement* onLeftButtonUppedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
-	if (clickedElement != NULL)
+	if (onLeftButtonUppedElement != NULL)
 	{
-		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+		point clickedPosRelativeElement = clickedPos - onLeftButtonUppedElement->pos;
 
-		callDelegate(clickedElement->onLeftButtonUpSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onLeftButtonUpEvent.call(clickedElement, clickedPosRelativeElement);
+		callDelegate(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, (void*)onLeftButtonUppedElement, clickedPosRelativeElement);
+		onLeftButtonUppedElement->onLeftButtonUpEvent.call(onLeftButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	controlElement* onRightButtonDownedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
-	if (clickedElement != NULL)
+	if (onRightButtonDownedElement != NULL)
 	{
-		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+		point clickedPosRelativeElement = clickedPos - onRightButtonDownedElement->pos;
 
-		callDelegate(clickedElement->onRightButtonDownSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onRightButtonDownEvent.call(clickedElement, clickedPosRelativeElement);
+		callDelegate(onRightButtonDownedElement->onRightButtonDownSystemDelegate, (void*)onRightButtonDownedElement, clickedPosRelativeElement);
+		onRightButtonDownedElement->onRightButtonDownEvent.call(onRightButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos)
 {
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	controlElement* onRightButtonUppedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
-	if (clickedElement != NULL)
+	if (onRightButtonUppedElement != NULL)
 	{
-		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
+		point clickedPosRelativeElement = clickedPos - onRightButtonUppedElement->pos;
 
-		callDelegate(clickedElement->onRightButtonUpSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
-		clickedElement->onRightButtonUpEvent.call(clickedElement, clickedPosRelativeElement);
+		callDelegate(onRightButtonUppedElement->onRightButtonUpSystemDelegate, (void*)onRightButtonUppedElement, clickedPosRelativeElement);
+		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
 	}
 }

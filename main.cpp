@@ -2,21 +2,19 @@
 #include "include.hpp"
 using namespace std;
 
-
 int main(void)
 {
 	StackPanel mainCont({ 0, 0 }, { 15, 15 }, Horizontal);
-	setMainContainer((containerElement*)&mainCont);
+	setMainContainer(&mainCont);
 
-	TextBlock test1({ 20, 1 });
-	test1.setText("aa1");
-	test1.setParent((containerElement*)&mainCont);
+	StackPanel firstVerticalCont({ 0, 0 }, { 15, 15 }, Vertical, red);
+	firstVerticalCont.setParent(&mainCont);
 
-	ListBox test2({ 1, 1 }, 15, 5, white, red);
-	test2.addItem("Item1");
-	test2.addItem("Item2");
-	test2.addItem("Item3");
-	test2.setParent((containerElement*)&mainCont);
+	StackPanel secondVerticalCont({ 0, 0 }, { 15, 15 }, Vertical, blue);
+	secondVerticalCont.setParent(&mainCont);
+
+	Button testButton1({ 0, 0 }, { 5, 15 }, (char*)"TestButton");
+	testButton1.setParent(&firstVerticalCont);
 
 	eventDispatcherMainLoop();
 

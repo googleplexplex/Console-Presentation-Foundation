@@ -127,6 +127,8 @@ void consolePrintStr(rectangle drawFrame, char* printedStr, int size) //TOFIX
 			consoleCursorPosition.x++;
 		}
 	}
+
+	delete[] strPrintedHere;
 }
 void consolePrintLine(rectangle drawFrame, int size, char lineCharset = filledCharacter_5_5)
 {
@@ -144,6 +146,8 @@ void consolePrintLine(rectangle drawFrame, int size, char lineCharset = filledCh
 			consoleCursorPosition.x++;
 		}
 	}
+
+	delete[] strPrintedHere;
 }
 
 void inline setSymbolFullColor(symbolColor color)
@@ -230,6 +234,7 @@ void consoleClearAll()
 	}
 
 	save.apply();
+	delete[] allConsoleInfo;
 }
 
 void showCursor(rectangle drawFrame, point cursorPos)

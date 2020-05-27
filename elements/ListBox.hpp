@@ -55,7 +55,8 @@ public:
 		selectedItemFoneColor = _selectedItemFoneColor;
 		background = _background;
 
-		onClickSystemDelegate = &listBox_onClick;
+		onClickSystemDelegate = listBox_onClick;
+		onFocusSystemDelegate = Default_System_OnFocus;
 
 		registerElement();
 	}
