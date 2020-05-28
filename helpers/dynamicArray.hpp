@@ -117,6 +117,6 @@ public:
 		arr = copy(copyedArray.arr, copyedArray.count * sizeof(A));
 		count = copyedArray.count;
 
-		return result;
+		return *this;
 	}
 };

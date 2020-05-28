@@ -7,14 +7,11 @@ int main(void)
 	StackPanel mainCont({ 0, 0 }, { 15, 15 }, Horizontal);
 	setMainContainer(&mainCont);
 
-	StackPanel firstVerticalCont({ 0, 0 }, { 15, 15 }, Vertical, red);
-	firstVerticalCont.setParent(&mainCont);
+	TextBlock testTextBock({ 0, 0 }, (char*)"TB1");
+	testTextBock.setParent(&mainCont);
 
-	StackPanel secondVerticalCont({ 0, 0 }, { 15, 15 }, Vertical, blue);
-	secondVerticalCont.setParent(&mainCont);
-
-	Button testButton1({ 0, 0 }, { 5, 15 }, (char*)"TestButton");
-	testButton1.setParent(&firstVerticalCont);
+	Button testButton({ 0, 0 }, { 5, 15 }, (char*)"TestB", NULL, blue, red);
+	testButton.setParent(&mainCont);
 
 	eventDispatcherMainLoop();
 

@@ -36,7 +36,7 @@ public:
 		}
 
 		setSymbolColor(textColor, background); //Text in button output
-		point textPos = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
+		point textPos = getTextPos();
 		if (getTo(drawFrame, textPos))
 		{
 			setTo(textPos);
@@ -44,5 +44,12 @@ public:
 		}
 
 		save.apply();
+	}
+
+	point getTextPos()
+	{
+		point result = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
+		//to validate
+		return result;
 	}
 };

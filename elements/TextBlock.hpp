@@ -36,10 +36,7 @@ public:
 		for (int i = 0; i < size.y; i++)
 		{
 			setTo(pos.x, pos.y + i);
-			for (int j = 0; j < size.x; j++)
-			{
-				consolePrintCharset(drawFrame, filledCharacter_5_5);
-			}
+			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
 		}
 
 		point textPos = getTextPos();
