@@ -14,25 +14,22 @@ public:
 		delete[] text;
 	}
 
-	void setText(char* settedText)
-	{
-		textLength = strlen(settedText);
-		text = stringCopy(settedText, textLength);
-	}
 	void setText(char* settedText, int settedTextLength)
 	{
 		textLength = settedTextLength;
 		text = stringCopy(settedText, textLength);
 	}
-	void setText(const char* settedText)
+	void setText(char* settedText)
 	{
-		textLength = strlen(settedText);
-		text = stringCopy(settedText, textLength);
+		setText(settedText, strlen(settedText));
 	}
 	void setText(const char* settedText, int settedTextLength)
 	{
-		textLength = settedTextLength;
-		text = stringCopy(settedText, textLength);
+		setText((char*)settedText, settedTextLength);
+	}
+	void setText(const char* settedText)
+	{
+		setText((char*)settedText, strlen(settedText));
 	}
 	void setTextColor(symbolColor settedTextColor)
 	{

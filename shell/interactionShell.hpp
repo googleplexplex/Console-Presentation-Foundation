@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include <conio.h>
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 
@@ -61,4 +62,13 @@ void setConsoleSize(int x, int y)
 void setTittle(char* newTittle)
 {
 	SetConsoleTitleA(newTittle);
+}
+
+bool keyboardHit()
+{
+	return _kbhit();
+}
+char getInputedChar()
+{
+	return _getch();
 }

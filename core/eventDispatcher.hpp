@@ -16,32 +16,45 @@ void eventDispatcherMainLoop()
 {
 	while (true)
 	{
+		//Get I/O
 		point mouseConsolePos = toPoint(getMouseConsolePos());
+		char keyboardPressedKey = 0;
+		bool keyboardPress = keyboardHit();
+		if (keyboardPress)
+			keyboardPressedKey = getInputedChar();
 
+		//Focus events
 		dynamicArray<controlElement*> prevElementsInFocus;
-		prevElementsInFocus.getCopyOf(elementsInFocus); //Operator
-
+		prevElementsInFocus = elementsInFocus;
 		elementsInFocus.clean();
-		callDelegate(mainContainer->onFocusSystemDelegate, mainContainer, mouseConsolePos);
+		callDelegate<void*, point>(mainContainer->onFocusSystemDelegate, mainContainer, mouseConsolePos);
 		for (int i = 0; i < prevElementsInFocus.count; i++)
 		{
 			if (elementsInFocus[i] != prevElementsInFocus[i] && prevElementsInFocus[i] != NULL)
 			{
-				callDelegate(prevElementsInFocus[i]->onFocusLostSystemDelegate, prevElementsInFocus[i], mouseConsolePos);
+				callDelegate<void*, point>(prevElementsInFocus[i]->onFocusLostSystemDelegate, prevElementsInFocus[i], mouseConsolePos);
 				break;
 			}
 		}
 
+		//Keyboard events
+		if (keyboardPress)
+		{
+			callDelegate<void*, char>(mainContainer->onKeyDownSystemDelegate, mainContainer, keyboardPressedKey);
+		}
+
+		//Mouse events
 		if (mouseLeftButtonState)
 		{
-			callDelegate(mainContainer->onClickSystemDelegate, mainContainer, mouseConsolePos);
-			callDelegate(mainContainer->onLeftButtonDownSystemDelegate, mainContainer, mouseConsolePos);
+			callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, mouseConsolePos);
+			callDelegate<void*, point>(mainContainer->onLeftButtonDownSystemDelegate, mainContainer, mouseConsolePos);
 		}
 		if (mouseRightButtonState)
 		{
-			callDelegate(mainContainer->onRightButtonDownSystemDelegate, mainContainer, mouseConsolePos);
+			callDelegate<void*, point>(mainContainer->onRightButtonDownSystemDelegate, mainContainer, mouseConsolePos);
 		}
 
+		//Pain events
 		consoleClearAll();
 		//consoleClearElements(consoleSizeRectangle());
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));

@@ -47,6 +47,27 @@ public:
 		save.apply();
 	}
 
+	void setText(char* settedText, int settedTextLength)
+	{
+		textLength = settedTextLength;
+		text = stringCopy(settedText, textLength);
+
+		if (size.x < settedTextLength)
+			size.x = settedTextLength;
+	}
+	void setText(char* settedText)
+	{
+		setText(settedText, strlen(settedText));
+	}
+	void setText(const char* settedText)
+	{
+		setText((char*)settedText, strlen(settedText));
+	}
+	void setText(const char* settedText, int settedTextLength)
+	{
+		setText((char*)settedText, settedTextLength);
+	}
+
 	void setOrientationX(orientationXEnum newOrientation)
 	{
 		orientationX = newOrientation;

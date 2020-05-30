@@ -8,6 +8,7 @@ int main(void)
 	setMainContainer(&mainCont);
 
 	TextBlock testTextBock({ 0, 0 }, (char*)"TB1");
+	testTextBock.setText("TxtBlc1");
 	testTextBock.setParent(&mainCont);
 
 	Button testButton({ 0, 0 }, { 5, 15 }, (char*)"TestB", NULL, blue, red);

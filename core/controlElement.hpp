@@ -21,6 +21,8 @@ public:
 	onLeftButtonUp_DelegateType onLeftButtonUpSystemDelegate = NULL;
 	onRightButtonDown_DelegateType onRightButtonDownSystemDelegate = NULL;
 	onRightButtonUp_DelegateType onRightButtonUpSystemDelegate = NULL;
+	onKeyDown_DelegateType onKeyDownSystemDelegate = NULL;
+	onKeyUp_DelegateType onKeyUpSystemDelegate = NULL;
 
 	onFocus_EventType onFocusEvent;
 	onFocusLost_EventType onFocusLostEvent;
@@ -29,6 +31,8 @@ public:
 	onLeftButtonUp_EventType onLeftButtonUpEvent;
 	onRightButtonDown_EventType onRightButtonDownEvent;
 	onRightButtonUp_EventType onRightButtonUpEvent;
+	onKeyDown_EventType onKeyDownEvent;
+	onKeyUp_EventType onKeyUpEvent;
 
 	void registerElement()
 	{
