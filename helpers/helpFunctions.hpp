@@ -71,6 +71,14 @@ struct point
 	{
 		return { x - right.x, y - right.y };
 	}
+	bool operator==(point& right)
+	{
+		return ((x == right.x) && (y == right.y));
+	}
+	bool operator!=(point& right)
+	{
+		return !((*this)==right);
+	}
 };
 struct rectangle
 {

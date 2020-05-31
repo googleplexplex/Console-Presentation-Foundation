@@ -4,10 +4,14 @@
 #include "helpers\helpFunctions.hpp"
 #include "shell\graphics.hpp"
 
-#define setConsoleTitle(x) SetConsoleTitle(x)
-#define setWinTo(x, y) SetWindowPos(consoleWindow, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER)
-#define mouseLeftButtonState (GetAsyncKeyState(VK_LBUTTON) == 0 ? false : true )
-#define mouseRightButtonState (GetAsyncKeyState(VK_RBUTTON) == 0 ? false : true )
+bool getMouseLeftButtonState()
+{
+	return (GetAsyncKeyState(VK_LBUTTON) != 0);
+}
+bool getMouseRightButtonState()
+{
+	return (GetAsyncKeyState(VK_RBUTTON) != 0);
+}
 
 POINT getMouseGlobalPos()
 {
@@ -63,6 +67,10 @@ void setTittle(char* newTittle)
 {
 	SetConsoleTitleA(newTittle);
 }
+void setWinTo(short x, short  y)
+{
+	SetWindowPos(consoleHWND, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+}
 
 bool keyboardHit()
 {
@@ -71,4 +79,77 @@ bool keyboardHit()
 char getInputedChar()
 {
 	return _getch();
+}
+
+struct UserActivityStruct
+{
+	bool mouseLeftButtonStateChanged;
+	bool mouseRightButtonStateChanged;
+	bool mousePosChanged;
+	bool keyboardStateChanged;
+};
+
+struct UserInputStruct
+{
+	point mouseConsolePos; //Mouse
+	bool mouseLeftPressed;
+	bool mouseRightPressed;
+	char keyboardPressedKey; //Keyboard
+	bool keyboardPress;
+
+	UserInputStruct()
+	{
+		setNull();
+	}
+
+	void setNull()
+	{
+		//Mouse
+		mouseConsolePos = { 0, 0 };
+		mouseLeftPressed = 0;
+		mouseRightPressed = 0;
+		//Keyboard
+		keyboardPress = 0;
+		keyboardPressedKey = 0;
+	}
+	void getIO()
+	{
+		//Mouse
+		mouseConsolePos = toPoint(getMouseConsolePos());
+		mouseLeftPressed = getMouseLeftButtonState();
+		mouseRightPressed = getMouseRightButtonState();
+		//Keyboard
+		keyboardPress = keyboardHit();
+		if (keyboardPress)
+			keyboardPressedKey = getInputedChar();
+		else
+			keyboardPressedKey = 0;
+	}
+};
+
+UserActivityStruct getUserActivity(UserInputStruct& prevUserIOActions, UserInputStruct& presentUserIOActions)
+{
+	UserActivityStruct result;
+
+	if (prevUserIOActions.mouseLeftPressed != presentUserIOActions.mouseLeftPressed)
+		result.mouseLeftButtonStateChanged = true;
+	else
+		result.mouseLeftButtonStateChanged = false;
+
+	if (prevUserIOActions.mouseRightPressed != presentUserIOActions.mouseRightPressed)
+		result.mouseRightButtonStateChanged = true;
+	else
+		result.mouseRightButtonStateChanged = false;
+
+	if (prevUserIOActions.mouseConsolePos != presentUserIOActions.mouseConsolePos)
+		result.mousePosChanged = true;
+	else
+		result.mousePosChanged = false;
+
+	if (prevUserIOActions.keyboardPress != presentUserIOActions.keyboardPress)
+		result.keyboardStateChanged = true;
+	else
+		result.keyboardStateChanged = false;
+
+	return result;
 }
