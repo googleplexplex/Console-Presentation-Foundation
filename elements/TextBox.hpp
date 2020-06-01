@@ -35,19 +35,23 @@ public:
 			setTo(pos.x, pos.y + i);
 			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
 		}
-
+		
 		point textPos = pos;
+		setTo(pos);
+		setSymbolColor(textColor, background);
 		for (int i = 0; i < textLength; i++)
 		{
-			if (textPos.x > drawFrame.secondPos.x || text[i] == enter)
+			if (textPos.x >= pos.x + size.x || text[i] == enter)
 			{
+				if (textPos.y >= pos.y + size.y)
+					break;
 				textPos.x = pos.x;
 				textPos.y++;
+				setTo(textPos);
 			}
-			else {
-				consolePrintCharset(drawFrame, textPos, text[i]);
-				textPos.x++;
-			}
+
+			consolePrintCharset(drawFrame, textPos, text[i]);
+			textPos.x++;
 		}
 
 		save.apply();

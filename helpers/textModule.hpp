@@ -21,7 +21,7 @@ public:
 	void setText(char* settedText, int settedTextLength)
 	{
 		textLength = settedTextLength;
-		delete[] text;
+		delete text;
 		text = stringCopy(settedText, textLength);
 	}
 	void setText(char* settedText)
@@ -48,8 +48,7 @@ public:
 		text[textLength] = addedCharset;
 		text[textLength + 1] = NULL;
 		textLength++;
-
-		delete[] oldText;
+		delete oldText;
 	}
 	void addToText(char* addedString, int addedStringLength)
 	{
@@ -59,18 +58,18 @@ public:
 		memcpy(text + textLength, addedString, addedStringLength);
 		text[textLength + addedStringLength] = NULL;
 		textLength += addedStringLength;
-
-		delete[] oldText;
+		delete oldText;
 	}
 	void popText()
 	{
+		if (textLength <= 0)
+			return;
 		char* oldText = text;
 		text = new char[textLength]; //Text Length - 1 + NULL-Charset
 		memcpy(text, oldText, textLength - 1);
 		text[textLength - 1] = NULL;
 		textLength--;
-
-		delete[] oldText;
+		delete oldText;
 	}
 
 	char* getText()

@@ -12,6 +12,8 @@ void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos);
 void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos);
 void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos);
 void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos);
+void StackPanel_onKeyDown(void* elementPtr, char key);
+void StackPanel_onKeyUp(void* elementPtr, char key);
 
 typedef enum stackPanelOrientationEnum
 {
@@ -38,6 +40,8 @@ public:
 		onLeftButtonUpSystemDelegate = StackPanel_onLeftButtonUp;
 		onRightButtonDownSystemDelegate = StackPanel_onRightButtonDown;
 		onRightButtonUpSystemDelegate = StackPanel_onRightButtonUp;
+		onKeyDownSystemDelegate = StackPanel_onKeyDown;
+		onKeyUpSystemDelegate = StackPanel_onKeyUp;
 
 		registerElement();
 	}
@@ -223,5 +227,27 @@ void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos)
 
 		callDelegate(onRightButtonUppedElement->onRightButtonUpSystemDelegate, (void*)onRightButtonUppedElement, clickedPosRelativeElement);
 		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
+	}
+}
+
+void StackPanel_onKeyDown(void* elementPtr, char key)
+{
+	StackPanel* container = (StackPanel*)elementPtr;
+
+	for (int i = 0; i < container->childs.count; i++)
+	{
+		controlElement* presentChild = container->childs[i];
+		callDelegate(presentChild->onKeyDownSystemDelegate, (void*)presentChild, key);
+	}
+}
+
+void StackPanel_onKeyUp(void* elementPtr, char key)
+{
+	StackPanel* container = (StackPanel*)elementPtr;
+
+	for (int i = 0; i < container->childs.count; i++)
+	{
+		controlElement* presentChild = container->childs[i];
+		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
 	}
 }

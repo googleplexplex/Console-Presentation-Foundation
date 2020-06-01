@@ -12,6 +12,8 @@ void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos);
 void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos);
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos);
+void Canvas_onKeyDown(void* elementPtr, char key);
+void Canvas_onKeyUp(void* elementPtr, char key);
 
 class Canvas : public containerElement {
 public:
@@ -28,6 +30,8 @@ public:
 		onLeftButtonUpSystemDelegate = Canvas_onLeftButtonUp;
 		onRightButtonDownSystemDelegate = Canvas_onRightButtonDown;
 		onRightButtonUpSystemDelegate = Canvas_onRightButtonUp;
+		onKeyDownSystemDelegate = Canvas_onKeyDown;
+		onKeyUpSystemDelegate = Canvas_onKeyUp;
 
 		registerElement();
 	}
@@ -160,5 +164,27 @@ void Canvas_onRightButtonUp(void* elementPtr, point clickedPos)
 
 		callDelegate(onRightButtonUppedElement->onRightButtonUpSystemDelegate, (void*)onRightButtonUppedElement, clickedPosRelativeElement);
 		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
+	}
+}
+
+void Canvas_onKeyDown(void* elementPtr, char key)
+{
+	Canvas* container = (Canvas*)elementPtr;
+	
+	for (int i = 0; i < container->childs.count; i++)
+	{
+		controlElement* presentChild = container->childs[i];
+		callDelegate(presentChild->onKeyDownSystemDelegate, (void*)presentChild, key);
+	}
+}
+
+void Canvas_onKeyUp(void* elementPtr, char key)
+{
+	Canvas* container = (Canvas*)elementPtr;
+
+	for (int i = 0; i < container->childs.count; i++)
+	{
+		controlElement* presentChild = container->childs[i];
+		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
 	}
 }

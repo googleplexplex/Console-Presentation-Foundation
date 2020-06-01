@@ -12,7 +12,7 @@ int main(void)
 	testTextBock.setParent(&mainCont);
 
 	TextBox testTextBox({ 0,0 }, { 5, 5 }, (char*)"TextBox", blue, red);
-	testTextBock.setParent(&mainCont);
+	testTextBox.setParent(&mainCont);
 
 	eventDispatcherMainLoop();
 
