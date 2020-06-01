@@ -108,6 +108,18 @@ void consolePrintCharset(rectangle drawFrame, char printedCharset) //TOFIX
 		}
 	}
 }
+void consolePrintCharset(rectangle drawFrame, point pos, char printedCharset) //TOFIX
+{
+	CHAR_INFO symbolPrintedHere = getc_fromConsole(pos.x, pos.y);
+
+	if (getTo(drawFrame, pos.x, pos.y))
+	{
+		if (printedCharset != symbolPrintedHere.Char.AsciiChar || presentTextAttribute != symbolPrintedHere.Attributes)
+		{
+			std::cout << printedCharset;
+		}
+	}
+}
 void consolePrintStr(rectangle drawFrame, char* printedStr, int size) //TOFIX
 {
 	point consoleCursorPosition = getConsoleCursorPosition();

@@ -2,6 +2,10 @@
 #include "shell\graphics.hpp"
 #include "helpers\helpFunctions.hpp"
 
+constexpr char backspace = 8;
+constexpr char tab = 9;
+constexpr char enter = 10;
+
 class textModule
 {
 protected:
@@ -17,6 +21,7 @@ public:
 	void setText(char* settedText, int settedTextLength)
 	{
 		textLength = settedTextLength;
+		delete[] text;
 		text = stringCopy(settedText, textLength);
 	}
 	void setText(char* settedText)
@@ -34,6 +39,38 @@ public:
 	void setTextColor(symbolColor settedTextColor)
 	{
 		textColor = settedTextColor;
+	}
+	void addToText(char addedCharset)
+	{
+		char* oldText = text;
+		text = new char[textLength + 1 + 1]; //Text Length + New charset + NULL-Charset
+		memcpy(text, oldText, textLength);
+		text[textLength] = addedCharset;
+		text[textLength + 1] = NULL;
+		textLength++;
+
+		delete[] oldText;
+	}
+	void addToText(char* addedString, int addedStringLength)
+	{
+		char* oldText = text;
+		text = new char[textLength + addedStringLength + 1]; //Text Length + New Text Length + NULL-Charset
+		memcpy(text, oldText, textLength);
+		memcpy(text + textLength, addedString, addedStringLength);
+		text[textLength + addedStringLength] = NULL;
+		textLength += addedStringLength;
+
+		delete[] oldText;
+	}
+	void popText()
+	{
+		char* oldText = text;
+		text = new char[textLength]; //Text Length - 1 + NULL-Charset
+		memcpy(text, oldText, textLength - 1);
+		text[textLength - 1] = NULL;
+		textLength--;
+
+		delete[] oldText;
 	}
 
 	char* getText()

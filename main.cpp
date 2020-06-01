@@ -11,8 +11,8 @@ int main(void)
 	testTextBock.setText("TxtBlc1");
 	testTextBock.setParent(&mainCont);
 
-	Button testButton({ 0, 0 }, { 5, 15 }, (char*)"TestB", NULL, blue, red);
-	testButton.setParent(&mainCont);
+	TextBox testTextBox({ 0,0 }, { 5, 5 }, (char*)"TextBox", blue, red);
+	testTextBock.setParent(&mainCont);
 
 	eventDispatcherMainLoop();
 
