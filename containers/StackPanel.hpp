@@ -51,17 +51,21 @@ public:
 		consoleCursorInfo save;
 		save.getAndReset();
 
-		setSymbolFullColor(background);
-		for (int i = 0; i < size.y; i++)
+		if (Visible)
 		{
-			setTo(pos.x, pos.y + i);
-			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
+			setSymbolFullColor(background);
+			for (int i = 0; i < size.y; i++)
+			{
+				setTo(pos.x, pos.y + i);
+				consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
+			}
+			setStandartSymbolsColor();
 		}
-		setStandartSymbolsColor();
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			childs[i]->Draw(getRect());
+			if(childs[i]->Visible)
+				childs[i]->Draw(getRect());
 		}
 
 		save.apply();
@@ -145,6 +149,9 @@ controlElement* StackPanel_getElementsInPos(containerElement* container, point p
 
 void StackPanel_onClick(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* clickedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (clickedElement != NULL)
@@ -157,6 +164,9 @@ void StackPanel_onClick(void* elementPtr, point clickedPos)
 }
 void StackPanel_onFocus(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	Default_System_OnFocus(elementPtr, clickedPos);
 
 	controlElement* elementInFocus = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
@@ -171,6 +181,9 @@ void StackPanel_onFocus(void* elementPtr, point clickedPos)
 }
 void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	StackPanel* stackPanelPtr = (StackPanel*)elementPtr;
 	for (int i = 0; i < stackPanelPtr->childs.count; i++)
 	{
@@ -183,6 +196,9 @@ void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
 }
 void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onLeftButtonDownedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onLeftButtonDownedElement != NULL)
@@ -195,6 +211,9 @@ void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos)
 }
 void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onLeftButtonUppedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onLeftButtonUppedElement != NULL)
@@ -207,6 +226,9 @@ void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos)
 }
 void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onRightButtonDownedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onRightButtonDownedElement != NULL)
@@ -219,6 +241,9 @@ void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos)
 }
 void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onRightButtonUppedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onRightButtonUppedElement != NULL)
@@ -234,6 +259,9 @@ void StackPanel_onKeyDown(void* elementPtr, char key)
 {
 	StackPanel* container = (StackPanel*)elementPtr;
 
+	if (container->Handled == false)
+		return;
+
 	for (int i = 0; i < container->childs.count; i++)
 	{
 		controlElement* presentChild = container->childs[i];
@@ -244,6 +272,9 @@ void StackPanel_onKeyDown(void* elementPtr, char key)
 void StackPanel_onKeyUp(void* elementPtr, char key)
 {
 	StackPanel* container = (StackPanel*)elementPtr;
+
+	if (container->Handled == false)
+		return;
 
 	for (int i = 0; i < container->childs.count; i++)
 	{

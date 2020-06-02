@@ -42,9 +42,9 @@ void _setParent(void* _child, void* _parent)
 }
 
 containerElement* mainContainer;
-void setMainContainer(containerElement* newMainContainer)
+void setMainContainer(containerElement& newMainContainer)
 {
-	mainContainer = newMainContainer;
+	mainContainer = &newMainContainer;
 	mainContainer->pos = { 0, 0 };
 	mainContainer->size = toPoint(getConsoleSize());
 	mainContainer->parent = NULL;

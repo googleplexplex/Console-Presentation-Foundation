@@ -41,17 +41,21 @@ public:
 		consoleCursorInfo save;
 		save.getAndReset();
 
-		setSymbolFullColor(background);
-		for (int i = 0; i < size.y; i++)
+		if (Visible)
 		{
-			setTo(pos.x, pos.y + i);
-			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
+			setSymbolFullColor(background);
+			for (int i = 0; i < size.y; i++)
+			{
+				setTo(pos.x, pos.y + i);
+				consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
+			}
+			setStandartSymbolsColor();
 		}
-		setStandartSymbolsColor();
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			childs[i]->Draw(getRect());
+			if(childs[i]->Visible)
+				childs[i]->Draw(getRect());
 		}
 
 		save.apply();
@@ -82,6 +86,9 @@ controlElement* Canvas_getElementsInPos(containerElement* container, point pos)
 
 void Canvas_onClick(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (clickedElement != NULL)
@@ -94,6 +101,9 @@ void Canvas_onClick(void* elementPtr, point clickedPos)
 }
 void Canvas_onFocus(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	Default_System_OnFocus(elementPtr, clickedPos);
 
 	controlElement* elementInFocus = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
@@ -108,6 +118,9 @@ void Canvas_onFocus(void* elementPtr, point clickedPos)
 }
 void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	Canvas* canvasPtr = (Canvas*)elementPtr;
 	for (int i = 0; i < canvasPtr->childs.count; i++)
 	{
@@ -120,6 +133,9 @@ void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 }
 void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onLeftButtonDownedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onLeftButtonDownedElement != NULL)
@@ -132,6 +148,9 @@ void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos)
 }
 void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onLeftButtonUppedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onLeftButtonUppedElement != NULL)
@@ -144,6 +163,9 @@ void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos)
 }
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onRightButtonDownedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onRightButtonDownedElement != NULL)
@@ -156,6 +178,9 @@ void Canvas_onRightButtonDown(void* elementPtr, point clickedPos)
 }
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos)
 {
+	if (((controlElement*)elementPtr)->Handled == false)
+		return;
+
 	controlElement* onRightButtonUppedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (onRightButtonUppedElement != NULL)
@@ -170,6 +195,9 @@ void Canvas_onRightButtonUp(void* elementPtr, point clickedPos)
 void Canvas_onKeyDown(void* elementPtr, char key)
 {
 	Canvas* container = (Canvas*)elementPtr;
+
+	if (container->Handled == false)
+		return;
 	
 	for (int i = 0; i < container->childs.count; i++)
 	{
@@ -181,6 +209,9 @@ void Canvas_onKeyDown(void* elementPtr, char key)
 void Canvas_onKeyUp(void* elementPtr, char key)
 {
 	Canvas* container = (Canvas*)elementPtr;
+
+	if (container->Handled == false)
+		return;
 
 	for (int i = 0; i < container->childs.count; i++)
 	{

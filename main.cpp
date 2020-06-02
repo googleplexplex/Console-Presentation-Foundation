@@ -5,7 +5,7 @@ using namespace std;
 int main(void)
 {
 	StackPanel mainCont({ 0, 0 }, { 15, 15 }, Horizontal);
-	setMainContainer(&mainCont);
+	setMainContainer(mainCont);
 
 	TextBlock testTextBock({ 0, 0 }, (char*)"TB1");
 	testTextBock.setText("TxtBlc1");

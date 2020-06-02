@@ -8,11 +8,12 @@ void _setParent(void* _child, void* _parent);
 class controlElement
 {
 public:
-	int zIndex = 0;
 	point pos;
 	point size;
-	symbolColor background;
+	bool Visible = true;
+	bool Handled = true;
 	void* parent;
+	symbolColor background;
 
 	onFocus_DelegateType onFocusSystemDelegate = NULL;
 	onFocusLost_DelegateType onFocusLostSystemDelegate = NULL;
