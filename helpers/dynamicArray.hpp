@@ -34,6 +34,8 @@ public:
 	dynamicArray() { arr = NULL; count = 0; }
 	dynamicArray(A* _arr, int _count) { arr = copy(_arr, _count); count = _count; }
 	dynamicArray(const A* _arr, int _count) { arr = copy(_arr, _count); count = _count; }
+	dynamicArray(char* str) : dynamicArray(str, strlen(str)) {}
+	dynamicArray(const char* str) : dynamicArray(str, strlen(str)) {}
 
 	bool add(int newElementsCount)
 	{
@@ -90,19 +92,23 @@ public:
 		}
 		count--;
 	}
-	void del(A element)
+	int find(A element)
 	{
 		for (int i = 0; i < count; i++)
 		{
 			if (arr[i] == element)
 			{
-				for (int j = i + 1; j < count; j++)
-				{
-					arr[j - 1] = arr[j];
-				}
+				return i;
 			}
 		}
-		count--;
+		return -1;
+	}
+	void del(A element)
+	{
+		int deletedElement = find(element);
+		if (deletedElement == -1)
+			return;
+		del(deletedElement);
 	}
 	unsigned int getSize()
 	{
@@ -116,6 +122,13 @@ public:
 	{
 		arr = copy(copyedArray.arr, copyedArray.count * sizeof(A));
 		count = copyedArray.count;
+
+		return *this;
+	}
+	dynamicArray<A>& operator=(char* str)
+	{
+		count = strlen(str);
+		arr = copy(str, count);
 
 		return *this;
 	}
