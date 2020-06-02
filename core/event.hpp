@@ -19,6 +19,8 @@ typedef void(*onRightButtonUp_DelegateType)(void*, point);
 //The delegate of on keyboard event should look like "void onKeyPressed(void* element, char pressedCharset)"
 typedef void(*onKeyDown_DelegateType)(void*, char);
 typedef void(*onKeyUp_DelegateType)(void*, char);
+//The delegate of text box event should look like "void onTextChanged(void* element)"
+typedef void(*onTextChanged_DelegateType)(void*);
 
 typedef event_twoDelegateArg<void*, point>	onFocus_EventType;
 typedef event_twoDelegateArg<void*, point>	onFocusLost_EventType;
@@ -29,6 +31,7 @@ typedef event_twoDelegateArg<void*, point>	onRightButtonDown_EventType;
 typedef event_twoDelegateArg<void*, point>	onRightButtonUp_EventType;
 typedef event_twoDelegateArg<void*, char>	onKeyDown_EventType;
 typedef event_twoDelegateArg<void*, char>	onKeyUp_EventType;
+typedef event_oneDelegateArg<void*>			onTextChanged_EventType;
 
 
 template <typename delegateArgType>

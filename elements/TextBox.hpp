@@ -4,14 +4,17 @@
 #include "shell\graphics.hpp"
 #include "helpers\helpFunctions.hpp"
 
-
 void TextBox_System_onKeyDown(void* textBoxPtr, char key);
+void TextBox_System_onTextChanged(void* textBoxPtr);
 
 class TextBox : public  controlElement { //insert TextModule
 	char* text;
 	unsigned int textLength;
 	symbolColor textColor;
+
+	onTextChanged_DelegateType onTextChangedSystemDelegate = NULL;
 public:
+	onTextChanged_EventType onTextChangedEvent;
 	unsigned int MaxLength;
 	bool ReadOnly;
 	//todo cursor
@@ -28,6 +31,7 @@ public:
 
 		onFocusSystemDelegate = Default_System_OnFocus;
 		onKeyDownSystemDelegate = TextBox_System_onKeyDown;
+		onTextChangedSystemDelegate = TextBox_System_onTextChanged;
 
 		registerElement();
 	}
@@ -73,6 +77,9 @@ public:
 	{
 		if (textLength == 0)
 			return;
+
+		callDelegate(onTextChangedSystemDelegate, (void*)this);
+
 		char* oldText = text;
 		text = new char[textLength];
 		memcpy(text, oldText, textLength - 1);
@@ -83,6 +90,9 @@ public:
 	{
 		if (MaxLength < textLength + 1)
 			return;
+
+		callDelegate(onTextChangedSystemDelegate, (void*)this);
+
 		char* oldText = text;
 		text = new char[textLength + 1 + 1];
 		memcpy(text, oldText, textLength);
@@ -94,6 +104,9 @@ public:
 	{
 		if (MaxLength < textLength + addedStringSize)
 			return;
+
+		callDelegate(onTextChangedSystemDelegate, (void*)this);
+
 		char* oldText = text;
 		text = new char[textLength + addedStringSize + 1];
 		memcpy(text, oldText, textLength);
@@ -146,4 +159,10 @@ void TextBox_System_onKeyDown(void* textBoxPtr, char key)
 		textBox->popText();
 	else if (key == tab)
 		textBox->addToText((char*)"    ", 4);
+}
+
+void TextBox_System_onTextChanged(void* textBoxPtr)
+{
+	TextBox* textBox = (TextBox*)textBoxPtr;
+	textBox->onTextChangedEvent.call(textBoxPtr);
 }
