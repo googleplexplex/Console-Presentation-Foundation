@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
-#include "shell\congetter.hpp"
+#include <windows.h>
+#include "shell\WinConIO.hpp"
 #include "helpers\helpFunctions.hpp"
 #include "helpers\dynamicArray.hpp"
 
@@ -98,7 +99,7 @@ symbolColor presentTextAttribute = white;
 void consolePrintCharset(rectangle drawFrame, char printedCharset) //TOFIX
 {
 	point consoleCursorPosition = getConsoleCursorPosition();
-	CHAR_INFO symbolPrintedHere = getc_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y);
+	CHAR_INFO symbolPrintedHere = getCharFromConsoleCI(toCoord(consoleCursorPosition));
 
 	if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
 	{
@@ -110,7 +111,7 @@ void consolePrintCharset(rectangle drawFrame, char printedCharset) //TOFIX
 }
 void consolePrintCharset(rectangle drawFrame, point pos, char printedCharset) //TOFIX
 {
-	CHAR_INFO symbolPrintedHere = getc_fromConsole(pos.x, pos.y);
+	CHAR_INFO symbolPrintedHere = getCharFromConsoleCI(toCoord(pos));
 
 	if (getTo(drawFrame, pos.x, pos.y))
 	{
@@ -123,8 +124,8 @@ void consolePrintCharset(rectangle drawFrame, point pos, char printedCharset) //
 void consolePrintStr(rectangle drawFrame, char* printedStr, int size) //TOFIX
 {
 	point consoleCursorPosition = getConsoleCursorPosition();
-	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
-	
+	CHAR_INFO* strPrintedHere = getStringFromConsoleCI(toCoord(consoleCursorPosition), size);
+
 	for (int i = 0; i < size; i++)
 	{
 		if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
@@ -145,7 +146,7 @@ void consolePrintStr(rectangle drawFrame, char* printedStr, int size) //TOFIX
 void consolePrintLine(rectangle drawFrame, int size, char lineCharset = filledCharacter_5_5)
 {
 	point consoleCursorPosition = getConsoleCursorPosition();
-	CHAR_INFO* strPrintedHere = gets_fromConsole(consoleCursorPosition.x, consoleCursorPosition.y, size);
+	CHAR_INFO* strPrintedHere = getStringFromConsoleCI(toCoord(consoleCursorPosition), size);
 
 	for (int i = 0; i < size; i++)
 	{
@@ -225,28 +226,7 @@ void consoleClearElements(rectangle drawFrame)
 }
 void consoleClearAll()
 {
-	CHAR_INFO* allConsoleInfo = getAll_fromConsole();
-	CHAR_INFO emptyCharset = { WCHAR(' '), black };
-	COORD consoleSize = getConsoleSize();
-
-	consoleCursorInfo save;
-	save.getAndReset();
-	setSymbolFullColor(black);
-
-	for (short i = 0; i < consoleSize.Y; i++)
-	{
-		for (short j = 0; j < consoleSize.X; j++)
-		{
-			if (!((allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar == emptyCharset.Char.AsciiChar || allConsoleInfo[i * consoleSize.X + j].Char.AsciiChar == -37) && allConsoleInfo[i * consoleSize.X + j].Attributes == emptyCharset.Attributes))
-			{
-				setTo(j, i);
-				std::cout << emptyCharset.Char.AsciiChar;
-			}
-		}
-	}
-
-	save.apply();
-	delete[] allConsoleInfo;
+	setAllConsoleCI();
 }
 
 void showCursor(rectangle drawFrame, point cursorPos)

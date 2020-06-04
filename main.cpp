@@ -4,6 +4,8 @@ using namespace std;
 
 int main(void)
 {
+	enableMouse();
+
 	StackPanel mainCont({ 0, 0 }, { 15, 15 }, Horizontal);
 	setMainContainer(mainCont);
 
