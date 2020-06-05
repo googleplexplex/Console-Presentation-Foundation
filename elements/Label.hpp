@@ -26,13 +26,6 @@ public:
 
 	void Draw(rectangle drawFrame)
 	{
-		consoleCursorInfo save;
-		save.getAndReset();
-
-		setTo(pos.x, pos.y);
-		setSymbolColor(textColor, background);
-		consolePrintStr(drawFrame, text, textLength);
-
-		save.apply();
+		consolePrintStr(drawFrame, pos, textLength, text, collectColor(textColor, background));
 	}
 };

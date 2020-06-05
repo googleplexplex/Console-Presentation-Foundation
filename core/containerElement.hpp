@@ -52,5 +52,6 @@ void setMainContainer(containerElement& newMainContainer)
 
 void drawAllElements()
 {
-	mainContainer->Draw(mainContainer->getRect());
+	rectangle mainContainerRect = mainContainer->getRect();
+	mainContainer->Draw(mainContainerRect);
 }

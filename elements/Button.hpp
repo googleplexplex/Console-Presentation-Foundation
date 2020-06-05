@@ -23,27 +23,12 @@ public:
 		registerElement();
 	}
 
-	void Draw(rectangle drawFrame)
+	void Draw(rectangle& drawFrame)
 	{
-		consoleCursorInfo save;
-		save.getAndReset();
+		rectangle thisElementRect = getRect();
+		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, background);
 
-		setSymbolFullColor(background);
-		for (int i = 0; i < size.y; i++)
-		{
-			setTo(pos.x, pos.y + i);
-			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
-		}
-
-		setSymbolColor(textColor, background); //Text in button output
-		point textPos = getTextPos();
-		if (getTo(drawFrame, textPos))
-		{
-			setTo(textPos);
-			consolePrintStr(drawFrame, text, textLength);
-		}
-
-		save.apply();
+		consolePrintStr(drawFrame, getTextPos(), textLength, text, collectColor(textColor, background));
 	}
 
 	point getTextPos()

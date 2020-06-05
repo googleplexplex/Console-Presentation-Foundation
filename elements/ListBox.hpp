@@ -61,40 +61,19 @@ public:
 		registerElement();
 	}
 
-	void Draw(rectangle drawFrame)
+	void Draw(rectangle& drawFrame) //TODO
 	{
-		consoleCursorInfo save;
-		save.getAndReset();
-
-		for (int i = 0; i < items.count; i++)
+		for (int i = 0; i < items.count || i < size.y; i++)
 		{
-			setTo(pos.x, pos.y + i);
-			int itemLenght = strlen(items[i]->ToString());
-
-			if (i != selectedItem)
-				setSymbolColor(itemTextColor, itemFoneColor);
-			else
-				setSymbolColor(selectedItemTextColor, selectedItemFoneColor);
-
-			if (itemLenght > size.x)
-			{
-				consolePrintStr(drawFrame, items[i]->ToString(), itemLenght - 3);
-				consolePrintStr(drawFrame, (char*)"...", 3);
-			}
-			else {
-				consolePrintStr(drawFrame, items[i]->ToString(), itemLenght);
-				consolePrintLine(drawFrame, size.x - itemLenght, filledCharacter_1_5);
-			}
+			char* itemString = items[i]->ToString();
+			consolePrintStrInLine(drawFrame, { pos.x, pos.y + i}, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
 		}
 
-		setSymbolFullColor(background);
-		for (int i = items.count; i < size.y; i++)
+		if (size.y > items.count)
 		{
-			setTo(pos.x, pos.y + i);
-			consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
+			rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
+			consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
 		}
-
-		save.apply();
 	}
 
 	void addItem(IInterpretedToString* item)

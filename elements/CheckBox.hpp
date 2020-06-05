@@ -26,17 +26,10 @@ public:
 
 	void Draw(rectangle drawFrame)
 	{
-		consoleCursorInfo save;
-		save.getAndReset();
-
-		setTo(pos.x, pos.y);
-		if(checked)
-			setSymbolFullColor(checkedColor);
+		if (checked)
+			consolePrintCharset(drawFrame, pos, filledCharacter_5_5, checkedColor);
 		else
-			setSymbolFullColor(notCheckedColor);
-		consolePrintCharset(drawFrame, filledCharacter_5_5);
-
-		save.apply();
+			consolePrintCharset(drawFrame, pos, filledCharacter_5_5, notCheckedColor);
 	}
 
 	void setState(bool settedState)

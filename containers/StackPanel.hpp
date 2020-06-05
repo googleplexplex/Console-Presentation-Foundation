@@ -46,29 +46,17 @@ public:
 		registerElement();
 	}
 
-	void Draw(rectangle drawFrame)
+	void Draw(rectangle& drawFrame)
 	{
-		consoleCursorInfo save;
-		save.getAndReset();
-
+		rectangle thisElementRect = getRect();
 		if (Visible)
-		{
-			setSymbolFullColor(background);
-			for (int i = 0; i < size.y; i++)
-			{
-				setTo(pos.x, pos.y + i);
-				consolePrintLine(drawFrame, size.x, filledCharacter_5_5);
-			}
-			setStandartSymbolsColor();
-		}
+			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < childs.count; i++)
 		{
 			if(childs[i]->Visible)
-				childs[i]->Draw(getRect());
+				childs[i]->Draw(thisElementRect);
 		}
-
-		save.apply();
 	}
 
 	void updatePositions()

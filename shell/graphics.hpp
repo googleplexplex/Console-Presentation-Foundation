@@ -67,6 +67,11 @@ point inline toPoint(COORD coord) //TODEL
 	return { coord.X, coord.Y };
 }
 
+SMALL_RECT inline toSmallRect(rectangle rect)
+{
+	return { short(rect.firstPos.x), short(rect.firstPos.y), short(rect.secondPos.x), short(rect.secondPos.y) };
+}
+
 rectangle _drawFrame = { {0, 0}, toPoint(getConsoleSize()) };
 
 void inline setTo(short x, short y)
@@ -96,81 +101,57 @@ point getConsoleCursorPosition()
 
 
 symbolColor presentTextAttribute = white;
-void consolePrintCharset(rectangle drawFrame, char printedCharset) //TOFIX
+void consolePrintCharset(rectangle& drawFrame, point pos, char printedCharset, symbolColor printedCharColor = presentTextAttribute)
 {
-	point consoleCursorPosition = getConsoleCursorPosition();
-	CHAR_INFO symbolPrintedHere = getCharFromConsoleCI(toCoord(consoleCursorPosition));
-
-	if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
+	if (getTo(drawFrame, pos))
+		setCharInConsoleA(toCoord(pos), printedCharset, (WORD)printedCharColor);
+}
+void consolePrintStr(rectangle& drawFrame, point pos, int size, char* printedStr, symbolColor printedStrColor = presentTextAttribute)
+{
+	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x, pos.y + size }))
+		setStringInConsoleA(toCoord(pos), printedStr, size, (WORD)printedStrColor);
+}
+void consolePrintLine(rectangle& drawFrame, point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
+{
+	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x, pos.y + size }))
+		setLineInConsoleA(toCoord(pos), lineCharset, size, (WORD)printedLineColor);
+}
+void consolePrintRect(rectangle& drawFrame, rectangle& rect, char lineCharset = filledCharacter_5_5, symbolColor lineCharsetColor = presentTextAttribute)
+{
+	if (getTo(drawFrame, rect.firstPos) && getTo(drawFrame, rect.secondPos))
 	{
-		if (printedCharset != symbolPrintedHere.Char.AsciiChar || presentTextAttribute != symbolPrintedHere.Attributes)
-		{
-			std::cout << printedCharset;
-		}
+		SMALL_RECT srrect = toSmallRect(rect);
+		setRectInConsoleA(srrect, lineCharset, (WORD)lineCharsetColor);
 	}
 }
-void consolePrintCharset(rectangle drawFrame, point pos, char printedCharset) //TOFIX
+void consolePrintStrInLine(rectangle& drawFrame, point pos, int lineSize, char* printedStr, int strSize, symbolColor strColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
 {
-	CHAR_INFO symbolPrintedHere = getCharFromConsoleCI(toCoord(pos));
-
-	if (getTo(drawFrame, pos.x, pos.y))
+	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x + strSize, pos.y }))
 	{
-		if (printedCharset != symbolPrintedHere.Char.AsciiChar || presentTextAttribute != symbolPrintedHere.Attributes)
-		{
-			std::cout << printedCharset;
-		}
+		consolePrintStr(drawFrame, pos, strSize, printedStr, strColor);
+		if(lineSize > strSize)
+			consolePrintLine(drawFrame, { pos.x, pos.y + strSize }, lineSize - strSize, filledChar, filledCharColor);
 	}
 }
-void consolePrintStr(rectangle drawFrame, char* printedStr, int size) //TOFIX
+void consolePrintStrInRect(rectangle& drawFrame, rectangle& rect, char* printedStr, int printedStrSize, symbolColor printedStrColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
 {
-	point consoleCursorPosition = getConsoleCursorPosition();
-	CHAR_INFO* strPrintedHere = getStringFromConsoleCI(toCoord(consoleCursorPosition), size);
-
-	for (int i = 0; i < size; i++)
-	{
-		if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
-		{
-			if (printedStr[i] != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
-			{
-				std::cout << printedStr[i];
-			}
-			else {
-				setTo(consoleCursorPosition.x + 1, consoleCursorPosition.y);
-			}
-			consoleCursorPosition.x++;
-		}
-	}
-
-	delete[] strPrintedHere;
-}
-void consolePrintLine(rectangle drawFrame, int size, char lineCharset = filledCharacter_5_5)
-{
-	point consoleCursorPosition = getConsoleCursorPosition();
-	CHAR_INFO* strPrintedHere = getStringFromConsoleCI(toCoord(consoleCursorPosition), size);
-
-	for (int i = 0; i < size; i++)
-	{
-		if (getTo(drawFrame, consoleCursorPosition.x, consoleCursorPosition.y))
-		{
-			if (lineCharset != strPrintedHere[i].Char.AsciiChar || presentTextAttribute != strPrintedHere[i].Attributes)
-			{
-				std::cout << lineCharset;
-			}
-			consoleCursorPosition.x++;
-		}
-	}
-
-	delete[] strPrintedHere;
+	SMALL_RECT srrect = toSmallRect(rect);
+	CHAR_INFO filledCharInfo = { filledChar, (WORD)filledCharColor };
+	setRectInConsoleA(srrect, printedStr, printedStrSize, printedStrColor, filledCharInfo);
 }
 
+symbolColor inline collectColor(symbolColor textColor, symbolColor backgroundColor)
+{
+	return symbolColor(textColor + (backgroundColor * 16));
+}
 void inline setSymbolFullColor(symbolColor color)
 {
-	presentTextAttribute = symbolColor(color + (color * 16));
+	presentTextAttribute = collectColor(color, color);
 	SetConsoleTextAttribute(stdHandle, presentTextAttribute);
 }
-void inline setSymbolColor(symbolColor text, symbolColor bg)
+void inline setSymbolColor(symbolColor textColor, symbolColor backgroundColor)
 {
-	presentTextAttribute = symbolColor(text + (bg * 16));
+	presentTextAttribute = collectColor(textColor, backgroundColor);
 	SetConsoleTextAttribute(stdHandle, presentTextAttribute);
 }
 void inline setStandartSymbolsColor()
@@ -208,21 +189,10 @@ void addElementZone(rectangle elementZone)
 }
 void consoleClearElements(rectangle drawFrame)
 {
-	consoleCursorInfo save;
-	save.getAndReset();
-	setSymbolFullColor(black);
-
 	for (int i = 0; i < elementsZones.count; i++)
 	{
-		point presentElementZoneSize = elementsZones[i].getSize();
-		for (int j = 0; j < presentElementZoneSize.y; j++)
-		{
-			setTo(elementsZones[i].firstPos.x, elementsZones[i].firstPos.y + j);
-			consolePrintLine(drawFrame, presentElementZoneSize.x, filledCharacter_1_5);
-		}
+		consolePrintRect(drawFrame, elementsZones[i], emptyAsciiChar, white);
 	}
-
-	save.apply();
 }
 void consoleClearAll()
 {
@@ -231,15 +201,6 @@ void consoleClearAll()
 
 void showCursor(rectangle drawFrame, point cursorPos)
 {
-	point mousePositionRelativeToTheConsole = cursorPos;
-	if (getTo(drawFrame, mousePositionRelativeToTheConsole))
-	{
-		consoleCursorInfo save;
-		save.getAndReset();
-
-		setTo(mousePositionRelativeToTheConsole);
-		std::cout << filledCharacter_5_5;
-
-		save.apply();
-	}
+	if (getTo(drawFrame, cursorPos))
+		setCharInConsoleA(toCoord(cursorPos), filledCharacter_5_5, white);
 }
