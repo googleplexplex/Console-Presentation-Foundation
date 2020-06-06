@@ -61,7 +61,7 @@ typedef enum orientationYEnum
 
 struct point
 {
-	int x, y;
+	unsigned int x, y;
 
 	point operator+(point& right)
 	{
@@ -80,6 +80,7 @@ struct point
 		return !((*this)==right);
 	}
 };
+
 struct rectangle
 {
 	point firstPos;
@@ -87,15 +88,16 @@ struct rectangle
 
 	point getSize()
 	{
-		return { secondPos.x - firstPos.x, secondPos.y - firstPos.y };
+		return (secondPos - firstPos);
 	}
 };
+
 struct marginType
 {
-	int Left;
-	int Top;
-	int Right;
-	int Down;
+	unsigned int Left;
+	unsigned int Top;
+	unsigned int Right;
+	unsigned int Down;
 
 	bool operator==(marginType right)
 	{
@@ -108,21 +110,4 @@ struct marginType
 marginType makeMargin(point _pos, point _size, point _sizeCont)
 {
 	return { _pos.x, _pos.y, _sizeCont.x - _pos.x - _size.x, _sizeCont.y - _pos.y - _size.y };
-}
-template<typename A, typename B>
-struct pair
-{
-	A first;
-	B second;
-
-	bool operator==(pair<A, B>& right)
-	{
-		return ( first == right.first
-			&& second == right.second);
-	}
-};
-template<typename A, typename B>
-pair<A, B> makePair(A first, B second)
-{
-	return pair<A, B>({ first, second });
 }

@@ -46,25 +46,25 @@ POINT inline toWinPoint(COORD coord) //TODEL
 }
 POINT inline toWinPoint(point point) //TODEL
 {
-	return { point.x, point.y };
+	return { static_cast<LONG>(point.x), static_cast<LONG>(point.y) };
 }
 
 COORD inline toCoord(POINT point) //TODEL
 {
-	return { short(point.x), short(point.y) };
+	return { static_cast<SHORT>(point.x), static_cast<SHORT>(point.y) };
 }
 COORD inline toCoord(point point) //TODEL
 {
-	return { short(point.x), short(point.y) };
+	return { static_cast<SHORT>(point.x), static_cast<SHORT>(point.y) };
 }
 
 point inline toPoint(POINT point) //TODEL
 {
-	return { point.x, point.y };
+	return { static_cast<unsigned int>(point.x), static_cast<unsigned int>(point.y) };
 }
 point inline toPoint(COORD coord) //TODEL
 {
-	return { coord.X, coord.Y };
+	return { static_cast<unsigned int>(coord.X), static_cast<unsigned int>(coord.Y) };
 }
 
 SMALL_RECT inline toSmallRect(rectangle rect)

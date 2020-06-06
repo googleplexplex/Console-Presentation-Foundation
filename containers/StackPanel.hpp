@@ -49,8 +49,7 @@ public:
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
-		if (Visible)
-			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < childs.count; i++)
 		{

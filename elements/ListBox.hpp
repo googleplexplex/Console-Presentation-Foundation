@@ -38,13 +38,13 @@ void listBox_onClick(void* listBoxPtr, point clickedPos);
 
 class ListBox : public controlElement {
 	dynamicArray<IInterpretedToString*> items;
-	int selectedItem;
+	unsigned int selectedItem;
 	symbolColor itemTextColor;
 	symbolColor itemFoneColor;
 	symbolColor selectedItemTextColor;
 	symbolColor selectedItemFoneColor;
 public:
-	ListBox(point _pos, int _sizex, int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
+	ListBox(point _pos, unsigned int _sizex, unsigned int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
 	{
 		pos = _pos;
 		size = { _sizex, _elementsCount };

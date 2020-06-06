@@ -10,13 +10,13 @@ class TextBlock : public controlElement, public textModule {
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
 public:
-	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { -1, -1 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, symbolColor _textColor = white, symbolColor _background = black)
+	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { 0, 0 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, symbolColor _textColor = white, symbolColor _background = black)
 	{
 		pos = _pos;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
-		size.x = (_size.x > 0) ? (_size.x) : (textLength);
-		size.y = (_size.y > 0) ? (_size.y) : (1);
+		size.x = (_size.x == 0) ? (_size.x) : (textLength);
+		size.y = (_size.y == 0) ? (_size.y) : (1);
 		orientationX = _orientationX;
 		orientationY = _orientationY;
 		background = _background;
@@ -35,7 +35,7 @@ public:
 		consolePrintStr(drawFrame, getTextPos(), textLength, text, collectColor(textColor, background));
 	}
 
-	void setText(char* settedText, int settedTextLength)
+	void setText(char* settedText, unsigned int settedTextLength)
 	{
 		textLength = settedTextLength;
 		text = stringCopy(settedText, textLength);
@@ -51,7 +51,7 @@ public:
 	{
 		setText((char*)settedText, strlen(settedText));
 	}
-	void setText(const char* settedText, int settedTextLength)
+	void setText(const char* settedText, unsigned int settedTextLength)
 	{
 		setText((char*)settedText, settedTextLength);
 	}

@@ -16,6 +16,7 @@ void Grid_onKeyDown(void* elementPtr, char key);
 void Grid_onKeyUp(void* elementPtr, char key);
 
 class Grid : public containerElement {
+	dynamicArray<Canvas*> elements; //?
 public:
 	Grid(point _pos, point _size, symbolColor _background = black)
 	{
@@ -39,8 +40,7 @@ public:
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
-		if (Visible)
-			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < childs.count; i++)
 		{
@@ -83,15 +83,6 @@ public:
 	{
 		//...
 		updatePositions();
-	}
-
-	void setRowsCount(int count)
-	{
-		//...
-	}
-	void setColumnsCount(int count)
-	{
-		//...
 	}
 
 	int getRowsCount()

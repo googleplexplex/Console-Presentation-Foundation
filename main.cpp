@@ -13,7 +13,7 @@ int main(void)
 	testTextBock.setText("TxtBlc1");
 	testTextBock.setParent(&mainCont);
 
-	TextBox testTextBox({ 0,0 }, { 5, 5 }, (char*)"TextBox", blue, red);
+	TextBox testTextBox({ 0, 0 }, { 5, 5 }, (char*)"TextBox", blue, red);
 	testTextBox.ReadOnly = true;
 	testTextBox.setParent(&mainCont);
 

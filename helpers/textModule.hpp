@@ -10,7 +10,7 @@ class textModule
 {
 protected:
 	char* text;
-	int textLength;
+	unsigned int textLength;
 	symbolColor textColor;
 public:
 	~textModule()
@@ -18,7 +18,7 @@ public:
 		delete[] text;
 	}
 
-	void setText(char* settedText, int settedTextLength)
+	void setText(char* settedText, unsigned int settedTextLength)
 	{
 		textLength = settedTextLength;
 		delete text;
@@ -28,7 +28,7 @@ public:
 	{
 		setText(settedText, strlen(settedText));
 	}
-	void setText(const char* settedText, int settedTextLength)
+	void setText(const char* settedText, unsigned int settedTextLength)
 	{
 		setText((char*)settedText, settedTextLength);
 	}
@@ -50,7 +50,7 @@ public:
 		textLength++;
 		delete oldText;
 	}
-	void addToText(char* addedString, int addedStringLength)
+	void addToText(char* addedString, unsigned int addedStringLength)
 	{
 		char* oldText = text;
 		text = new char[textLength + addedStringLength + 1]; //Text Length + New Text Length + NULL-Charset

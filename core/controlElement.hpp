@@ -47,12 +47,12 @@ public:
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
-	void setPos(int x, int y)
+	void setPos(unsigned int x, unsigned int y)
 	{
 		pos.x = x;
 		pos.y = y;
 	}
-	void setSize(int x, int y)
+	void setSize(unsigned int x, unsigned int y)
 	{
 		size.x = x;
 		size.y = y;

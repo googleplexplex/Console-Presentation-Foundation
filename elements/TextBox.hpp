@@ -76,7 +76,7 @@ public:
 		text[textLength + 1] = NULL;
 		textLength++;
 	}
-	void addToText(char* addedString, int addedStringSize)
+	void addToText(char* addedString, unsigned int addedStringSize)
 	{
 		if (MaxLength < textLength + addedStringSize)
 			return;
