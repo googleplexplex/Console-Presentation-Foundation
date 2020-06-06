@@ -36,8 +36,8 @@ public:
 }; 
 void _setParent(void* _child, void* _parent)
 {
-	containerElement* parent = (containerElement*)_parent;
-	controlElement* child = (controlElement*)_child;
+	containerElement* parent = static_cast<containerElement*>(_parent);
+	controlElement* child = static_cast<containerElement*>(_child);
 	parent->addControlElement(child);
 }
 
@@ -53,5 +53,6 @@ void setMainContainer(containerElement& newMainContainer)
 void drawAllElements()
 {
 	rectangle mainContainerRect = mainContainer->getRect();
-	mainContainer->Draw(mainContainerRect);
+	if(mainContainer->Visible)
+		mainContainer->Draw(mainContainerRect);
 }

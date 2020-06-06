@@ -61,6 +61,6 @@ public:
 
 void CheckBox_onClick(void* checkBoxPtr, point clickedPos)
 {
-	CheckBox* checkBox = (CheckBox*)checkBoxPtr;
+	CheckBox* checkBox = static_cast<CheckBox*>(checkBoxPtr);
 	checkBox->setState(!(checkBox->isChecked()));
 }

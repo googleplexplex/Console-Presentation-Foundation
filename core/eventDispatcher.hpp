@@ -9,7 +9,7 @@ const unsigned int eventDispatcherDelay = 50;
 dynamicArray<controlElement*> elementsInFocus;
 void Default_System_OnFocus(void* elementPtr, point clickedPos)
 {
-	elementsInFocus.add((controlElement*)elementPtr);
+	elementsInFocus.add(static_cast<controlElement*>(elementPtr));
 }
 
 UserInputStruct prevDispatchUserIO;
@@ -22,56 +22,58 @@ void eventDispatcherMainLoop()
 		UserInput.getIO();
 		UserActivityStruct UserActivity = getUserActivity(prevDispatchUserIO, UserInput);
 
-		//Focus events
-		dynamicArray<controlElement*> prevElementsInFocus;
-		prevElementsInFocus = elementsInFocus;
-		elementsInFocus.clean();
-		callDelegate<void*, point>(mainContainer->onFocusSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-		for (int i = 0; i < prevElementsInFocus.count; i++)
+		if (mainContainer->Handled)
 		{
-			if (elementsInFocus[i] != prevElementsInFocus[i] && prevElementsInFocus[i] != NULL)
+			//Focus events
+			dynamicArray<controlElement*> prevElementsInFocus;
+			prevElementsInFocus = elementsInFocus;
+			elementsInFocus.clean();
+			callDelegate<void*, point>(mainContainer->onFocusSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+			for (int i = 0; i < prevElementsInFocus.count; i++)
 			{
-				callDelegate<void*, point>(prevElementsInFocus[i]->onFocusLostSystemDelegate, prevElementsInFocus[i], UserInput.mouseConsolePos);
-				break;
+				if (elementsInFocus[i] != prevElementsInFocus[i] && prevElementsInFocus[i] != NULL)
+				{
+					callDelegate<void*, point>(prevElementsInFocus[i]->onFocusLostSystemDelegate, prevElementsInFocus[i], UserInput.mouseConsolePos);
+					break;
+				}
+			}
+
+			//Keyboard events
+			if (UserActivity.keyboardStateChanged)
+			{
+				if (UserInput.keyboardPress)
+					callDelegate<void*, char>(mainContainer->onKeyDownSystemDelegate, mainContainer, UserInput.keyboardPressedKey);
+				else
+					callDelegate<void*, char>(mainContainer->onKeyUpSystemDelegate, mainContainer, UserInput.keyboardPressedKey);
+			}
+
+			//Mouse events
+			if (UserActivity.mouseLeftButtonStateChanged)
+			{
+				if (UserInput.mouseLeftPressed)
+				{
+					callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+					callDelegate<void*, point>(mainContainer->onLeftButtonDownSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+				}
+				else {
+					callDelegate<void*, point>(mainContainer->onLeftButtonUpSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+				}
+			}
+			if (UserActivity.mouseRightButtonStateChanged)
+			{
+				if (UserInput.mouseRightPressed)
+				{
+					callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+					callDelegate<void*, point>(mainContainer->onRightButtonDownSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+				}
+				else {
+					callDelegate<void*, point>(mainContainer->onRightButtonUpSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+				}
 			}
 		}
 
-		//Keyboard events
-		if (UserActivity.keyboardStateChanged)
-		{
-			if(UserInput.keyboardPress)
-				callDelegate<void*, char>(mainContainer->onKeyDownSystemDelegate, mainContainer, UserInput.keyboardPressedKey);
-			else
-				callDelegate<void*, char>(mainContainer->onKeyUpSystemDelegate, mainContainer, UserInput.keyboardPressedKey);
-		}
-
-		//Mouse events
-		if (UserActivity.mouseLeftButtonStateChanged)
-		{
-			if (UserInput.mouseLeftPressed)
-			{
-				callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-				callDelegate<void*, point>(mainContainer->onLeftButtonDownSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-			}
-			else {
-				callDelegate<void*, point>(mainContainer->onLeftButtonUpSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-			}
-		}
-		if (UserActivity.mouseRightButtonStateChanged)
-		{
-			if (UserInput.mouseRightPressed)
-			{
-				callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-				callDelegate<void*, point>(mainContainer->onRightButtonDownSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-			}
-			else {
-				callDelegate<void*, point>(mainContainer->onRightButtonUpSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-			}
-		}
-
-		//Pain events
+		//Output
 		consoleClearAll();
-		//consoleClearElements(consoleSizeRectangle());
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
 		drawAllElements();
 		Sleep(eventDispatcherDelay);

@@ -33,11 +33,11 @@ typedef enum symbolColor {
 };
 
 //If we use enum, then filledCharacter_5_5 ((char)219) will be perceived as (int)219 and we will not be able to use "cout << filledCharacter_5_5"
-#define filledCharacter_5_5 (char)219
-#define filledCharacter_4_5 (char)178
-#define filledCharacter_3_5 (char)177
-#define filledCharacter_2_5 (char)176
-#define filledCharacter_1_5 (char)32
+constexpr char filledCharacter_5_5 = 219;
+constexpr char filledCharacter_4_5 = 178;
+constexpr char filledCharacter_3_5 = 177;
+constexpr char filledCharacter_2_5 = 176;
+constexpr char filledCharacter_1_5 = 32;
 
 
 POINT inline toWinPoint(COORD coord) //TODEL

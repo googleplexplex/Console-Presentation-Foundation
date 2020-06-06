@@ -119,136 +119,116 @@ controlElement* Grid_getElementsInPos(containerElement* container, point pos)
 
 void Grid_onClick(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* clickedElement = Grid_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Grid* clickedGrid = static_cast<Grid*>(elementPtr);
+	controlElement* clickedElement = Grid_getElementsInPos(clickedGrid, clickedPos);
 
 	if (clickedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
 
-		callDelegate(clickedElement->onClickSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(clickedElement->onClickSystemDelegate, clickedElement, clickedPosRelativeElement);
 		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
 	}
 }
 void Grid_onFocus(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
+	Grid* focusedGrid = static_cast<Grid*>(elementPtr);
+	controlElement* elementInFocus = Grid_getElementsInPos(focusedGrid, clickedPos);
 
 	Default_System_OnFocus(elementPtr, clickedPos);
-
-	controlElement* elementInFocus = Grid_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (elementInFocus != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - elementInFocus->pos;
 
-		callDelegate(elementInFocus->onFocusSystemDelegate, (void*)elementInFocus, clickedPosRelativeElement);
+		callDelegate<void*, point>(elementInFocus->onFocusSystemDelegate, elementInFocus, clickedPosRelativeElement);
 		elementInFocus->onFocusEvent.call(elementInFocus, clickedPosRelativeElement);
 	}
 }
 void Grid_onFocusLost(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
+	Grid* focusLostedGrid = static_cast<Grid*>(elementPtr);
 
-	Grid* GridPtr = (Grid*)elementPtr;
-	for (int i = 0; i < GridPtr->childs.count; i++)
+	for (int i = 0; i < focusLostedGrid->childs.count; i++)
 	{
-		controlElement* presentChild = GridPtr->childs[i];
+		controlElement* presentChild = focusLostedGrid->childs[i];
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-		callDelegate(presentChild->onFocusLostSystemDelegate, (void*)presentChild, focusLostPosRelativeElement);
+		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
 		presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
 	}
 }
 void Grid_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onLeftButtonDownedElement = Grid_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Grid* leftButtonDownedGrid = static_cast<Grid*>(elementPtr);
+	controlElement* onLeftButtonDownedElement = Grid_getElementsInPos(leftButtonDownedGrid, clickedPos);
 
 	if (onLeftButtonDownedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonDownedElement->pos;
 
-		callDelegate(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, (void*)onLeftButtonDownedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, onLeftButtonDownedElement, clickedPosRelativeElement);
 		onLeftButtonDownedElement->onLeftButtonDownEvent.call(onLeftButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void Grid_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onLeftButtonUppedElement = Grid_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Grid* leftButtonUpedGrid = static_cast<Grid*>(elementPtr);
+	controlElement* onLeftButtonUppedElement = Grid_getElementsInPos(leftButtonUpedGrid, clickedPos);
 
 	if (onLeftButtonUppedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonUppedElement->pos;
 
-		callDelegate(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, (void*)onLeftButtonUppedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, onLeftButtonUppedElement, clickedPosRelativeElement);
 		onLeftButtonUppedElement->onLeftButtonUpEvent.call(onLeftButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 void Grid_onRightButtonDown(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onRightButtonDownedElement = Grid_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Grid* rightButtonDownedGrid = static_cast<Grid*>(elementPtr);
+	controlElement* onRightButtonDownedElement = Grid_getElementsInPos(rightButtonDownedGrid, clickedPos);
 
 	if (onRightButtonDownedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonDownedElement->pos;
 
-		callDelegate(onRightButtonDownedElement->onRightButtonDownSystemDelegate, (void*)onRightButtonDownedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onRightButtonDownedElement->onRightButtonDownSystemDelegate, onRightButtonDownedElement, clickedPosRelativeElement);
 		onRightButtonDownedElement->onRightButtonDownEvent.call(onRightButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void Grid_onRightButtonUp(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onRightButtonUppedElement = Grid_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Grid* rightButtonUpedGrid = static_cast<Grid*>(elementPtr);
+	controlElement* onRightButtonUppedElement = Grid_getElementsInPos(rightButtonUpedGrid, clickedPos);
 
 	if (onRightButtonUppedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonUppedElement->pos;
 
-		callDelegate(onRightButtonUppedElement->onRightButtonUpSystemDelegate, (void*)onRightButtonUppedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onRightButtonUppedElement->onRightButtonUpSystemDelegate, onRightButtonUppedElement, clickedPosRelativeElement);
 		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 
 void Grid_onKeyDown(void* elementPtr, char key)
 {
-	Grid* container = (Grid*)elementPtr;
+	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
 
-	if (container->Handled == false)
-		return;
-
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < keyDownedGrid->childs.count; i++)
 	{
-		controlElement* presentChild = container->childs[i];
-		callDelegate(presentChild->onKeyDownSystemDelegate, (void*)presentChild, key);
+		controlElement* presentChild = keyDownedGrid->childs[i];
+		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
 
 void Grid_onKeyUp(void* elementPtr, char key)
 {
-	Grid* container = (Grid*)elementPtr;
+	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
 
-	if (container->Handled == false)
-		return;
-
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < keyDownedGrid->childs.count; i++)
 	{
-		controlElement* presentChild = container->childs[i];
-		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
+		controlElement* presentChild = keyDownedGrid->childs[i];
+		callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
 	}
 }

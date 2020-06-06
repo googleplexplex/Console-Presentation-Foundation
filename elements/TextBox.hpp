@@ -46,7 +46,7 @@ public:
 		if (Visible)
 			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
 		
-		consolePrintStrInRect(drawFrame, thisElementRect, text, textLength, textColor, filledCharacter_5_5, background);
+		consolePrintStrInRect(drawFrame, thisElementRect, text, textLength, collectColor(textColor, background), filledCharacter_5_5, background);
 	}
 
 	void popText()
@@ -54,7 +54,7 @@ public:
 		if (textLength == 0)
 			return;
 
-		callDelegate(onTextChangedSystemDelegate, (void*)this);
+		callDelegate<void*>(onTextChangedSystemDelegate, this);
 
 		char* oldText = text;
 		text = new char[textLength];
@@ -67,7 +67,7 @@ public:
 		if (MaxLength < textLength + 1)
 			return;
 
-		callDelegate(onTextChangedSystemDelegate, (void*)this);
+		callDelegate<void*>(onTextChangedSystemDelegate, this);
 
 		char* oldText = text;
 		text = new char[textLength + 1 + 1];
@@ -81,7 +81,7 @@ public:
 		if (MaxLength < textLength + addedStringSize)
 			return;
 
-		callDelegate(onTextChangedSystemDelegate, (void*)this);
+		callDelegate<void*>(onTextChangedSystemDelegate, this);
 
 		char* oldText = text;
 		text = new char[textLength + addedStringSize + 1];
@@ -124,7 +124,7 @@ bool isNum(char charset)
 
 void TextBox_System_onKeyDown(void* textBoxPtr, char key)
 {
-	TextBox* textBox = (TextBox*)textBoxPtr;
+	TextBox* textBox = static_cast<TextBox*>(textBoxPtr);
 
 	if (textBox->ReadOnly)
 		return;
@@ -139,6 +139,6 @@ void TextBox_System_onKeyDown(void* textBoxPtr, char key)
 
 void TextBox_System_onTextChanged(void* textBoxPtr)
 {
-	TextBox* textBox = (TextBox*)textBoxPtr;
+	TextBox* textBox = static_cast<TextBox*>(textBoxPtr);
 	textBox->onTextChangedEvent.call(textBoxPtr);
 }

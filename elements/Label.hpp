@@ -10,7 +10,7 @@
 class Label : public controlElement, public textModule
 {
 public:
-	Label(point _pos, char* _text = (char*)"Label", symbolColor _textColor = white, symbolColor _background = black)
+	Label(point _pos, char* _text = static_cast<char*>("Label"), symbolColor _textColor = white, symbolColor _background = black)
 	{
 		pos = _pos;
 		textLength = strlen(_text);

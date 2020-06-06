@@ -61,7 +61,7 @@ public:
 		registerElement();
 	}
 
-	void Draw(rectangle& drawFrame) //TODO
+	void Draw(rectangle& drawFrame)
 	{
 		for (int i = 0; i < items.count || i < size.y; i++)
 		{
@@ -148,7 +148,7 @@ public:
 
 void listBox_onClick(void* listBoxPtr, point clickedPos)
 {
-	ListBox* listBox = (ListBox*)listBoxPtr;
+	ListBox* listBox = static_cast<ListBox*>(listBoxPtr);
 
 	if (clickedPos.y < listBox->items.count)
 	{

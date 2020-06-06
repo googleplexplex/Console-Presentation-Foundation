@@ -86,27 +86,15 @@ public:
 		addChild(element);
 		updatePositions();
 	}
-	/*void addEmptyRow()
-	{
-		addChild((controlElement*)NULL);
-	}*/
 	void addElement(int rowIndex)
 	{
 		addControlElement(childs[rowIndex]);
 	}
-	/*void setElement(controlElement* element, int rowIndex)
-	{
-		//...
-	}*/
 	void delControlElement(controlElement* element)
 	{
 		delChild(element);
 		updatePositions();
 	}
-	/*void delRow(int rowIndex)
-	{
-		delChild(childs[rowIndex]);
-	}*/
 	void delElement(int rowIndex)
 	{
 		delControlElement(childs[rowIndex]);
@@ -137,136 +125,116 @@ controlElement* StackPanel_getElementsInPos(containerElement* container, point p
 
 void StackPanel_onClick(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* clickedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	StackPanel* clickedStackPanel = static_cast<StackPanel*>(elementPtr);
+	controlElement* clickedElement = StackPanel_getElementsInPos(clickedStackPanel, clickedPos);
 
 	if (clickedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
 
-		callDelegate(clickedElement->onClickSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(clickedElement->onClickSystemDelegate, clickedElement, clickedPosRelativeElement);
 		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
 	}
 }
 void StackPanel_onFocus(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
+	StackPanel* focusedStackPanel = static_cast<StackPanel*>(elementPtr);
+	controlElement* elementInFocus = StackPanel_getElementsInPos(focusedStackPanel, clickedPos);
 
 	Default_System_OnFocus(elementPtr, clickedPos);
-
-	controlElement* elementInFocus = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (elementInFocus != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - elementInFocus->pos;
 
-		callDelegate(elementInFocus->onFocusSystemDelegate, (void*)elementInFocus, clickedPosRelativeElement);
+		callDelegate<void*, point>(elementInFocus->onFocusSystemDelegate, elementInFocus, clickedPosRelativeElement);
 		elementInFocus->onFocusEvent.call(elementInFocus, clickedPosRelativeElement);
 	}
 }
 void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
+	StackPanel* focusLostedStackPanel = static_cast<StackPanel*>(elementPtr);
 
-	StackPanel* stackPanelPtr = (StackPanel*)elementPtr;
-	for (int i = 0; i < stackPanelPtr->childs.count; i++)
+	for (int i = 0; i < focusLostedStackPanel->childs.count; i++)
 	{
-		controlElement* presentChild = stackPanelPtr->childs[i];
+		controlElement* presentChild = focusLostedStackPanel->childs[i];
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-		callDelegate(presentChild->onFocusLostSystemDelegate, (void*)presentChild, focusLostPosRelativeElement);
+		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
 		presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
 	}
 }
 void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onLeftButtonDownedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	StackPanel* leftButtonDownedStackPanel = static_cast<StackPanel*>(elementPtr);
+	controlElement* onLeftButtonDownedElement = StackPanel_getElementsInPos(leftButtonDownedStackPanel, clickedPos);
 
 	if (onLeftButtonDownedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonDownedElement->pos;
 
-		callDelegate(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, (void*)onLeftButtonDownedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, onLeftButtonDownedElement, clickedPosRelativeElement);
 		onLeftButtonDownedElement->onLeftButtonDownEvent.call(onLeftButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onLeftButtonUppedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	StackPanel* leftButtonUpedStackPanel = static_cast<StackPanel*>(elementPtr);
+	controlElement* onLeftButtonUppedElement = StackPanel_getElementsInPos(leftButtonUpedStackPanel, clickedPos);
 
 	if (onLeftButtonUppedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonUppedElement->pos;
 
-		callDelegate(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, (void*)onLeftButtonUppedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, onLeftButtonUppedElement, clickedPosRelativeElement);
 		onLeftButtonUppedElement->onLeftButtonUpEvent.call(onLeftButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onRightButtonDownedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	StackPanel* rightButtonDownedStackPanel = static_cast<StackPanel*>(elementPtr);
+	controlElement* onRightButtonDownedElement = StackPanel_getElementsInPos(rightButtonDownedStackPanel, clickedPos);
 
 	if (onRightButtonDownedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonDownedElement->pos;
 
-		callDelegate(onRightButtonDownedElement->onRightButtonDownSystemDelegate, (void*)onRightButtonDownedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onRightButtonDownedElement->onRightButtonDownSystemDelegate, onRightButtonDownedElement, clickedPosRelativeElement);
 		onRightButtonDownedElement->onRightButtonDownEvent.call(onRightButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onRightButtonUppedElement = StackPanel_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	StackPanel* rightButtonUpedStackPanel = static_cast<StackPanel*>(elementPtr);
+	controlElement* onRightButtonUppedElement = StackPanel_getElementsInPos(rightButtonUpedStackPanel, clickedPos);
 
 	if (onRightButtonUppedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonUppedElement->pos;
 
-		callDelegate(onRightButtonUppedElement->onRightButtonUpSystemDelegate, (void*)onRightButtonUppedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onRightButtonUppedElement->onRightButtonUpSystemDelegate, onRightButtonUppedElement, clickedPosRelativeElement);
 		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 
 void StackPanel_onKeyDown(void* elementPtr, char key)
 {
-	StackPanel* container = (StackPanel*)elementPtr;
+	StackPanel* keyDownedStackPanel = static_cast<StackPanel*>(elementPtr);
 
-	if (container->Handled == false)
-		return;
-
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < keyDownedStackPanel->childs.count; i++)
 	{
-		controlElement* presentChild = container->childs[i];
-		callDelegate(presentChild->onKeyDownSystemDelegate, (void*)presentChild, key);
+		controlElement* presentChild = keyDownedStackPanel->childs[i];
+		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
 
 void StackPanel_onKeyUp(void* elementPtr, char key)
 {
-	StackPanel* container = (StackPanel*)elementPtr;
+	StackPanel* keyUpedStackPanel = static_cast<StackPanel*>(elementPtr);
 
-	if (container->Handled == false)
-		return;
-
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < keyUpedStackPanel->childs.count; i++)
 	{
-		controlElement* presentChild = container->childs[i];
+		controlElement* presentChild = keyUpedStackPanel->childs[i];
 		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
 	}
 }

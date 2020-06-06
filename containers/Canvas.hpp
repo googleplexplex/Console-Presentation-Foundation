@@ -74,136 +74,116 @@ controlElement* Canvas_getElementsInPos(containerElement* container, point pos)
 
 void Canvas_onClick(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* clickedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Canvas* clickedCanvas = static_cast<Canvas*>(elementPtr);
+	controlElement* clickedElement = Canvas_getElementsInPos(clickedCanvas, clickedPos);
 
 	if (clickedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
 
-		callDelegate(clickedElement->onClickSystemDelegate, (void*)clickedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(clickedElement->onClickSystemDelegate, clickedElement, clickedPosRelativeElement);
 		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onFocus(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
+	Canvas* focusedCanvas = static_cast<Canvas*>(elementPtr);
+	controlElement* elementInFocus = Canvas_getElementsInPos(focusedCanvas, clickedPos);
 
 	Default_System_OnFocus(elementPtr, clickedPos);
-
-	controlElement* elementInFocus = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
 
 	if (elementInFocus != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - elementInFocus->pos;
 
-		callDelegate(elementInFocus->onFocusSystemDelegate, (void*)elementInFocus, clickedPosRelativeElement);
+		callDelegate<void*, point>(elementInFocus->onFocusSystemDelegate, focusedCanvas, clickedPosRelativeElement);
 		elementInFocus->onFocusEvent.call(elementInFocus, clickedPosRelativeElement);
 	}
 }
 void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
+	Canvas* focusLostCanvas = static_cast<Canvas*>(elementPtr);
 
-	Canvas* canvasPtr = (Canvas*)elementPtr;
-	for (int i = 0; i < canvasPtr->childs.count; i++)
+	for (int i = 0; i < focusLostCanvas->childs.count; i++)
 	{
-		controlElement* presentChild = canvasPtr->childs[i];
+		controlElement* presentChild = focusLostCanvas->childs[i];
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-		callDelegate(presentChild->onFocusLostSystemDelegate, (void*)presentChild, focusLostPosRelativeElement);
+		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
 		presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
 	}
 }
 void Canvas_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onLeftButtonDownedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Canvas* leftButtonDownedCanvas = static_cast<Canvas*>(elementPtr);
+	controlElement* onLeftButtonDownedElement = Canvas_getElementsInPos(leftButtonDownedCanvas, clickedPos);
 
 	if (onLeftButtonDownedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonDownedElement->pos;
 
-		callDelegate(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, (void*)onLeftButtonDownedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, onLeftButtonDownedElement, clickedPosRelativeElement);
 		onLeftButtonDownedElement->onLeftButtonDownEvent.call(onLeftButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onLeftButtonUppedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Canvas* leftButtonUpedCanvas = static_cast<Canvas*>(elementPtr);
+	controlElement* onLeftButtonUppedElement = Canvas_getElementsInPos(leftButtonUpedCanvas, clickedPos);
 
 	if (onLeftButtonUppedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonUppedElement->pos;
 
-		callDelegate(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, (void*)onLeftButtonUppedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, onLeftButtonUppedElement, clickedPosRelativeElement);
 		onLeftButtonUppedElement->onLeftButtonUpEvent.call(onLeftButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onRightButtonDown(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onRightButtonDownedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Canvas* rightButtonDownedCanvas = static_cast<Canvas*>(elementPtr);
+	controlElement* onRightButtonDownedElement = Canvas_getElementsInPos(rightButtonDownedCanvas, clickedPos);
 
 	if (onRightButtonDownedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonDownedElement->pos;
 
-		callDelegate(onRightButtonDownedElement->onRightButtonDownSystemDelegate, (void*)onRightButtonDownedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onRightButtonDownedElement->onRightButtonDownSystemDelegate, onRightButtonDownedElement, clickedPosRelativeElement);
 		onRightButtonDownedElement->onRightButtonDownEvent.call(onRightButtonDownedElement, clickedPosRelativeElement);
 	}
 }
 void Canvas_onRightButtonUp(void* elementPtr, point clickedPos)
 {
-	if (((controlElement*)elementPtr)->Handled == false)
-		return;
-
-	controlElement* onRightButtonUppedElement = Canvas_getElementsInPos((containerElement*)elementPtr, clickedPos);
+	Canvas* rightButtonUpedCanvas = static_cast<Canvas*>(elementPtr);
+	controlElement* onRightButtonUppedElement = Canvas_getElementsInPos(rightButtonUpedCanvas, clickedPos);
 
 	if (onRightButtonUppedElement != NULL)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonUppedElement->pos;
 
-		callDelegate(onRightButtonUppedElement->onRightButtonUpSystemDelegate, (void*)onRightButtonUppedElement, clickedPosRelativeElement);
+		callDelegate<void*, point>(onRightButtonUppedElement->onRightButtonUpSystemDelegate, onRightButtonUppedElement, clickedPosRelativeElement);
 		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 
 void Canvas_onKeyDown(void* elementPtr, char key)
 {
-	Canvas* container = (Canvas*)elementPtr;
-
-	if (container->Handled == false)
-		return;
+	Canvas* keyDownedCanvas = static_cast<Canvas*>(elementPtr);
 	
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < keyDownedCanvas->childs.count; i++)
 	{
-		controlElement* presentChild = container->childs[i];
-		callDelegate(presentChild->onKeyDownSystemDelegate, (void*)presentChild, key);
+		controlElement* presentChild = keyDownedCanvas->childs[i];
+		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
 
 void Canvas_onKeyUp(void* elementPtr, char key)
 {
-	Canvas* container = (Canvas*)elementPtr;
+	Canvas* keyUpedCanvas = static_cast<Canvas*>(elementPtr);
 
-	if (container->Handled == false)
-		return;
-
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < keyUpedCanvas->childs.count; i++)
 	{
-		controlElement* presentChild = container->childs[i];
-		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
+		controlElement* presentChild = keyUpedCanvas->childs[i];
+		callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
 	}
 }
