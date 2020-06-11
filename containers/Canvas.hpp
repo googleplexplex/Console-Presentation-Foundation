@@ -16,6 +16,7 @@ void Canvas_onKeyDown(void* elementPtr, char key);
 void Canvas_onKeyUp(void* elementPtr, char key);
 
 class Canvas : public containerElement {
+	dynamicArray<controlElement*> childs;
 public:
 	Canvas(point _pos, point _size, symbolColor _background = black)
 	{
@@ -34,6 +35,28 @@ public:
 		onKeyUpSystemDelegate = Canvas_onKeyUp;
 
 		registerElement();
+	}
+
+	void addChild(controlElement* addedChild)
+	{
+		childs.add(addedChild);
+		addedChild->parent = this;
+	}
+
+	void delChild(controlElement* deletedChild)
+	{
+		childs.del(deletedChild);
+		deletedChild->parent = NULL;
+	}
+
+	controlElement* getChild(int index)
+	{
+		return childs[index];
+	}
+
+	unsigned int getChildsCount()
+	{
+		return childs.count;
 	}
 
 	void Draw(rectangle& drawFrame)
@@ -60,11 +83,12 @@ public:
 
 controlElement* Canvas_getElementsInPos(containerElement* container, point pos)
 {
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < container->getChildsCount(); i++)
 	{
-		if (container->childs[i]->entersTheArea(pos))
+		controlElement* presentChild = container->getChild(i);
+		if (presentChild->entersTheArea(pos))
 		{
-			return container->childs[i];
+			return presentChild;
 		}
 	}
 
@@ -103,9 +127,9 @@ void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 {
 	Canvas* focusLostCanvas = static_cast<Canvas*>(elementPtr);
 
-	for (int i = 0; i < focusLostCanvas->childs.count; i++)
+	for (int i = 0; i < focusLostCanvas->getChildsCount(); i++)
 	{
-		controlElement* presentChild = focusLostCanvas->childs[i];
+		controlElement* presentChild = focusLostCanvas->getChild(i);
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
 		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
@@ -169,9 +193,9 @@ void Canvas_onKeyDown(void* elementPtr, char key)
 {
 	Canvas* keyDownedCanvas = static_cast<Canvas*>(elementPtr);
 	
-	for (int i = 0; i < keyDownedCanvas->childs.count; i++)
+	for (int i = 0; i < keyDownedCanvas->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyDownedCanvas->childs[i];
+		controlElement* presentChild = keyDownedCanvas->getChild(i);
 		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
@@ -180,9 +204,9 @@ void Canvas_onKeyUp(void* elementPtr, char key)
 {
 	Canvas* keyUpedCanvas = static_cast<Canvas*>(elementPtr);
 
-	for (int i = 0; i < keyUpedCanvas->childs.count; i++)
+	for (int i = 0; i < keyUpedCanvas->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyUpedCanvas->childs[i];
+		controlElement* presentChild = keyUpedCanvas->getChild(i);
 		callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
 	}
 }

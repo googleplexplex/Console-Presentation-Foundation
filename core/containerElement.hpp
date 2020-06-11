@@ -4,41 +4,32 @@
 class containerElement : public controlElement
 {
 public:
-	dynamicArray<controlElement*> childs;
-
 	virtual void addControlElement(controlElement* element) = 0;
-	void addChild(controlElement* addedChild)
-	{
-		childs.add(addedChild);
-		addedChild->parent = this;
-	}
-	void addChild(containerElement* addedChild)
-	{
-		childs.add(addedChild);
-		addedChild->parent = this;
-	}
-	virtual void delControlElement(controlElement* element) = 0;
-	void delChild(controlElement* deleteddChild)
-	{
-		childs.del(deleteddChild);
-		deleteddChild->parent = this;
-	}
-	void delChild(containerElement* deleteddChild)
-	{
-		childs.del(deleteddChild);
-		deleteddChild->parent = this;
-	}
+	virtual void addChild(controlElement* addedChild) = 0;
 
-	controlElement* getChild(int index)
-	{
-		return childs[index];
-	}
+	virtual void delControlElement(controlElement* element) = 0;
+	virtual void delChild(controlElement* deleteddChild) = 0;
+
+	virtual controlElement* getChild(int index) = 0;
+	virtual unsigned int getChildsCount() = 0;
 }; 
 void _setParent(void* _child, void* _parent)
 {
 	containerElement* parent = static_cast<containerElement*>(_parent);
 	controlElement* child = static_cast<containerElement*>(_child);
 	parent->addControlElement(child);
+}
+
+void addChild(containerElement* parent, dynamicArray<controlElement*>& parentChilds, controlElement* addedChild)
+{
+	parentChilds.add(addedChild);
+	addedChild->parent = parent;
+}
+
+void delChild(containerElement* parent, dynamicArray<controlElement*>& parentChilds, controlElement* deletedChild)
+{
+	parentChilds.del(deletedChild);
+	deletedChild->parent = parent;
 }
 
 containerElement* mainContainer;

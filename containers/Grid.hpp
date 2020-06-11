@@ -16,8 +16,9 @@ void Grid_onKeyDown(void* elementPtr, char key);
 void Grid_onKeyUp(void* elementPtr, char key);
 
 class Grid : public containerElement {
-	dynamicArray<Canvas*> elements; //?
 public:
+	dynamicArray<dynamicArray<controlElement*>> elements;
+	point oneElementSize;
 	Grid(point _pos, point _size, symbolColor _background = black)
 	{
 		pos = _pos;
@@ -37,71 +38,122 @@ public:
 		registerElement();
 	}
 
+	void addChild(controlElement* addedChild)
+	{
+
+	}
+
+	void delChild(controlElement* deleteddChild)
+	{
+
+	}
+
+	controlElement* getChild(int index)
+	{
+		return NULL;
+	}
+
+	unsigned int getChildsCount()
+	{
+		return 0;
+	}
+
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
 		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
-		for (int i = 0; i < childs.count; i++)
+		for (int i = 0; i < getRowsCount(); i++)
 		{
-			if (childs[i]->Visible)
-				childs[i]->Draw(thisElementRect);
+			for (int j = 0; j < getColumnsCount(); j++)
+			{
+				if (elements[i][j] != NULL && elements[i][j]->Visible)
+					elements[i][j]->Draw(thisElementRect);
+			}
 		}
 	}
 
 	void updatePositions()
 	{
-		//...
-	}
+		oneElementSize = { size.x / getColumnsCount(), size.y / getRowsCount() };
+		point presentPos;
 
-	void addControlElement(controlElement* element, int row, int column)
-	{
-		//...
-		updatePositions();
-	}
-	void addRow()
-	{
-		//...
-		updatePositions();
-	}
-	void addColumn()
-	{
-		//...
-		updatePositions();
-	}
-	void delControlElement(controlElement* element, int row, int column)
-	{
-		//...
-		updatePositions();
-	}
-	void delRow(int row)
-	{
-		//...
-		updatePositions();
-	}
-	void delColumn(int column)
-	{
-		//...
-		updatePositions();
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			presentPos = pos;
+			for (int j = 0; j < getColumnsCount(); j++)
+			{
+				if (elements[i][j] != NULL)
+				{
+					elements[i][j]->pos = presentPos;
+					elements[i][j]->size = oneElementSize;
+				}
+
+				pos.x += oneElementSize.x;
+			}
+		}
 	}
 
 	int getRowsCount()
 	{
-		//...
+		return elements.count;
 	}
 	int getColumnsCount()
 	{
-		//...
+		return elements[0].count;
+	}
+
+	void addRow()
+	{
+		dynamicArray<controlElement*> addedRow;
+		addedRow.add(NULL, getRowsCount() + 1);
+		elements.add(addedRow);
+		updatePositions();
+	}
+	void addColumn()
+	{
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			elements[i].add(NULL);
+		}
+		updatePositions();
+	}
+	void addControlElement(controlElement& element, int row, int column)
+	{
+		elements[row][column] = &element;
+	}
+
+	void delControlElement(int row, int column)
+	{
+		elements[row][column] = NULL;
+	}
+	void delRow(int rowIndex)
+	{
+		elements.del(rowIndex);
+		updatePositions();
+	}
+	void delColumn(int columnIndex)
+	{
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			elements[i].del(columnIndex);
+		}
+		updatePositions();
 	}
 };
 
 controlElement* Grid_getElementsInPos(containerElement* container, point pos)
 {
-	for (int i = 0; i < container->childs.count; i++)
+	Grid* clickedGrid = static_cast<Grid*>(container);
+
+	for (int i = 0; i < clickedGrid->getRowsCount(); i++)
 	{
-		if (container->childs[i]->entersTheArea(pos))
+		for (int j = 0; j < clickedGrid->getColumnsCount(); j++)
 		{
-			return container->childs[i];
+			if (clickedGrid->elements[i][j] != NULL && clickedGrid->elements[i][j]->entersTheArea(pos))
+			{
+				return clickedGrid->elements[i][j];
+			}
 		}
 	}
 
@@ -140,13 +192,18 @@ void Grid_onFocusLost(void* elementPtr, point clickedPos)
 {
 	Grid* focusLostedGrid = static_cast<Grid*>(elementPtr);
 
-	for (int i = 0; i < focusLostedGrid->childs.count; i++)
+	for (int i = 0; i < focusLostedGrid->getRowsCount(); i++)
 	{
-		controlElement* presentChild = focusLostedGrid->childs[i];
-		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
+		for (int j = 0; j < focusLostedGrid->getColumnsCount(); j++)
+		{
+			controlElement* presentChild = focusLostedGrid->elements[i][j];
+			if (presentChild == NULL)
+				return;
+			point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
-		presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
+			callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
+			presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
+		}
 	}
 }
 void Grid_onLeftButtonDown(void* elementPtr, point clickedPos)
@@ -206,10 +263,16 @@ void Grid_onKeyDown(void* elementPtr, char key)
 {
 	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
 
-	for (int i = 0; i < keyDownedGrid->childs.count; i++)
+	for (int i = 0; i < keyDownedGrid->getRowsCount(); i++)
 	{
-		controlElement* presentChild = keyDownedGrid->childs[i];
-		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
+		for (int j = 0; j < keyDownedGrid->getColumnsCount(); j++)
+		{
+			controlElement* presentChild = keyDownedGrid->elements[i][j];
+			if (presentChild == NULL)
+				return;
+
+			callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
+		}
 	}
 }
 
@@ -217,9 +280,15 @@ void Grid_onKeyUp(void* elementPtr, char key)
 {
 	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
 
-	for (int i = 0; i < keyDownedGrid->childs.count; i++)
+	for (int i = 0; i < keyDownedGrid->getRowsCount(); i++)
 	{
-		controlElement* presentChild = keyDownedGrid->childs[i];
-		callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
+		for (int j = 0; j < keyDownedGrid->getColumnsCount(); j++)
+		{
+			controlElement* presentChild = keyDownedGrid->elements[i][j];
+			if (presentChild == NULL)
+				return;
+
+			callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
+		}
 	}
 }

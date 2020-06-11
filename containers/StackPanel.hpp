@@ -22,6 +22,7 @@ typedef enum stackPanelOrientationEnum
 };
 
 class StackPanel : public containerElement {
+	dynamicArray<controlElement*> childs;
 public:
 	stackPanelOrientationEnum stackPanelOrientation;
 	identifySetterOf(stackPanelOrientation)
@@ -44,6 +45,28 @@ public:
 		onKeyUpSystemDelegate = StackPanel_onKeyUp;
 
 		registerElement();
+	}
+
+	void addChild(controlElement* addedChild)
+	{
+		childs.add(addedChild);
+		addedChild->parent = this;
+	}
+
+	void delChild(controlElement* deletedChild)
+	{
+		childs.del(deletedChild);
+		deletedChild->parent = NULL;
+	}
+
+	controlElement* getChild(int index)
+	{
+		return childs[index];
+	}
+
+	unsigned int getChildsCount()
+	{
+		return childs.count;
 	}
 
 	void Draw(rectangle& drawFrame)
@@ -111,11 +134,12 @@ public:
 
 controlElement* StackPanel_getElementsInPos(containerElement* container, point pos)
 {
-	for (int i = 0; i < container->childs.count; i++)
+	for (int i = 0; i < container->getChildsCount(); i++)
 	{
-		if (container->childs[i]->entersTheArea(pos))
+		controlElement* presentChild = container->getChild(i);
+		if (presentChild->entersTheArea(pos))
 		{
-			return container->childs[i];
+			return presentChild;
 		}
 	}
 
@@ -154,9 +178,9 @@ void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
 {
 	StackPanel* focusLostedStackPanel = static_cast<StackPanel*>(elementPtr);
 
-	for (int i = 0; i < focusLostedStackPanel->childs.count; i++)
+	for (int i = 0; i < focusLostedStackPanel->getChildsCount(); i++)
 	{
-		controlElement* presentChild = focusLostedStackPanel->childs[i];
+		controlElement* presentChild = focusLostedStackPanel->getChild(i);
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
 		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
@@ -220,9 +244,9 @@ void StackPanel_onKeyDown(void* elementPtr, char key)
 {
 	StackPanel* keyDownedStackPanel = static_cast<StackPanel*>(elementPtr);
 
-	for (int i = 0; i < keyDownedStackPanel->childs.count; i++)
+	for (int i = 0; i < keyDownedStackPanel->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyDownedStackPanel->childs[i];
+		controlElement* presentChild = keyDownedStackPanel->getChild(i);
 		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
@@ -231,9 +255,9 @@ void StackPanel_onKeyUp(void* elementPtr, char key)
 {
 	StackPanel* keyUpedStackPanel = static_cast<StackPanel*>(elementPtr);
 
-	for (int i = 0; i < keyUpedStackPanel->childs.count; i++)
+	for (int i = 0; i < keyUpedStackPanel->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyUpedStackPanel->childs[i];
+		controlElement* presentChild = keyUpedStackPanel->getChild(i);
 		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
 	}
 }

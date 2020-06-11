@@ -14,4 +14,5 @@
 //Containers
 #include "containers/Canvas.hpp"
 #include "containers/Grid.hpp"
+#include "containers/UniformGrid.hpp"
 #include "containers/StackPanel.hpp"

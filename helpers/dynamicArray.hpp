@@ -61,7 +61,7 @@ public:
 		arr[count - 1] = element;
 		return true;
 	}
-	bool add(int elementsCount, A element)
+	bool add(A element, int elementsCount)
 	{
 		if (add(elementsCount) == false)
 			return false;
