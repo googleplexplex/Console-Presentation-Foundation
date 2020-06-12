@@ -70,6 +70,20 @@ public:
 		}
 	}
 
+	void addControlElement(controlElement& element, int row, int column)
+	{
+		if (childs.canGet(row))
+			if (childs[row].canGet(column))
+				childs[row][column] = &element;
+	}
+
+	void delControlElement(int row, int column)
+	{
+		if(childs.canGet(row))
+			if(childs[row].canGet(column))
+				childs[row][column] = NULL;
+	}
+
 	controlElement* getChild(int index)
 	{
 		int gettedChildRow = index / getColumnsCount();
@@ -124,6 +138,7 @@ public:
 	{
 		return childs.count;
 	}
+
 	int getColumnsCount()
 	{
 		return childs[0].count;
@@ -133,23 +148,16 @@ public:
 	{
 		return childs != NULL;
 	}
-	void identify() //to setRowColumn? //kill!
-	{
-		dynamicArray<controlElement*> addedRow;
-		addedRow.set(NULL);
-		childs.set(addedRow);
-	}
 
 	void addRow()
 	{
-		if (!isIdentifyed())
-		{
-			identify();
-			return;
-		}
-
 		dynamicArray<controlElement*> addedRow;
-		addedRow.add(NULL, getColumnsCount());
+
+		if (isIdentifyed())
+			addedRow.set(NULL, getColumnsCount());
+		else
+			addedRow.set(NULL);
+
 		childs.add(addedRow);
 
 		updatePositions();
@@ -158,7 +166,9 @@ public:
 	{
 		if (!isIdentifyed())
 		{
-			identify();
+			dynamicArray<controlElement*> addedRow;
+			addedRow.add(NULL);
+			childs.add(addedRow);
 			rowsCount--;
 		}
 
@@ -171,13 +181,16 @@ public:
 
 		updatePositions();
 	}
+	void delRow(int rowIndex)
+	{
+		childs.del(rowIndex);
+		updatePositions();
+	}
+
 	void addColumn()
 	{
 		if (!isIdentifyed())
-		{
-			identify();
 			return;
-		}
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
@@ -189,10 +202,7 @@ public:
 	void addColumns(int columnsCount)
 	{
 		if (!isIdentifyed())
-		{
-			identify();
-			columnsCount--;
-		}
+			return;
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
@@ -201,24 +211,11 @@ public:
 
 		updatePositions();
 	}
-	void addControlElement(controlElement& element, int row, int column)
-	{
-		//validate row/column
-		childs[row][column] = &element;
-	}
-
-	void delControlElement(int row, int column)
-	{
-		//validate row/column
-		childs[row][column] = NULL;
-	}
-	void delRow(int rowIndex)
-	{
-		childs.del(rowIndex);
-		updatePositions();
-	}
 	void delColumn(int columnIndex)
 	{
+		if (!isIdentifyed())
+			return;
+
 		for (int i = 0; i < getRowsCount(); i++)
 		{
 			childs[i].del(columnIndex);

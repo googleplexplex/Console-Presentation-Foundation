@@ -97,7 +97,7 @@ public:
 
 	inline void clean()
 	{
-		delete[] arr;
+		delete arr;
 		arr = NULL;
 		count = 0;
 	}
@@ -114,6 +114,11 @@ public:
 		return -1;
 	}
 
+	bool canGet(unsigned int index)
+	{
+		return index < count;
+	}
+
 	void delLast()
 	{
 		if (count != 0)
@@ -121,6 +126,12 @@ public:
 	}
 	void del(unsigned int index)
 	{
+		if (count == 1 && index == 0)
+		{
+			clean();
+			return;
+		}
+
 		for (int i = index + 1; i < count; i++)
 		{
 			arr[i - 1] = arr[i];
@@ -148,15 +159,6 @@ public:
 	{
 		arr = copy(copyedArray.arr, copyedArray.count * sizeof(T));
 		count = copyedArray.count;
-
-		return *this;
-	}
-	template <typename B>
-	dynamicArray<T>& operator=(const B* newArr)
-	{
-		delete arr;
-		arr = newArr;
-		count = 0;
 
 		return *this;
 	}
