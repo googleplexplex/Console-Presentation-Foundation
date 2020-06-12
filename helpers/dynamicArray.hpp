@@ -26,21 +26,21 @@ A* copy(const A* _from, int _count)
 	return ret;
 }
 
-template<typename A> struct dynamicArray //First type - array type
+template<typename T> struct dynamicArray //First type - array type
 {
-	A* arr;
+	T* arr;
 public:
 	unsigned int count;
 	dynamicArray() { arr = NULL; count = 0; }
-	dynamicArray(A* _arr, int _count) { arr = copy(_arr, _count); count = _count; }
-	dynamicArray(const A* _arr, int _count) { arr = copy(_arr, _count); count = _count; }
-	dynamicArray(char* str) : dynamicArray(str, strlen(str)) {}
-	dynamicArray(const char* str) : dynamicArray(str, strlen(str)) {}
+	dynamicArray(const T& element) { arr = element; count = 1; }
+	dynamicArray(T* _arr, int _count) { arr = copy(_arr, _count); count = _count; }
+	dynamicArray(const T* _arr, int _count) { arr = copy(_arr, _count); count = _count; }
+	dynamicArray(const char* str) { count = strlen(str); arr = copy(str, count); }
 
 	bool add(int newElementsCount)
 	{
-		A* temp = arr;
-		arr = new A[count + newElementsCount];
+		T* temp = arr;
+		arr = new T[count + newElementsCount];
 		if (!arr)
 			return false;
 		for (int i = 0; i < count; i++)
@@ -54,31 +54,66 @@ public:
 	{
 		return add(1);
 	}
-	bool add(A element)
+	bool add(T element)
 	{
 		if (add(1) == false)
 			return false;
 		arr[count - 1] = element;
 		return true;
 	}
-	bool add(A element, int elementsCount)
+	bool add(T element, int elementsCount)
 	{
+		int prevCount = count;
 		if (add(elementsCount) == false)
 			return false;
 
-		for (int i = 0; i < count - elementsCount; i++)
+		for (int i = 0; i < elementsCount; i++)
 		{
-			arr[i + count - elementsCount] = element;
+			arr[prevCount + i] = element;
 		}
 
 		return true;
 	}
+
+	void set(T element, int elementsCount)
+	{
+		delete arr;
+
+		arr = new T[elementsCount];
+		for (int i = 0; i < elementsCount; i++)
+		{
+			arr[i] = element;
+		}
+		count = elementsCount;
+	}
+	void set(T element)
+	{
+		delete arr;
+
+		arr = new T();
+		arr[0] = element;
+		count = 1;
+	}
+
 	inline void clean()
 	{
 		delete[] arr;
 		arr = NULL;
 		count = 0;
 	}
+
+	int find(T element)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			if (arr[i] == element)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	void delLast()
 	{
 		if (count != 0)
@@ -92,44 +127,55 @@ public:
 		}
 		count--;
 	}
-	int find(A element)
-	{
-		for (int i = 0; i < count; i++)
-		{
-			if (arr[i] == element)
-			{
-				return i;
-			}
-		}
-		return -1;
-	}
-	void del(A element)
+	void del(T element)
 	{
 		int deletedElement = find(element);
 		if (deletedElement == -1)
 			return;
 		del(deletedElement);
 	}
+
 	unsigned int getSize()
 	{
-		return (sizeof(A) * count);
+		return (sizeof(T) * count);
 	}
-	A &operator[](int elementId)
+
+	T &operator[](int elementId)
 	{
 		return arr[elementId];
 	}
-	dynamicArray<A>& operator=(dynamicArray<A>& copyedArray)
+	dynamicArray<T>& operator=(dynamicArray<T>& copyedArray)
 	{
-		arr = copy(copyedArray.arr, copyedArray.count * sizeof(A));
+		arr = copy(copyedArray.arr, copyedArray.count * sizeof(T));
 		count = copyedArray.count;
 
 		return *this;
 	}
-	dynamicArray<A>& operator=(char* str)
+	template <typename B>
+	dynamicArray<T>& operator=(const B* newArr)
 	{
-		count = strlen(str);
-		arr = copy(str, count);
+		delete arr;
+		arr = newArr;
+		count = 0;
 
 		return *this;
+	}
+	dynamicArray<T>& operator=(decltype(NULL) settedNull)
+	{
+		delete arr;
+		arr = (T*)settedNull;
+		count = 0;
+
+		return *this;
+	}
+	template <typename B>
+	bool operator==(const B& ptr)
+	{
+		return ((void*)arr == (void*)ptr);
+	}
+	template <typename B>
+	bool operator!=(const B& ptr)
+	{
+		return ((void*)arr != (void*)ptr);
 	}
 };

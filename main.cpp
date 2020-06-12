@@ -4,9 +4,8 @@ using namespace std;
 
 int main(void)
 {
-	enableMouse();
-
-	StackPanel mainCont({ 0, 0 }, { 15, 15 }, Horizontal);
+	UniformGrid mainCont({ 0, 0 }, { 0, 0 }, black);
+	mainCont.setRowsColumnsCount(3, 3);
 	setMainContainer(mainCont);
 
 	TextBlock testTextBock({ 0, 0 }, (char*)"TB1");

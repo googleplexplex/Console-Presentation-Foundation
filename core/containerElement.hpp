@@ -4,20 +4,19 @@
 class containerElement : public controlElement
 {
 public:
-	virtual void addControlElement(controlElement* element) = 0;
 	virtual void addChild(controlElement* addedChild) = 0;
 
-	virtual void delControlElement(controlElement* element) = 0;
 	virtual void delChild(controlElement* deleteddChild) = 0;
 
 	virtual controlElement* getChild(int index) = 0;
 	virtual unsigned int getChildsCount() = 0;
 }; 
+
 void _setParent(void* _child, void* _parent)
 {
 	containerElement* parent = static_cast<containerElement*>(_parent);
 	controlElement* child = static_cast<containerElement*>(_child);
-	parent->addControlElement(child);
+	parent->addChild(child);
 }
 
 void addChild(containerElement* parent, dynamicArray<controlElement*>& parentChilds, controlElement* addedChild)

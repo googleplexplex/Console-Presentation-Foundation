@@ -12,10 +12,6 @@ bool getMouseRightButtonState()
 {
 	return (GetAsyncKeyState(VK_RBUTTON) != 0);
 }
-void enableMouse()
-{
-	SetConsoleMode(consoleHWND, ENABLE_MOUSE_INPUT);
-}
 
 POINT getMouseGlobalPos()
 {

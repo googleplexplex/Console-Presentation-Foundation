@@ -25,6 +25,9 @@ public:
 		size = _size;
 		background = _background;
 
+		childs = NULL;
+		oneElementSize = { 0, 0 };
+
 		onFocusSystemDelegate = UniformGrid_onFocus;
 		onFocusLostSystemDelegate = UniformGrid_onFocusLost;
 		onClickSystemDelegate = UniformGrid_onClick;
@@ -40,8 +43,16 @@ public:
 
 	void addChild(controlElement* addedChild)
 	{
+		if (childs.count == 0)
+			addRow();
+
+		if (childs[0][0] != NULL)
+			childs[0][0]->parent = NULL;
+
 		childs[0][0] = addedChild;
 		addedChild->parent = this;
+
+		updatePositions(); //fix second call after addRow()
 	}
 
 	void delChild(controlElement* deletedChild)
@@ -103,10 +114,11 @@ public:
 					childs[i][j]->size = oneElementSize;
 				}
 
-				pos.x += oneElementSize.x;
+				presentPos.x += oneElementSize.x;
 			}
 		}
 	}
+
 
 	int getRowsCount()
 	{
@@ -117,28 +129,87 @@ public:
 		return childs[0].count;
 	}
 
-	void addRow()
+	bool isIdentifyed()
+	{
+		return childs != NULL;
+	}
+	void identify() //to setRowColumn? //kill!
 	{
 		dynamicArray<controlElement*> addedRow;
-		addedRow.add(NULL, getRowsCount() + 1);
+		addedRow.set(NULL);
+		childs.set(addedRow);
+	}
+
+	void addRow()
+	{
+		if (!isIdentifyed())
+		{
+			identify();
+			return;
+		}
+
+		dynamicArray<controlElement*> addedRow;
+		addedRow.add(NULL, getColumnsCount());
 		childs.add(addedRow);
+
+		updatePositions();
+	}
+	void addRows(int rowsCount)
+	{
+		if (!isIdentifyed())
+		{
+			identify();
+			rowsCount--;
+		}
+
+		for (int i = 0; i < rowsCount; i++)
+		{
+			dynamicArray<controlElement*> addedRow;
+			addedRow.add(NULL, getColumnsCount());
+			childs.add(addedRow);
+		}
+
 		updatePositions();
 	}
 	void addColumn()
 	{
+		if (!isIdentifyed())
+		{
+			identify();
+			return;
+		}
+
 		for (int i = 0; i < getRowsCount(); i++)
 		{
 			childs[i].add(NULL);
 		}
+
+		updatePositions();
+	}
+	void addColumns(int columnsCount)
+	{
+		if (!isIdentifyed())
+		{
+			identify();
+			columnsCount--;
+		}
+
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			childs[i].add(NULL, columnsCount);
+		}
+
 		updatePositions();
 	}
 	void addControlElement(controlElement& element, int row, int column)
 	{
+		//validate row/column
 		childs[row][column] = &element;
 	}
 
 	void delControlElement(int row, int column)
 	{
+		//validate row/column
 		childs[row][column] = NULL;
 	}
 	void delRow(int rowIndex)
@@ -152,7 +223,24 @@ public:
 		{
 			childs[i].del(columnIndex);
 		}
+
 		updatePositions();
+	}
+
+	void setRowsColumnsCount(int rowsCount, int columnsCount)
+	{
+		for (int i = 0; i < rowsCount; i++)
+		{
+			dynamicArray<controlElement*> addedRow;
+			addedRow.set(NULL, columnsCount);
+			childs.add(addedRow);
+		}
+
+		updatePositions();
+	}
+	void setColumnsRowsCount(int columnsCount, int rowsCount)
+	{
+		setRowsColumnsCount(rowsCount, columnsCount);
 	}
 };
 
