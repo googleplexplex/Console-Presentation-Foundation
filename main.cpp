@@ -6,6 +6,7 @@ int main(void)
 {
 	UniformGrid mainCont({ 0, 0 }, { 0, 0 }, black);
 	mainCont.setRowsColumnsCount(3, 3);
+	mainCont.setHeight(0, 2);
 	setMainContainer(mainCont);
 
 	TextBlock testTextBock({ 0, 0 }, (char*)"TB1");

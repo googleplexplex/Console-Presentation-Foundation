@@ -71,6 +71,10 @@ struct point
 	{
 		return { x - right.x, y - right.y };
 	}
+	point operator/(point& right)
+	{
+		return { x / right.x, y / right.y };
+	}
 	bool operator==(point& right)
 	{
 		return ((x == right.x) && (y == right.y));

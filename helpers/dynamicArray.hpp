@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 template <typename A>
 A* copy(A* _from, int _count)
@@ -124,7 +125,7 @@ public:
 		if (count != 0)
 			count--;
 	}
-	void del(unsigned int index)
+	void delElementIn(unsigned int index)
 	{
 		if (count == 1 && index == 0)
 		{
@@ -140,10 +141,12 @@ public:
 	}
 	void del(T element)
 	{
-		int deletedElement = find(element);
-		if (deletedElement == -1)
+		int deletedElementIndex = find(element);
+
+		if (deletedElementIndex == -1)
 			return;
-		del(deletedElement);
+
+		delElementIn(deletedElementIndex);
 	}
 
 	unsigned int getSize()
@@ -180,4 +183,39 @@ public:
 	{
 		return ((void*)arr != (void*)ptr);
 	}
+
+	void show()
+	{
+		std::cout << "[";
+
+		for (int i = 0; i < count; i++)
+		{
+			std::cout << arr[i];
+
+			if (i != count - 1)
+				std::cout << ", ";
+		}
+
+		std::cout << "]";
+	}
+
+	friend std::ostream& operator<<(std::ostream& out, const dynamicArray<T>& showedArray);
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& out, const dynamicArray<T>& showedArray)
+{
+	out << "[";
+
+	for (int i = 0; i < showedArray.count; i++)
+	{
+		out << showedArray[i];
+
+		if (i != showedArray.count - 1)
+			out << ", ";
+	}
+
+	out << "]";
+
+	return out;
+}
