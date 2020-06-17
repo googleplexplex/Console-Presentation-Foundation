@@ -15,16 +15,8 @@ void UniformGrid_onRightButtonUp(void* elementPtr, point clickedPos);
 void UniformGrid_onKeyDown(void* elementPtr, char key);
 void UniformGrid_onKeyUp(void* elementPtr, char key);
 
-struct UniformGridElement
-{
-	controlElement* element;
-	unsigned int span;
-};
-const UniformGridElement emptyUniformGridElement = { NULL, 0 };
-const UniformGridElement* emptyUniformGridElementPtr = &emptyUniformGridElement;
-
 class UniformGrid : public containerElement {
-	dynamicArray<dynamicArray<UniformGridElement*>> childs;
+	dynamicArray<dynamicArray<controlElement*>> childs;
 	dynamicArray<unsigned int> widths;
 	dynamicArray<unsigned int> heights;
 	point onePointSize;
@@ -50,76 +42,52 @@ public:
 		registerElement();
 	}
 
-	void addChild(controlElement* addedChild, unsigned int span)
+	void addChild(controlElement* addedChild)
 	{
 		if (childs.count == 0)
 			addRow();
 
-		if (childs[0][0] != emptyUniformGridElementPtr)
-			childs[0][0]->element->parent = NULL;
+		if (childs[0][0] != NULL)
+			childs[0][0]->parent = NULL;
 
-		childs[0][0] = new UniformGridElement({ addedChild, span });
+		childs[0][0] = addedChild;
 		addedChild->parent = this;
 
-		updatePositions();
-	}
-	void addChild(controlElement* addedChild)
-	{
-		addChild(addedChild, 1);
+		updatePositions(); //fix second call after addRow()
 	}
 
 	void delChild(controlElement* deletedChild)
 	{
-		for (int i = 0; i < getRowsCount(); i++)
+		int findResult = -1;
+		for (int i = 0; i < childs.count; i++)
 		{
-			for (int j = 0; j < getColumnsCount(); j++)
+			findResult = childs[i].find(deletedChild);
+			if (findResult != -1)
 			{
-				if (childs[i][j]->element == deletedChild)
-				{
-					childs[i][j] = (UniformGridElement*)(emptyUniformGridElementPtr);
-				}
+				childs[i].delElementIn(findResult);
+				deletedChild->parent = NULL;
+				return;
 			}
 		}
 	}
 
-	void addControlElement(controlElement& element, unsigned int span, int row, int column)
-	{
-		if (childs.canGet(row))
-			if (childs[row].canGet(column))
-				childs[row][column] = new UniformGridElement({ &element, span });
-
-		updatePositions();
-	}
 	void addControlElement(controlElement& element, int row, int column)
 	{
-		addControlElement(element, 1, row, column);
+		if (childs.canGet(row))
+		{
+			if (childs[row].canGet(column))
+			{
+				childs[row][column] = &element;
+				updatePositions();
+			}
+		}
 	}
 
 	void delControlElement(int row, int column)
 	{
-		if(childs.canGet(row))
-			if(childs[row].canGet(column))
-				childs[row][column] = (UniformGridElement*)(emptyUniformGridElementPtr);
-	}
-
-	controlElement* getControlElement(int row, int column)
-	{
 		if (childs.canGet(row))
 			if (childs[row].canGet(column))
-				if(childs[row][column] != (UniformGridElement*)(emptyUniformGridElementPtr))
-					return childs[row][column]->element;
-
-		return NULL;
-	}
-
-	unsigned int getControlElementSpan(int row, int column)
-	{
-		if (childs.canGet(row))
-			if (childs[row].canGet(column))
-				if(childs[row][column] != (UniformGridElement*)(emptyUniformGridElementPtr))
-					return childs[row][column]->span;
-
-		return 0;
+				childs[row][column] = NULL;
 	}
 
 	controlElement* getChild(int index)
@@ -127,33 +95,12 @@ public:
 		int gettedChildRow = index / getColumnsCount();
 		int gettedChildColumn = index % getColumnsCount();
 
-		if(childs.canGet(gettedChildRow))
-			if(childs[gettedChildRow].canGet(gettedChildColumn))
-				if(childs[gettedChildRow][gettedChildColumn] != (UniformGridElement*)(emptyUniformGridElementPtr))
-					return childs[gettedChildRow][gettedChildColumn]->element;
-
-		return NULL;
+		return childs[gettedChildRow][gettedChildColumn];
 	}
 
 	unsigned int getChildsCount()
 	{
 		return getRowsCount() * getColumnsCount();
-	}
-
-	void Draw(rectangle& drawFrame)
-	{
-		rectangle thisElementRect = getRect();
-		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
-		//showGrid();
-
-		for (int i = 0; i < getRowsCount(); i++)
-		{
-			for (int j = 0; j < getColumnsCount(); j++)
-			{
-				if (childs[i][j] != (UniformGridElement*)(emptyUniformGridElementPtr) && childs[i][j]->element->Visible)
-					childs[i][j]->element->Draw(thisElementRect);
-			}
-		}
 	}
 
 	void showGrid(symbolColor gridColor = blue)
@@ -179,6 +126,21 @@ public:
 		}
 	}
 
+	void Draw(rectangle& drawFrame)
+	{
+		rectangle thisElementRect = getRect();
+		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			for (int j = 0; j < getColumnsCount(); j++)
+			{
+				if (childs[i][j] != NULL && childs[i][j]->Visible)
+					childs[i][j]->Draw(thisElementRect);
+			}
+		}
+	}
+
 	void updatePositions()
 	{
 		onePointSize = calculateOnePointSize();
@@ -188,23 +150,10 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j] != (UniformGridElement*)(emptyUniformGridElementPtr))
+				if (childs[i][j] != NULL)
 				{
-					point presentSize = { widths[j] * onePointSize.x, heights[i] * onePointSize.y };
-					childs[i][j]->element->pos = presentPos;
-
-					if(childs[i][j]->span == 1)
-						childs[i][j]->element->size = presentSize;
-					else {
-						point presentSpanSize = { 0, heights[i] * onePointSize.y };
-
-						for (int k = 0; k < childs[i][j]->span && j + k < widths.count; k++)
-						{
-							presentSpanSize.x += widths[j + k] * onePointSize.x;
-						}
-
-						childs[i][j]->element->size = presentSpanSize;
-					}
+					childs[i][j]->pos = presentPos;
+					childs[i][j]->size = { widths[j] * onePointSize.x, heights[i] * onePointSize.y };
 				}
 
 				presentPos.x += widths[j] * onePointSize.x;
@@ -292,12 +241,12 @@ public:
 
 	void addRow(unsigned int size)
 	{
-		dynamicArray<UniformGridElement*> addedRow;
+		dynamicArray<controlElement*> addedRow;
 
 		if (isIdentifyed())
-			addedRow.set((UniformGridElement*)(emptyUniformGridElementPtr), getColumnsCount());
+			addedRow.set(NULL, getColumnsCount());
 		else
-			addedRow.set((UniformGridElement*)(emptyUniformGridElementPtr));
+			addedRow.set(NULL);
 
 		childs.add(addedRow);
 		heights.add(size);
@@ -308,23 +257,22 @@ public:
 	{
 		addRow(1);
 	}
-
 	void addRows(int rowsCount, unsigned int rowsSize)
 	{
 		heights.add(rowsSize, rowsCount);
 
-		if (!isIdentifyed()) //!
+		if (!isIdentifyed())
 		{
-			dynamicArray<UniformGridElement*> addedRow;
-			addedRow.set((UniformGridElement*)(emptyUniformGridElementPtr));
+			dynamicArray<controlElement*> addedRow;
+			addedRow.add(NULL);
 			childs.add(addedRow);
 			rowsCount--;
 		}
 
 		for (int i = 0; i < rowsCount; i++)
 		{
-			dynamicArray<UniformGridElement*> addedRow;
-			addedRow.set((UniformGridElement*)(emptyUniformGridElementPtr), getColumnsCount());
+			dynamicArray<controlElement*> addedRow;
+			addedRow.add(NULL, getColumnsCount());
 			childs.add(addedRow);
 		}
 
@@ -334,7 +282,6 @@ public:
 	{
 		addRows(rowsCount, 1);
 	}
-
 	void delRow(int rowIndex)
 	{
 		heights.delElementIn(rowIndex);
@@ -349,7 +296,7 @@ public:
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
-			childs[i].add((UniformGridElement*)(emptyUniformGridElementPtr));
+			childs[i].add(NULL);
 		}
 		widths.add(size);
 
@@ -359,7 +306,6 @@ public:
 	{
 		addColumn(1);
 	}
-
 	void addColumns(int columnsCount, int columnsSize)
 	{
 		if (!isIdentifyed())
@@ -367,7 +313,7 @@ public:
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
-			childs[i].add((UniformGridElement*)(emptyUniformGridElementPtr), columnsCount);
+			childs[i].add(NULL, columnsCount);
 		}
 		widths.add(columnsSize, columnsCount);
 
@@ -377,7 +323,6 @@ public:
 	{
 		addColumns(columnsCount, 1);
 	}
-
 	void delColumn(int columnIndex)
 	{
 		if (!isIdentifyed())
@@ -396,8 +341,8 @@ public:
 	{
 		for (int i = 0; i < rowsCount; i++)
 		{
-			dynamicArray<UniformGridElement*> addedRow;
-			addedRow.set((UniformGridElement*)(emptyUniformGridElementPtr), columnsCount);
+			dynamicArray<controlElement*> addedRow;
+			addedRow.set(NULL, columnsCount);
 			childs.add(addedRow);
 		}
 		heights.set(size, rowsCount);
@@ -419,18 +364,17 @@ public:
 	}
 };
 
-controlElement* UniformGrid_getElementsInPos(UniformGrid* container, point pos)
+controlElement* UniformGrid_getElementsInPos(containerElement* container, point pos)
 {
-	for (int i = 0; i < container->getRowsCount(); i++)
-	{
-		for (int j = 0; j < container->getColumnsCount(); j++)
-		{
-			controlElement* presentChild = container->getControlElement(i, j);
+	UniformGrid* clickedUniformGrid = static_cast<UniformGrid*>(container);
 
-			if (presentChild != NULL && presentChild->entersTheArea(pos))
-			{
-				return presentChild;
-			}
+	for (int i = 0; i < clickedUniformGrid->getChildsCount(); i++)
+	{
+		controlElement* presentChild = clickedUniformGrid->getChild(i);
+
+		if (presentChild != NULL && presentChild->entersTheArea(pos))
+		{
+			return presentChild;
 		}
 	}
 

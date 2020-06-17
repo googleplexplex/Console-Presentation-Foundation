@@ -11,11 +11,11 @@ int main(void)
 
 	TextBlock testTextBlock({ 0, 0 }, (char*)"TB1");
 	testTextBlock.setText("TxtBlc1");
-	mainCont.addControlElement(testTextBlock, 2, 0, 0);
+	mainCont.addControlElement(testTextBlock, 0, 0);
 
 	TextBox testTextBox({ 0, 0 }, { 5, 5 }, (char*)"TextBox", blue, red);
 	testTextBox.ReadOnly = true;
-	mainCont.addControlElement(testTextBox, 1, 0, 2);
+	mainCont.addControlElement(testTextBox, 0, 1);
 
 	eventDispatcherMainLoop();
 
