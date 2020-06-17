@@ -9,13 +9,13 @@ int main(void)
 	mainCont.setHeight(0, 2);
 	setMainContainer(mainCont);
 
-	TextBlock testTextBock({ 0, 0 }, (char*)"TB1");
-	testTextBock.setText("TxtBlc1");
-	testTextBock.setParent(&mainCont);
+	TextBlock testTextBlock({ 0, 0 }, (char*)"TB1");
+	testTextBlock.setText("TxtBlc1");
+	mainCont.addControlElement(testTextBlock, 2, 0, 0);
 
 	TextBox testTextBox({ 0, 0 }, { 5, 5 }, (char*)"TextBox", blue, red);
 	testTextBox.ReadOnly = true;
-	testTextBox.setParent(&mainCont);
+	mainCont.addControlElement(testTextBox, 1, 0, 2);
 
 	eventDispatcherMainLoop();
 

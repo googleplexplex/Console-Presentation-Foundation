@@ -111,11 +111,6 @@ void consolePrintStr(rectangle& drawFrame, point pos, int size, char* printedStr
 	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x, pos.y + size }))
 		setStringInConsoleA(toCoord(pos), printedStr, size, (WORD)printedStrColor);
 }
-void consolePrintLine(rectangle& drawFrame, point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
-{
-	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x, pos.y + size }))
-		setLineInConsoleA(toCoord(pos), lineCharset, size, (WORD)printedLineColor);
-}
 void consolePrintRect(rectangle& drawFrame, rectangle& rect, char lineCharset = filledCharacter_5_5, symbolColor lineCharsetColor = presentTextAttribute)
 {
 	if (getTo(drawFrame, rect.firstPos) && getTo(drawFrame, rect.secondPos))
@@ -123,6 +118,16 @@ void consolePrintRect(rectangle& drawFrame, rectangle& rect, char lineCharset = 
 		SMALL_RECT srrect = toSmallRect(rect);
 		setRectInConsoleA(srrect, lineCharset, (WORD)lineCharsetColor);
 	}
+}
+void consolePrintLine(rectangle& drawFrame, point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
+{
+	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x + size, pos.y }))
+		setLineInConsoleA(toCoord(pos), lineCharset, size, (WORD)printedLineColor);
+}
+void consolePrintVerticalLine(rectangle& drawFrame, point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
+{
+	rectangle varticalLineRect = { pos, { pos.x + 1, pos.y + size} };
+	consolePrintRect(drawFrame, varticalLineRect, lineCharset, printedLineColor);
 }
 void consolePrintStrInLine(rectangle& drawFrame, point pos, int lineSize, char* printedStr, int strSize, symbolColor strColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
 {
