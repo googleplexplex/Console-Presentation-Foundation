@@ -50,7 +50,7 @@ public:
 		registerElement();
 	}
 
-	void addChild(controlElement* addedChild, unsigned int span)
+	void addChild(controlElement& addedChild, unsigned int span)
 	{
 		if (childs.count == 0)
 			addRow();
@@ -58,29 +58,36 @@ public:
 		if (childs[0][0] != emptyGridElementPtr)
 			childs[0][0]->element->parent = NULL;
 
-		childs[0][0] = new GridElement({ addedChild, span });
-		addedChild->parent = this;
+		childs[0][0] = new GridElement({ &addedChild, span });
+		addedChild.parent = this;
 
 		updatePositions();
 	}
-	void addChild(controlElement* addedChild)
+	void addChild(controlElement& addedChild)
 	{
 		addChild(addedChild, 1);
 	}
 
-	void delChild(controlElement* deletedChild)
+	void delChild(controlElement& deletedChild)
 	{
 		for (int i = 0; i < getRowsCount(); i++)
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j]->element == deletedChild)
+				if (childs[i][j]->element == &deletedChild)
 				{
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 				}
 			}
 		}
 	}
+
+	unsigned int getChildsCount()
+	{
+		return getRowsCount() * getColumnsCount();
+	}
+
+	//
 
 	void addControlElement(controlElement& element, unsigned int span, int row, int column)
 	{
@@ -133,11 +140,6 @@ public:
 					return childs[gettedChildRow][gettedChildColumn]->element;
 
 		return NULL;
-	}
-
-	unsigned int getChildsCount()
-	{
-		return getRowsCount() * getColumnsCount();
 	}
 
 	void Draw(rectangle& drawFrame)

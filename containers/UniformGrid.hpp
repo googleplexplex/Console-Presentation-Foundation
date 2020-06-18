@@ -17,11 +17,10 @@ void UniformGrid_onKeyUp(void* elementPtr, char key);
 
 class UniformGrid : public containerElement {
 	dynamicArray<dynamicArray<controlElement*>> childs;
-	dynamicArray<unsigned int> widths;
-	dynamicArray<unsigned int> heights;
-	point onePointSize;
+	point oneElementSize;
+	bool ShowGridLines;
 public:
-	UniformGrid(point _pos, point _size, symbolColor _background = black)
+	UniformGrid(point _pos, point _size, bool _showGridLines = false, symbolColor _background = black)
 	{
 		pos = _pos;
 		size = _size;
@@ -42,30 +41,37 @@ public:
 		registerElement();
 	}
 
-	void addChild(controlElement* addedChild)
+	void addChild(controlElement& addedChild)
 	{
-		if (childs.count == 0)
+		if (!isIdentifyed())
 			addRow();
 
-		if (childs[0][0] != NULL)
-			childs[0][0]->parent = NULL;
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			for (int j = 0; j < getColumnsCount(); j++)
+			{
+				if (childs[i][j] == NULL)
+				{
+					childs[i][j] = &addedChild;
+					addedChild.parent = this;
 
-		childs[0][0] = addedChild;
-		addedChild->parent = this;
-
-		updatePositions(); //fix second call after addRow()
+					updatePositions();
+					return;
+				}
+			}
+		}
 	}
 
-	void delChild(controlElement* deletedChild)
+	void delChild(controlElement& deletedChild)
 	{
 		int findResult = -1;
 		for (int i = 0; i < childs.count; i++)
 		{
-			findResult = childs[i].find(deletedChild);
+			findResult = childs[i].find(&deletedChild);
 			if (findResult != -1)
 			{
 				childs[i].delElementIn(findResult);
-				deletedChild->parent = NULL;
+				deletedChild.parent = NULL;
 				return;
 			}
 		}
@@ -92,7 +98,7 @@ public:
 
 	controlElement* getChild(int index)
 	{
-		int gettedChildRow = index / getColumnsCount();
+		int gettedChildRow = index / getRowsCount();
 		int gettedChildColumn = index % getColumnsCount();
 
 		return childs[gettedChildRow][gettedChildColumn];
@@ -105,7 +111,7 @@ public:
 
 	void showGrid(symbolColor gridColor = blue)
 	{
-		onePointSize = calculateOnePointSize();
+		oneElementSize = calculateOneElementSize();
 		point presentPos = pos;
 		rectangle thisElementRect = getRect();
 
@@ -113,23 +119,25 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				point presentSize = { widths[j] * onePointSize.x, heights[i] * onePointSize.y };
+				consolePrintLine(thisElementRect, presentPos, oneElementSize.x - 1, filledCharacter_5_5, blue);
+				consolePrintVerticalLine(thisElementRect, presentPos, oneElementSize.y - 1, filledCharacter_5_5, blue);
 
-				consolePrintLine(thisElementRect, presentPos, presentSize.x - 1, filledCharacter_5_5, blue);
-				consolePrintVerticalLine(thisElementRect, presentPos, presentSize.y - 1, filledCharacter_5_5, blue);
-
-				presentPos.x += widths[j] * onePointSize.x;
+				presentPos.x += oneElementSize.x;
 			}
 
 			presentPos.x = pos.x;
-			presentPos.y += heights[i] * onePointSize.y;
+			presentPos.y += oneElementSize.y;
 		}
 	}
 
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
-		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+
+		if (ShowGridLines)
+			showGrid();
+		else
+			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
@@ -143,7 +151,7 @@ public:
 
 	void updatePositions()
 	{
-		onePointSize = calculateOnePointSize();
+		oneElementSize = calculateOneElementSize();
 		point presentPos = pos;
 
 		for (int i = 0; i < getRowsCount(); i++)
@@ -153,83 +161,35 @@ public:
 				if (childs[i][j] != NULL)
 				{
 					childs[i][j]->pos = presentPos;
-					childs[i][j]->size = { widths[j] * onePointSize.x, heights[i] * onePointSize.y };
+					childs[i][j]->size = oneElementSize;
 				}
 
-				presentPos.x += widths[j] * onePointSize.x;
+				presentPos.x += oneElementSize.x;
 			}
 
 			presentPos.x = 0;
-			presentPos.y += heights[i] * onePointSize.y;
+			presentPos.y += oneElementSize.y;
 		}
-	}
-
-	void setHeight(unsigned int elementIndex, unsigned int newHeight)
-	{
-		heights[elementIndex] = newHeight;
-
-		updatePositions();
-	}
-
-	void setWidth(unsigned int elementIndex, unsigned int newWidth)
-	{
-		widths[elementIndex] = newWidth;
-
-		updatePositions();
-	}
-
-	unsigned int getHeight(unsigned int elementIndex)
-	{
-		return heights[elementIndex];
-	}
-
-	unsigned int getHeightsSum()
-	{
-		unsigned int result = 0;
-
-		for (int i = 0; i < heights.count; i++)
-		{
-			result += heights[i];
-		}
-
-		return result;
-	}
-
-	unsigned int getWidth(unsigned int elementIndex)
-	{
-		return widths[elementIndex];
-	}
-
-	unsigned int getWidthsSum()
-	{
-		unsigned int result = 0;
-
-		for (int i = 0; i < widths.count; i++)
-		{
-			result += widths[i];
-		}
-
-		return result;
 	}
 
 	point getOnePointSize()
 	{
-		return onePointSize;
+		return oneElementSize;
 	}
 
-	point calculateOnePointSize()
+	point calculateOneElementSize()
 	{
-		point gridSizeInPoints = { getWidthsSum(), getHeightsSum() };
-		return size / gridSizeInPoints;
+		point gridSizeInElements = { getColumnsCount(), getRowsCount() };
+		return size / gridSizeInElements;
 	}
 
 
-	int getRowsCount()
+	unsigned int getRowsCount()
 	{
 		return childs.count;
 	}
 
-	int getColumnsCount()
+	unsigned int getColumnsCount()
 	{
 		return childs[0].count;
 	}
@@ -239,28 +199,8 @@ public:
 		return childs != NULL;
 	}
 
-	void addRow(unsigned int size)
+	void addRows(int rowsCount)
 	{
-		dynamicArray<controlElement*> addedRow;
-
-		if (isIdentifyed())
-			addedRow.set(NULL, getColumnsCount());
-		else
-			addedRow.set(NULL);
-
-		childs.add(addedRow);
-		heights.add(size);
-
-		updatePositions();
-	}
-	void addRow()
-	{
-		addRow(1);
-	}
-	void addRows(int rowsCount, unsigned int rowsSize)
-	{
-		heights.add(rowsSize, rowsCount);
-
 		if (!isIdentifyed())
 		{
 			dynamicArray<controlElement*> addedRow;
@@ -278,35 +218,18 @@ public:
 
 		updatePositions();
 	}
-	void addRows(int rowsCount)
+	void addRow()
 	{
-		addRows(rowsCount, 1);
+		addRows(1);
 	}
+
 	void delRow(int rowIndex)
 	{
-		heights.delElementIn(rowIndex);
 		childs.delElementIn(rowIndex);
 		updatePositions();
 	}
 
-	void addColumn(unsigned int size)
-	{
-		if (!isIdentifyed())
-			return;
-
-		for (int i = 0; i < getRowsCount(); i++)
-		{
-			childs[i].add(NULL);
-		}
-		widths.add(size);
-
-		updatePositions();
-	}
-	void addColumn()
-	{
-		addColumn(1);
-	}
-	void addColumns(int columnsCount, int columnsSize)
+	void addColumns(int columnsCount)
 	{
 		if (!isIdentifyed())
 			return;
@@ -315,14 +238,14 @@ public:
 		{
 			childs[i].add(NULL, columnsCount);
 		}
-		widths.add(columnsSize, columnsCount);
 
 		updatePositions();
 	}
-	void addColumns(int columnsCount)
+	void addColumn()
 	{
-		addColumns(columnsCount, 1);
+		addColumns(1);
 	}
+
 	void delColumn(int columnIndex)
 	{
 		if (!isIdentifyed())
@@ -332,7 +255,6 @@ public:
 		{
 			childs[i].delElementIn(columnIndex);
 		}
-		widths.delElementIn(columnIndex);
 
 		updatePositions();
 	}
@@ -345,8 +267,6 @@ public:
 			addedRow.set(NULL, columnsCount);
 			childs.add(addedRow);
 		}
-		heights.set(size, rowsCount);
-		widths.set(size, columnsCount);
 
 		updatePositions();
 	}

@@ -57,7 +57,7 @@ public:
 		size.x = x;
 		size.y = y;
 	}
-	void setParent(void* parent)
+	void setParent(controlElement* parent)
 	{
 		_setParent(this, parent);
 	}
