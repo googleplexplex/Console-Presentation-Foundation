@@ -25,8 +25,6 @@ class StackPanel : public containerElement {
 public:
 	dynamicArray<controlElement*> childs;
 	stackPanelOrientationEnum stackPanelOrientation;
-	identifySetterOf(stackPanelOrientation)
-	identifyGetterOf(stackPanelOrientation)
 	StackPanel(point _pos, point _size, stackPanelOrientationEnum _stackPanelOrientation = Vertical, symbolColor _background = black)
 	{
 		pos = _pos;
@@ -47,27 +45,50 @@ public:
 		registerElement();
 	}
 
+
 	void addChild(controlElement& addedChild)
 	{
 		childs.add(&addedChild);
 		addedChild.parent = this;
+
+		updatePositions();
 	}
 
+	void delChild(unsigned int index)
+	{
+		childs[index]->parent = NULL;
+		childs.delElementIn(index);
+
+		updatePositions();
+	}
 	void delChild(controlElement& deletedChild)
 	{
 		childs.del(&deletedChild);
 		deletedChild.parent = NULL;
-	}
 
-	unsigned int getChildsCount()
+		updatePositions();
+	}
+	void delChild(point childPos)
 	{
-		return childs.count;
+		for (int i = 0; i < childs.count; i++)
+		{
+			if (childs[i]->entersTheArea(childPos))
+			{
+				delChild(*(childs[i]));
+				return;
+			}
+		}
 	}
 
 	controlElement* getChild(int index)
 	{
 		return childs[index];
 	}
+	unsigned int getChildsCount()
+	{
+		return childs.count;
+	}
+
 
 	void Draw(rectangle& drawFrame)
 	{
@@ -80,6 +101,7 @@ public:
 				childs[i]->Draw(thisElementRect);
 		}
 	}
+
 
 	void updatePositions()
 	{
@@ -102,31 +124,6 @@ public:
 				posPresentChild.x += childs[i]->size.x;
 			}
 		}
-	}
-
-	void addControlElement(controlElement& element)
-	{
-		addChild(element);
-		updatePositions();
-	}
-
-	void delControlElement(controlElement& element)
-	{
-		delChild(element);
-		updatePositions();
-	}
-	void delElement(int rowIndex)
-	{
-		delControlElement(*(childs[rowIndex]));
-	}
-
-	int getRowsCount()
-	{
-		return childs.count;
-	}
-	controlElement* getRowElement(int rowIndex)
-	{
-		return childs[rowIndex];
 	}
 };
 

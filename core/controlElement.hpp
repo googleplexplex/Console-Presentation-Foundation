@@ -10,6 +10,7 @@ class controlElement
 public:
 	point pos;
 	point size;
+public:
 	bool Visible = true;
 	bool Handled = true;
 	void* parent;
@@ -47,23 +48,9 @@ public:
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
-	void setPos(unsigned int x, unsigned int y)
-	{
-		pos.x = x;
-		pos.y = y;
-	}
-	void setSize(unsigned int x, unsigned int y)
-	{
-		size.x = x;
-		size.y = y;
-	}
 	void setParent(controlElement* parent)
 	{
 		_setParent(this, parent);
-	}
-	void setBackground(symbolColor _textFone)
-	{
-		background = _textFone;
 	}
 
 	point getPos()
@@ -81,9 +68,5 @@ public:
 	void* getParent()
 	{
 		return parent;
-	}
-	symbolColor getBackground()
-	{
-		return background;
 	}
 };

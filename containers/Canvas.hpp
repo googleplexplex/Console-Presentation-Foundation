@@ -37,27 +37,44 @@ public:
 		registerElement();
 	}
 
-	void addChild(controlElement& addedChild)
+
+	void addChild(controlElement& addedChild, point childPos)
 	{
 		childs.add(&addedChild);
 		addedChild.parent = this;
+		addedChild.pos = pos + childPos;
+	}
+	void addChild(controlElement& addedChild)
+	{
+		addChild(addedChild, { 0, 0 });
 	}
 
 	void delChild(controlElement& deletedChild)
 	{
 		childs.del(&deletedChild);
 		deletedChild.parent = NULL;
+		deletedChild.pos = { 0, 0 };
 	}
-
-	unsigned int getChildsCount()
+	void delChild(point deletedElementPos)
 	{
-		return childs.count;
+		for (int i = 0; i < childs.count; i++)
+		{
+			if (childs[i]->entersTheArea(deletedElementPos))
+			{
+				delChild(*(childs[i]));
+			}
+		}
 	}
 
 	controlElement* getChild(int index)
 	{
 		return childs[index];
 	}
+	unsigned int getChildsCount()
+	{
+		return childs.count;
+	}
+
 
 	void Draw(rectangle& drawFrame)
 	{
@@ -69,15 +86,6 @@ public:
 			if(childs[i]->Visible)
 				childs[i]->Draw(thisElementRect);
 		}
-	}
-
-	void addControlElement(controlElement& element)
-	{
-		addChild(element);
-	}
-	void delControlElement(controlElement& element)
-	{
-		delChild(element);
 	}
 };
 

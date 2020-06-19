@@ -89,6 +89,7 @@ struct point
 		return !((*this)==right);
 	}
 };
+constexpr point emptyPoint = { 0, 0 };
 
 struct rectangle
 {
