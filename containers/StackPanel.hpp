@@ -22,8 +22,8 @@ typedef enum stackPanelOrientationEnum
 };
 
 class StackPanel : public containerElement {
-public:
 	dynamicArray<controlElement*> childs;
+public:
 	stackPanelOrientationEnum stackPanelOrientation;
 	StackPanel(stackPanelOrientationEnum _stackPanelOrientation = Vertical, symbolColor _background = black)
 	{
@@ -46,6 +46,7 @@ public:
 	}
 
 
+	//Standart container methods
 	void addChild(controlElement& addedChild)
 	{
 		childs.add(&addedChild);
@@ -90,6 +91,7 @@ public:
 	}
 
 
+	//Drawing methods
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
@@ -103,6 +105,7 @@ public:
 	}
 
 
+	//Distribution to elements of their position
 	void updatePositions()
 	{
 		if (stackPanelOrientation == Vertical)
@@ -127,6 +130,8 @@ public:
 	}
 };
 
+
+//Container events distribution
 controlElement* StackPanel_getElementsInPos(StackPanel* container, point pos)
 {
 	for (int i = 0; i < container->getChildsCount(); i++)

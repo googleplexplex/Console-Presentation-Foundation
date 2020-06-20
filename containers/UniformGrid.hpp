@@ -42,6 +42,8 @@ public:
 		registerElement();
 	}
 
+
+	//Standart container methods
 	void addChild(controlElement& addedChild)
 	{
 		if (!isIdentifyed())
@@ -139,6 +141,26 @@ public:
 	}
 
 
+	//Drawing methods
+	void Draw(rectangle& drawFrame)
+	{
+		rectangle thisElementRect = getRect();
+
+		if (ShowGridLines)
+			showGrid();
+		else
+			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			for (int j = 0; j < getColumnsCount(); j++)
+			{
+				if (childs[i][j] != NULL && childs[i][j]->Visible)
+					childs[i][j]->Draw(thisElementRect);
+			}
+		}
+	}
+
 	void showGrid(symbolColor gridColor = blue)
 	{
 		oneElementSize = calculateOneElementSize();
@@ -160,25 +182,8 @@ public:
 		}
 	}
 
-	void Draw(rectangle& drawFrame)
-	{
-		rectangle thisElementRect = getRect();
 
-		if (ShowGridLines)
-			showGrid();
-		else
-			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
-
-		for (int i = 0; i < getRowsCount(); i++)
-		{
-			for (int j = 0; j < getColumnsCount(); j++)
-			{
-				if (childs[i][j] != NULL && childs[i][j]->Visible)
-					childs[i][j]->Draw(thisElementRect);
-			}
-		}
-	}
-
+	//Distribution to elements of their position
 	void updatePositions()
 	{
 		oneElementSize = calculateOneElementSize();
@@ -214,6 +219,7 @@ public:
 	}
 
 
+	//Additional container interaction
 	bool isIdentifyed()
 	{
 		return childs != NULL;
@@ -325,6 +331,8 @@ public:
 	}
 };
 
+
+//Container events distribution
 controlElement* UniformGrid_getElementsInPos(containerElement* container, point pos)
 {
 	UniformGrid* clickedUniformGrid = static_cast<UniformGrid*>(container);

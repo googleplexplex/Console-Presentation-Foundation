@@ -16,8 +16,8 @@ void Canvas_onKeyDown(void* elementPtr, char key);
 void Canvas_onKeyUp(void* elementPtr, char key);
 
 class Canvas : public containerElement {
-public:
 	dynamicArray<controlElement*> childs;
+public:
 	Canvas(symbolColor _background = black)
 	{
 		pos = emptyPoint;
@@ -38,6 +38,7 @@ public:
 	}
 
 
+	//Standart container methods
 	void addChild(controlElement& addedChild, point childPos)
 	{
 		childs.add(&addedChild);
@@ -76,6 +77,7 @@ public:
 	}
 
 
+	//Drawing methods
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
@@ -89,6 +91,8 @@ public:
 	}
 };
 
+
+//Container events distribution
 controlElement* Canvas_getElementsInPos(Canvas* container, point pos)
 {
 	for (int i = 0; i < container->getChildsCount(); i++)

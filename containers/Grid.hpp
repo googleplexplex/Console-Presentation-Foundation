@@ -52,6 +52,8 @@ public:
 		registerElement();
 	}
 
+
+	//Standart container methods
 	void addChild(controlElement& element, unsigned int span, int row, int column)
 	{
 		if (childs.canGet(row))
@@ -168,6 +170,7 @@ public:
 	}
 
 
+	//Drawing methods
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
@@ -211,6 +214,7 @@ public:
 	}
 
 
+	//Distribution to elements of their position
 	void updatePositions()
 	{
 		onePointSize = calculateOnePointSize();
@@ -310,6 +314,7 @@ public:
 	}
 
 
+	//Additional container interaction
 	bool isIdentifyed()
 	{
 		return childs != NULL;
@@ -465,6 +470,8 @@ public:
 	}
 };
 
+
+//Container events distribution
 controlElement* Grid_getElementsInPos(Grid* container, point pos)
 {
 	for (int i = 0; i < container->getRowsCount(); i++)
