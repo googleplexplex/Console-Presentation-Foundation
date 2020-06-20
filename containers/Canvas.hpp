@@ -18,10 +18,10 @@ void Canvas_onKeyUp(void* elementPtr, char key);
 class Canvas : public containerElement {
 public:
 	dynamicArray<controlElement*> childs;
-	Canvas(point _pos, point _size, symbolColor _background = black)
+	Canvas(symbolColor _background = black)
 	{
-		pos = _pos;
-		size = _size;
+		pos = emptyPoint;
+		size = emptyPoint;
 		background = _background;
 
 		onFocusSystemDelegate = Canvas_onFocus;

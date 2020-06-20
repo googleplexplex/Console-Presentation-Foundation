@@ -9,6 +9,10 @@ public:
 	virtual unsigned int getChildsCount() = 0;
 
 	friend void setMainContainer(containerElement& newMainContainer);
+	void setAsMainContainer()
+	{
+		setMainContainer(*this);
+	}
 }; 
 
 void _setParent(void* _child, void* _parent)

@@ -30,13 +30,14 @@ class Grid : public containerElement {
 	point onePointSize;
 public:
 	bool ShowGridLines;
-	Grid(point _pos = emptyPoint, point _size = emptyPoint, symbolColor _background = black)
+	Grid(unsigned int rowsCount = 0, unsigned int columnsCount = 0, bool _showGridLines = false, symbolColor _background = black)
 	{
-		pos = _pos;
-		size = _size;
+		pos = emptyPoint;
+		size = emptyPoint;
+		ShowGridLines = _showGridLines;
 		background = _background;
 
-		childs = NULL;
+		setRowsColumnsCount(rowsCount, columnsCount);
 
 		onFocusSystemDelegate = Grid_onFocus;
 		onFocusLostSystemDelegate = Grid_onFocusLost;
@@ -302,6 +303,9 @@ public:
 	point calculateOnePointSize()
 	{
 		point gridSizeInPoints = { getWidthsSum(), getHeightsSum() };
+		if (gridSizeInPoints.x == 0 || gridSizeInPoints.y == 0)
+			return emptyPoint;
+
 		return size / gridSizeInPoints;
 	}
 
@@ -330,7 +334,7 @@ public:
 		addRow(1);
 	}
 
-	void addRows(int rowsCount, unsigned int rowsSize)
+	void addRows(unsigned int rowsCount, unsigned int rowsSize)
 	{
 		heights.add(rowsSize, rowsCount);
 
@@ -351,19 +355,19 @@ public:
 
 		updatePositions();
 	}
-	void addRows(int rowsCount)
+	void addRows(unsigned int rowsCount)
 	{
 		addRows(rowsCount, 1);
 	}
 
-	void delRow(int rowIndex)
+	void delRow(unsigned int rowIndex)
 	{
 		heights.delElementIn(rowIndex);
 		childs.delElementIn(rowIndex);
 		updatePositions();
 	}
 
-	int getRowsCount()
+	unsigned int getRowsCount()
 	{
 		return childs.count;
 	}
@@ -387,7 +391,7 @@ public:
 		addColumn(1);
 	}
 
-	void addColumns(int columnsCount, int columnsSize)
+	void addColumns(unsigned int columnsCount, unsigned int columnsSize)
 	{
 		if (!isIdentifyed())
 			return;
@@ -400,12 +404,12 @@ public:
 
 		updatePositions();
 	}
-	void addColumns(int columnsCount)
+	void addColumns(unsigned int columnsCount)
 	{
 		addColumns(columnsCount, 1);
 	}
 
-	void delColumn(int columnIndex)
+	void delColumn(unsigned int columnIndex)
 	{
 		if (!isIdentifyed())
 			return;
@@ -419,13 +423,13 @@ public:
 		updatePositions();
 	}
 
-	int getColumnsCount()
+	unsigned int getColumnsCount()
 	{
 		return childs[0].count;
 	}
 
 
-	void setRowsColumnsCount(int rowsCount, int columnsCount, unsigned int size)
+	void setRowsColumnsCount(unsigned int rowsCount, unsigned int columnsCount, unsigned int size)
 	{
 		for (int i = 0; i < rowsCount; i++)
 		{
@@ -438,15 +442,15 @@ public:
 
 		updatePositions();
 	}
-	void setRowsColumnsCount(int rowsCount, int columnsCount)
+	void setRowsColumnsCount(unsigned int rowsCount, unsigned int columnsCount)
 	{
 		setRowsColumnsCount(rowsCount, columnsCount, 1);
 	}
-	void setColumnsRowsCount(int columnsCount, int rowsCount, unsigned int size)
+	void setColumnsRowsCount(unsigned int columnsCount, unsigned int rowsCount, unsigned int size)
 	{
 		setRowsColumnsCount(rowsCount, columnsCount, size);
 	}
-	void setColumnsRowsCount(int columnsCount, int rowsCount)
+	void setColumnsRowsCount(unsigned int columnsCount, unsigned int rowsCount)
 	{
 		setRowsColumnsCount(rowsCount, columnsCount, 1);
 	}

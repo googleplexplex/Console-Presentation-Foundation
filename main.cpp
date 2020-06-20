@@ -4,11 +4,9 @@ using namespace std;
 
 int main(void)
 {
-	Grid mainCont;
-	mainCont.setRowsColumnsCount(5, 5);
+	Grid mainCont(5, 5, true);
 	mainCont.setWidth(2, 2);
-	mainCont.ShowGridLines = true;
-	setMainContainer(mainCont);
+	mainCont.setAsMainContainer();
 
 	//...
 

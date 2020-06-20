@@ -20,13 +20,14 @@ class UniformGrid : public containerElement {
 	point oneElementSize;
 public:
 	bool ShowGridLines;
-	UniformGrid(point _pos, point _size, bool _showGridLines = false, symbolColor _background = black)
+	UniformGrid(unsigned int rowsCount = 0, unsigned int columnsCount = 0, bool _showGridLines = false, symbolColor _background = black)
 	{
-		pos = _pos;
-		size = _size;
+		pos = emptyPoint;
+		size = emptyPoint;
+		ShowGridLines = _showGridLines;
 		background = _background;
 
-		childs = NULL;
+		setRowsColumnsCount(rowsCount, columnsCount);
 
 		onFocusSystemDelegate = UniformGrid_onFocus;
 		onFocusLostSystemDelegate = UniformGrid_onFocusLost;

@@ -25,10 +25,10 @@ class StackPanel : public containerElement {
 public:
 	dynamicArray<controlElement*> childs;
 	stackPanelOrientationEnum stackPanelOrientation;
-	StackPanel(point _pos, point _size, stackPanelOrientationEnum _stackPanelOrientation = Vertical, symbolColor _background = black)
+	StackPanel(stackPanelOrientationEnum _stackPanelOrientation = Vertical, symbolColor _background = black)
 	{
-		pos = _pos;
-		size = _size;
+		pos = emptyPoint;
+		size = emptyPoint;
 		stackPanelOrientation = _stackPanelOrientation;
 		background = _background;
 
