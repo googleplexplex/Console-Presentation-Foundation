@@ -7,14 +7,16 @@
 void CheckBox_onClick(void* checkBoxPtr, point clickedPos);
 
 class CheckBox : public controlElement {
-	bool checked;
+public:
+	bool Checked;
 	symbolColor checkedColor;
 	symbolColor notCheckedColor;
-public:
-	CheckBox(point _pos, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white)
+	CheckBox(bool _checked = false, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white)
 	{
-		pos = _pos;
+		pos = emptyPoint;
 		size = { 1, 1 };
+		Checked = _checked;
+
 		checkedColor = _checkedColor;
 		notCheckedColor = _notCheckedColor;
 
@@ -24,43 +26,25 @@ public:
 		registerElement();
 	}
 
+	//Drawing methods
 	void Draw(rectangle drawFrame)
 	{
-		if (checked)
+		if (Checked)
 			consolePrintCharset(drawFrame, pos, filledCharacter_5_5, checkedColor);
 		else
 			consolePrintCharset(drawFrame, pos, filledCharacter_5_5, notCheckedColor);
 	}
 
-	void setState(bool settedState)
-	{
-		checked = settedState;
-	}
-	void setCheckedColor(symbolColor settedColor)
-	{
-		checkedColor = settedColor;
-	}
-	void setNotCheckedColor(symbolColor settedColor)
-	{
-		notCheckedColor = settedColor;
-	}
-
+	//Check box methods
 	bool isChecked()
 	{
-		return checked;
-	}
-	symbolColor getCheckedColor()
-	{
-		return checkedColor;
-	}
-	symbolColor getNotCheckedColor()
-	{
-		return notCheckedColor;
+		return Checked;
 	}
 };
 
+//System delegates
 void CheckBox_onClick(void* checkBoxPtr, point clickedPos)
 {
 	CheckBox* checkBox = static_cast<CheckBox*>(checkBoxPtr);
-	checkBox->setState(!(checkBox->isChecked()));
+	checkBox->Checked = !(checkBox->Checked);
 }

@@ -7,12 +7,12 @@
 
 
 class TextBlock : public controlElement, public textModule {
+public:
 	orientationXEnum orientationX;
 	orientationYEnum orientationY;
-public:
-	TextBlock(point _pos, char* _text = (char*)"TextBlock", point _size = { 0, 0 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, symbolColor _textColor = white, symbolColor _background = black)
+	TextBlock(char* _text = (char*)"TextBlock", point _size = { 0, 0 }, orientationXEnum _orientationX = centerX, orientationYEnum _orientationY = centerY, symbolColor _textColor = white, symbolColor _background = black)
 	{
-		pos = _pos;
+		pos = emptyPoint;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
 		size.x = (_size.x == 0) ? (_size.x) : (textLength);
@@ -27,6 +27,8 @@ public:
 		registerElement();
 	}
 
+
+	//Drawing methods
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
@@ -35,6 +37,8 @@ public:
 		consolePrintStr(drawFrame, getTextPos(), textLength, text, collectColor(textColor, background));
 	}
 
+
+	//Text block methods
 	void setText(char* settedText, unsigned int settedTextLength)
 	{
 		textLength = settedTextLength;
@@ -56,15 +60,6 @@ public:
 		setText((char*)settedText, settedTextLength);
 	}
 
-	void setOrientationX(orientationXEnum newOrientation)
-	{
-		orientationX = newOrientation;
-	}
-	void setOrientationY(orientationYEnum newOrientation)
-	{
-		orientationY = newOrientation;
-	}
-
 	point getTextPos()
 	{
 		point result;
@@ -84,13 +79,5 @@ public:
 			result.y = pos.y + size.y - 1;
 
 		return result;
-	}
-	orientationXEnum getOrientationX()
-	{
-		return orientationX;
-	}
-	orientationYEnum getOrientationY()
-	{
-		return orientationY;
 	}
 };

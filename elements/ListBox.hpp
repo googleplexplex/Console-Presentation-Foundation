@@ -6,6 +6,7 @@
 #include "helpers\helpFunctions.hpp"
 #include "helpers\dynamicArray.hpp"
 
+
 class CharPtr_InterpretedToString : public IInterpretedToString
 {
 public:
@@ -25,7 +26,7 @@ public:
 	}
 	~CharPtr_InterpretedToString()
 	{
-		delete[] string;
+		delete string;
 	}
 
 	char* ToString()
@@ -39,14 +40,14 @@ void listBox_onClick(void* listBoxPtr, point clickedPos);
 class ListBox : public controlElement {
 	dynamicArray<IInterpretedToString*> items;
 	unsigned int selectedItem;
+public:
 	symbolColor itemTextColor;
 	symbolColor itemFoneColor;
 	symbolColor selectedItemTextColor;
 	symbolColor selectedItemFoneColor;
-public:
-	ListBox(point _pos, unsigned int _sizex, unsigned int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
+	ListBox(unsigned int _sizex, unsigned int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
 	{
-		pos = _pos;
+		pos = emptyPoint;
 		size = { _sizex, _elementsCount };
 		selectedItem = -1;
 		itemTextColor = _itemTextColor;
@@ -61,6 +62,8 @@ public:
 		registerElement();
 	}
 
+
+	//Drawing methods
 	void Draw(rectangle& drawFrame)
 	{
 		for (int i = 0; i < items.count || i < size.y; i++)
@@ -76,18 +79,33 @@ public:
 		}
 	}
 
+
+	//List box methods
 	void addItem(IInterpretedToString* item)
 	{
 		items.add(item);
 	}
 	void addItem(char* item)
 	{
-		items.add(new CharPtr_InterpretedToString(item));
+		addItem(new CharPtr_InterpretedToString(item));
 	}
 	void addItem(const char* item)
 	{
-		items.add(new CharPtr_InterpretedToString((char*)item));
+		addItem(new CharPtr_InterpretedToString((char*)item));
 	}
+	void insertItem(IInterpretedToString* item, unsigned int insertedIndex)
+	{
+		items.insert(item, insertedIndex);
+	}
+	void insertItem(char* item, unsigned int insertedIndex)
+	{
+		insertItem(new CharPtr_InterpretedToString(item), insertedIndex);
+	}
+	void insertItem(const char* item, unsigned int insertedIndex)
+	{
+		insertItem(new CharPtr_InterpretedToString((char*)item), insertedIndex);
+	}
+
 	void deleteItem(IInterpretedToString* item)
 	{
 		items.del(item);
@@ -102,10 +120,18 @@ public:
 		IInterpretedToString* deletedElementIndex = findItem((char*)item);
 		items.del(deletedElementIndex);
 	}
+	void deleteItem(unsigned int index)
+	{
+		items.delElementIn(index);
+	}
 
-	void popItem()
+	void popBackItem()
 	{
 		items.delLast();
+	}
+	void popFrontItem()
+	{
+		items.delFirst();
 	}
 	void clearItems()
 	{
@@ -116,7 +142,7 @@ public:
 	{
 		return items.count;
 	}
-	IInterpretedToString* getItem(int index)
+	IInterpretedToString* getItem(unsigned int index)
 	{
 		return items[index];
 	}
@@ -146,6 +172,8 @@ public:
 	friend void listBox_onClick(void* listBoxPtr, point clickedPos);
 };
 
+
+//System delegates
 void listBox_onClick(void* listBoxPtr, point clickedPos)
 {
 	ListBox* listBox = static_cast<ListBox*>(listBoxPtr);

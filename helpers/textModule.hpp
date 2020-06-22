@@ -6,13 +6,35 @@ constexpr char backspace = 8;
 constexpr char tab = 9;
 constexpr char enter = 10;
 
+bool isENLitera(char charset)
+{
+	return (('a' <= charset && charset >= 'z') || ('A' <= charset && charset >= 'Z'));
+}
+bool isRULitera(char charset)
+{
+	return (('à' <= charset && charset >= 'ÿ') || ('À' <= charset && charset >= 'ß'));
+}
+dynamicArray<char> allPunctuationMarks = "~`!@\"#¹$;%^:&?*()-_+=\\|/{[}].,<>";
+bool isPunctuationMark(char charset)
+{
+	int findResult = allPunctuationMarks.find(charset);
+	return (findResult != -1);
+}
+dynamicArray<char> allNumbers = "0123456789";
+bool isNum(char charset)
+{
+	int findResult = allNumbers.find(charset);
+	return (findResult != -1);
+}
+
 class textModule
 {
 protected:
 	char* text;
 	unsigned int textLength;
-	symbolColor textColor;
 public:
+	symbolColor textColor;
+
 	~textModule()
 	{
 		delete[] text;
@@ -79,9 +101,5 @@ public:
 	int getTextLength()
 	{
 		return textLength;
-	}
-	symbolColor getSymbolColor()
-	{
-		return textColor;
 	}
 };

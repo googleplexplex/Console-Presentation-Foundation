@@ -7,10 +7,10 @@
 
 class Button : public controlElement, public textModule {
 public:
-	Button(point _pos, point _size, char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)
+	Button(char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
-		pos = _pos;
-		size = _size;
+		pos = emptyPoint;
+		size = emptyPoint;
 		textLength = strlen(_text);
 		text = stringCopy(_text, textLength);
 		background = _foneColor;
@@ -23,6 +23,8 @@ public:
 		registerElement();
 	}
 
+
+	//Drawing methods
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
@@ -31,6 +33,7 @@ public:
 		consolePrintStr(drawFrame, getTextPos(), textLength, text, collectColor(textColor, background));
 	}
 
+private:
 	point getTextPos()
 	{
 		point result = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };

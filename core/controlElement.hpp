@@ -5,6 +5,8 @@
 #include "shell\graphics.hpp"
 
 void _setParent(void* _child, void* _parent);
+
+//Control Element Interface
 class controlElement
 {
 public:

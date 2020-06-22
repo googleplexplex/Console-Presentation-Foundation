@@ -44,11 +44,13 @@ public:
 		arr = new T[count + newElementsCount];
 		if (!arr)
 			return false;
+
 		for (int i = 0; i < count; i++)
 		{
 			arr[i] = temp[i];
 		}
 		count += newElementsCount;
+
 		return true;
 	}
 	bool add()
@@ -96,6 +98,24 @@ public:
 		count = 1;
 	}
 
+	void insert(T element, unsigned int insertedIndex)
+	{
+		T* temp = arr;
+		arr = new T[count + 1];
+
+		for (int i = 0; i < insertedIndex; i++)
+		{
+			arr[i] = temp[i];
+		}
+		arr[insertedIndex] = element;
+		for (int i = insertedIndex; i < count + 1; i++)
+		{
+			arr[i + 1] = temp[i];
+		}
+
+		count++;
+	}
+
 	inline void clean()
 	{
 		delete arr;
@@ -120,11 +140,6 @@ public:
 		return index < count;
 	}
 
-	void delLast()
-	{
-		if (count != 0)
-			count--;
-	}
 	void delElementIn(unsigned int index)
 	{
 		if (count == 1 && index == 0)
@@ -147,6 +162,14 @@ public:
 			return;
 
 		delElementIn(deletedElementIndex);
+	}
+	void delFirst()
+	{
+		delElementIn(0);
+	}
+	void delLast()
+	{
+		delElementIn(count - 1);
 	}
 
 	unsigned int getSize()

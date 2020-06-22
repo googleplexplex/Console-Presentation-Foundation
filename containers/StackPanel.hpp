@@ -136,7 +136,7 @@ controlElement* StackPanel_getElementsInPos(StackPanel* container, point pos)
 {
 	for (int i = 0; i < container->getChildsCount(); i++)
 	{
-		controlElement* presentChild = container->childs[i];
+		controlElement* presentChild = container->getChild(i);
 		if (presentChild->entersTheArea(pos))
 		{
 			return presentChild;
@@ -180,7 +180,7 @@ void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
 
 	for (int i = 0; i < focusLostedStackPanel->getChildsCount(); i++)
 	{
-		controlElement* presentChild = focusLostedStackPanel->childs[i];
+		controlElement* presentChild = focusLostedStackPanel->getChild(i);
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
 		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
@@ -246,7 +246,7 @@ void StackPanel_onKeyDown(void* elementPtr, char key)
 
 	for (int i = 0; i < keyDownedStackPanel->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyDownedStackPanel->childs[i];
+		controlElement* presentChild = keyDownedStackPanel->getChild(i);
 		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
@@ -257,7 +257,7 @@ void StackPanel_onKeyUp(void* elementPtr, char key)
 
 	for (int i = 0; i < keyUpedStackPanel->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyUpedStackPanel->childs[i];
+		controlElement* presentChild = keyUpedStackPanel->getChild(i);
 		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
 	}
 }

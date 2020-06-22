@@ -18,7 +18,8 @@ void Grid_onKeyUp(void* elementPtr, char key);
 struct GridElement
 {
 	controlElement* element;
-	unsigned int span;
+	unsigned int columnSpan;
+	unsigned int rowSpan;
 };
 const GridElement emptyGridElement = { NULL, 0 };
 const GridElement* emptyGridElementPtr = &emptyGridElement;
@@ -54,13 +55,13 @@ public:
 
 
 	//Standart container methods
-	void addChild(controlElement& element, unsigned int span, int row, int column)
+	void addChild(controlElement& element, unsigned int columnSpan, unsigned int rowSpan, unsigned int row, unsigned int column)
 	{
 		if (childs.canGet(row))
 		{
 			if (childs[row].canGet(column))
 			{
-				childs[row][column] = new GridElement({ &element, span });
+				childs[row][column] = new GridElement({ &element, columnSpan, rowSpan });
 				childs[row][column]->element->parent = this;
 			}
 		}
@@ -77,7 +78,7 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j] != emptyGridElementPtr)
+				if (childs[i][j] == emptyGridElementPtr)
 				{
 					childs[i][j] = new GridElement({ &addedChild, span });
 					childs[i][j]->element->parent = this;

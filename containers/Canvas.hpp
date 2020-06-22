@@ -141,7 +141,7 @@ void Canvas_onFocusLost(void* elementPtr, point clickedPos)
 
 	for (int i = 0; i < focusLostCanvas->getChildsCount(); i++)
 	{
-		controlElement* presentChild = focusLostCanvas->childs[i];
+		controlElement* presentChild = focusLostCanvas->getChild(i);
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
 		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
@@ -207,7 +207,7 @@ void Canvas_onKeyDown(void* elementPtr, char key)
 	
 	for (int i = 0; i < keyDownedCanvas->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyDownedCanvas->childs[i];
+		controlElement* presentChild = keyDownedCanvas->getChild(i);
 		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
 	}
 }
@@ -218,7 +218,7 @@ void Canvas_onKeyUp(void* elementPtr, char key)
 
 	for (int i = 0; i < keyUpedCanvas->getChildsCount(); i++)
 	{
-		controlElement* presentChild = keyUpedCanvas->childs[i];
+		controlElement* presentChild = keyUpedCanvas->getChild(i);
 		callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
 	}
 }
