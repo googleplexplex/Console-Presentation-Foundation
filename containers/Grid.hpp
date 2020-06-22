@@ -18,8 +18,8 @@ void Grid_onKeyUp(void* elementPtr, char key);
 struct GridElement
 {
 	controlElement* element;
-	unsigned int columnSpan;
-	unsigned int rowSpan;
+	unsigned int RowSpan;
+	unsigned int ColumnSpan;
 };
 const GridElement emptyGridElement = { NULL, 0 };
 const GridElement* emptyGridElementPtr = &emptyGridElement;
@@ -55,43 +55,26 @@ public:
 
 
 	//Standart container methods
-	void addChild(controlElement& element, unsigned int columnSpan, unsigned int rowSpan, unsigned int row, unsigned int column)
+	void addChild(controlElement& element, unsigned int row, unsigned int column, unsigned int RowSpan, unsigned int ColumnSpan)
 	{
 		if (childs.canGet(row))
 		{
 			if (childs[row].canGet(column))
 			{
-				childs[row][column] = new GridElement({ &element, columnSpan, rowSpan });
+				childs[row][column] = new GridElement({ &element, RowSpan, ColumnSpan });
 				childs[row][column]->element->parent = this;
 			}
 		}
 
 		updatePositions();
 	}
-	void addChild(controlElement& element, int row, int column)
+	void addChild(controlElement& element, unsigned int row, unsigned int column)
 	{
-		addChild(element, 1, row, column);
-	}
-	void addChild(controlElement& addedChild, unsigned int span)
-	{
-		for (int i = 0; i < getRowsCount(); i++)
-		{
-			for (int j = 0; j < getColumnsCount(); j++)
-			{
-				if (childs[i][j] == emptyGridElementPtr)
-				{
-					childs[i][j] = new GridElement({ &addedChild, span });
-					childs[i][j]->element->parent = this;
-
-					updatePositions();
-					return;
-				}
-			}
-		}
+		addChild(element, row, column, 1, 1);
 	}
 	void addChild(controlElement& addedChild)
 	{
-		addChild(addedChild, 1);
+		addChild(addedChild, 1, 1, 1, 1);
 	}
 
 	void delChild(controlElement& deletedChild)
@@ -103,7 +86,6 @@ public:
 				if (childs[i][j]->element == &deletedChild)
 				{
 					childs[i][j]->element->parent = NULL;
-					childs[i][j]->span = 0;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 				}
 			}
@@ -118,7 +100,6 @@ public:
 				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->entersTheArea(childPos))
 				{
 					childs[i][j]->element->parent = NULL;
-					childs[i][j]->span = 0;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 				}
 			}
@@ -129,7 +110,6 @@ public:
 		if (childs.canGet(row) && childs[row].canGet(column) && childs[row][column] != (GridElement*)(emptyGridElementPtr))
 		{
 			childs[row][column]->element->parent = NULL;
-			childs[row][column]->span = 0;
 			childs[row][column] = (GridElement*)(emptyGridElementPtr);
 		}
 	}
@@ -143,12 +123,21 @@ public:
 
 		return NULL;
 	}
-	unsigned int getChildSpan(int row, int column)
+	unsigned int getChildRowSpan(int row, int column)
 	{
 		if (childs.canGet(row))
 			if (childs[row].canGet(column))
 				if (childs[row][column] != (GridElement*)(emptyGridElementPtr))
-					return childs[row][column]->span;
+					return childs[row][column]->RowSpan;
+
+		return 0;
+	}
+	unsigned int getChildColumnSpan(int row, int column)
+	{
+		if (childs.canGet(row))
+			if (childs[row].canGet(column))
+				if (childs[row][column] != (GridElement*)(emptyGridElementPtr))
+					return childs[row][column]->ColumnSpan;
 
 		return 0;
 	}
@@ -230,17 +219,30 @@ public:
 					point presentSize = { widths[j] * onePointSize.x, heights[i] * onePointSize.y };
 					childs[i][j]->element->pos = presentPos;
 
-					if (childs[i][j]->span == 1)
-						childs[i][j]->element->size = presentSize;
+					if (childs[i][j]->RowSpan == 1)
+						childs[i][j]->element->size.y = presentSize.y;
 					else {
-						point presentSpanSize = { 0, heights[i] * onePointSize.y };
+						unsigned int presentSpanSize = 0;
 
-						for (int k = 0; k < childs[i][j]->span && j + k < widths.count; k++)
+						for (int k = 0; k < childs[i][j]->RowSpan && j + k < heights.count; k++)
 						{
-							presentSpanSize.x += widths[j + k] * onePointSize.x;
+							presentSpanSize += heights[j + k] * onePointSize.y;
 						}
 
-						childs[i][j]->element->size = presentSpanSize;
+						childs[i][j]->element->size.y = presentSpanSize;
+					}
+
+					if (childs[i][j]->ColumnSpan == 1)
+						childs[i][j]->element->size.x = presentSize.x;
+					else {
+						unsigned int presentSpanSize = 0;
+
+						for (int k = 0; k < childs[i][j]->ColumnSpan && j + k < widths.count; k++)
+						{
+							presentSpanSize += widths[j + k] * onePointSize.x;
+						}
+
+						childs[i][j]->element->size.x = presentSpanSize;
 					}
 				}
 
