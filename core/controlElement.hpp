@@ -18,25 +18,15 @@ public:
 	void* parent;
 	symbolColor background;
 
-	onFocus_DelegateType onFocusSystemDelegate = NULL;
-	onFocusLost_DelegateType onFocusLostSystemDelegate = NULL;
-	onClick_DelegateType onClickSystemDelegate = NULL;
-	onLeftButtonDown_DelegateType onLeftButtonDownSystemDelegate = NULL;
-	onLeftButtonUp_DelegateType onLeftButtonUpSystemDelegate = NULL;
-	onRightButtonDown_DelegateType onRightButtonDownSystemDelegate = NULL;
-	onRightButtonUp_DelegateType onRightButtonUpSystemDelegate = NULL;
-	onKeyDown_DelegateType onKeyDownSystemDelegate = NULL;
-	onKeyUp_DelegateType onKeyUpSystemDelegate = NULL;
-
-	onFocus_EventType onFocusEvent;
-	onFocusLost_EventType onFocusLostEvent;
-	onClick_EventType onClickEvent;
-	onLeftButtonDown_EventType onLeftButtonDownEvent;
-	onLeftButtonUp_EventType onLeftButtonUpEvent;
-	onRightButtonDown_EventType onRightButtonDownEvent;
-	onRightButtonUp_EventType onRightButtonUpEvent;
-	onKeyDown_EventType onKeyDownEvent;
-	onKeyUp_EventType onKeyUpEvent;
+	onFocus_EventType onFocus;
+	onFocusLost_EventType onFocusLost;
+	onClick_EventType onClick;
+	onLeftButtonDown_EventType onLeftButtonDown;
+	onLeftButtonUp_EventType onLeftButtonUp;
+	onRightButtonDown_EventType onRightButtonDown;
+	onRightButtonUp_EventType onRightButtonUp;
+	onKeyDown_EventType onKeyDown;
+	onKeyUp_EventType onKeyUp;
 
 	void registerElement()
 	{

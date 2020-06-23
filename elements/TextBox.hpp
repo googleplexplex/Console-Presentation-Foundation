@@ -7,9 +7,8 @@
 void TextBox_System_onKeyDown(void* textBoxPtr, char key);
 
 class TextBox : public controlElement, public textModule {
-	onTextChanged_DelegateType onTextChangedSystemDelegate = NULL;
 public:
-	onTextChanged_EventType onTextChangedEvent;
+	onTextChanged_EventType onTextChanged;
 	unsigned int MaxLength;
 	bool ReadOnly;
 	//todo cursor
@@ -24,9 +23,8 @@ public:
 		background = _foneColor;
 		textColor = _textColor;
 
-		onFocusSystemDelegate = Default_System_OnFocus;
-		onKeyDownSystemDelegate = TextBox_System_onKeyDown;
-		onTextChangedSystemDelegate = NULL;
+		onFocus += Default_System_OnFocus;
+		onKeyDown += TextBox_System_onKeyDown;
 
 		registerElement();
 	}

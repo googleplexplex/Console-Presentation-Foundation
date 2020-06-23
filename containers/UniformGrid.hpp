@@ -5,15 +5,15 @@
 #include "helpers\helpFunctions.hpp"
 
 
-void UniformGrid_onFocus(void* elementPtr, point clickedPos);
-void UniformGrid_onFocusLost(void* elementPtr, point clickedPos);
-void UniformGrid_onClick(void* elementPtr, point clickedPos);
-void UniformGrid_onLeftButtonDown(void* elementPtr, point clickedPos);
-void UniformGrid_onLeftButtonUp(void* elementPtr, point clickedPos);
-void UniformGrid_onRightButtonDown(void* elementPtr, point clickedPos);
-void UniformGrid_onRightButtonUp(void* elementPtr, point clickedPos);
-void UniformGrid_onKeyDown(void* elementPtr, char key);
-void UniformGrid_onKeyUp(void* elementPtr, char key);
+void UniformGrid_Dispatch_onFocus(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onFocusLost(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onClick(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onLeftButtonDown(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onLeftButtonUp(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
+void UniformGrid_Dispatch_onKeyDown(void* elementPtr, char key);
+void UniformGrid_Dispatch_onKeyUp(void* elementPtr, char key);
 
 class UniformGrid : public containerElement {
 	dynamicArray<dynamicArray<controlElement*>> childs;
@@ -29,15 +29,15 @@ public:
 
 		setRowsColumnsCount(rowsCount, columnsCount);
 
-		onFocusSystemDelegate = UniformGrid_onFocus;
-		onFocusLostSystemDelegate = UniformGrid_onFocusLost;
-		onClickSystemDelegate = UniformGrid_onClick;
-		onLeftButtonDownSystemDelegate = UniformGrid_onLeftButtonDown;
-		onLeftButtonUpSystemDelegate = UniformGrid_onLeftButtonUp;
-		onRightButtonDownSystemDelegate = UniformGrid_onRightButtonDown;
-		onRightButtonUpSystemDelegate = UniformGrid_onRightButtonUp;
-		onKeyDownSystemDelegate = UniformGrid_onKeyDown;
-		onKeyUpSystemDelegate = UniformGrid_onKeyUp;
+		onFocus += UniformGrid_Dispatch_onFocus;
+		onFocusLost += UniformGrid_Dispatch_onFocusLost;
+		onClick += UniformGrid_Dispatch_onClick;
+		onLeftButtonDown += UniformGrid_Dispatch_onLeftButtonDown;
+		onLeftButtonUp += UniformGrid_Dispatch_onLeftButtonUp;
+		onRightButtonDown += UniformGrid_Dispatch_onRightButtonDown;
+		onRightButtonUp += UniformGrid_Dispatch_onRightButtonUp;
+		onKeyDown += UniformGrid_Dispatch_onKeyDown;
+		onKeyUp += UniformGrid_Dispatch_onKeyUp;
 
 		registerElement();
 	}
@@ -353,7 +353,7 @@ controlElement* UniformGrid_getElementsInPos(containerElement* container, point 
 	return NULL;
 }
 
-void UniformGrid_onClick(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onClick(void* elementPtr, point clickedPos)
 {
 	UniformGrid* clickedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 	controlElement* clickedElement = UniformGrid_getElementsInPos(clickedUniformGrid, clickedPos);
@@ -362,11 +362,10 @@ void UniformGrid_onClick(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
 
-		callDelegate<void*, point>(clickedElement->onClickSystemDelegate, clickedElement, clickedPosRelativeElement);
-		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
+		clickedElement->onClick.call(clickedElement, clickedPosRelativeElement);
 	}
 }
-void UniformGrid_onFocus(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onFocus(void* elementPtr, point clickedPos)
 {
 	UniformGrid* focusedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 	controlElement* elementInFocus = UniformGrid_getElementsInPos(focusedUniformGrid, clickedPos);
@@ -377,11 +376,10 @@ void UniformGrid_onFocus(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - elementInFocus->pos;
 
-		callDelegate<void*, point>(elementInFocus->onFocusSystemDelegate, elementInFocus, clickedPosRelativeElement);
-		elementInFocus->onFocusEvent.call(elementInFocus, clickedPosRelativeElement);
+		elementInFocus->onFocus.call(elementInFocus, clickedPosRelativeElement);
 	}
 }
-void UniformGrid_onFocusLost(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onFocusLost(void* elementPtr, point clickedPos)
 {
 	UniformGrid* focusLostedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 
@@ -394,12 +392,11 @@ void UniformGrid_onFocusLost(void* elementPtr, point clickedPos)
 				return;
 			point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-			callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
-			presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
+			presentChild->onFocusLost.call(presentChild, focusLostPosRelativeElement);
 		}
 	}
 }
-void UniformGrid_onLeftButtonDown(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
 	UniformGrid* leftButtonDownedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 	controlElement* onLeftButtonDownedElement = UniformGrid_getElementsInPos(leftButtonDownedUniformGrid, clickedPos);
@@ -408,11 +405,10 @@ void UniformGrid_onLeftButtonDown(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonDownedElement->pos;
 
-		callDelegate<void*, point>(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, onLeftButtonDownedElement, clickedPosRelativeElement);
-		onLeftButtonDownedElement->onLeftButtonDownEvent.call(onLeftButtonDownedElement, clickedPosRelativeElement);
+		onLeftButtonDownedElement->onLeftButtonDown.call(onLeftButtonDownedElement, clickedPosRelativeElement);
 	}
 }
-void UniformGrid_onLeftButtonUp(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
 	UniformGrid* leftButtonUpedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 	controlElement* onLeftButtonUppedElement = UniformGrid_getElementsInPos(leftButtonUpedUniformGrid, clickedPos);
@@ -421,11 +417,10 @@ void UniformGrid_onLeftButtonUp(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonUppedElement->pos;
 
-		callDelegate<void*, point>(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, onLeftButtonUppedElement, clickedPosRelativeElement);
-		onLeftButtonUppedElement->onLeftButtonUpEvent.call(onLeftButtonUppedElement, clickedPosRelativeElement);
+		onLeftButtonUppedElement->onLeftButtonUp.call(onLeftButtonUppedElement, clickedPosRelativeElement);
 	}
 }
-void UniformGrid_onRightButtonDown(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos)
 {
 	UniformGrid* rightButtonDownedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 	controlElement* onRightButtonDownedElement = UniformGrid_getElementsInPos(rightButtonDownedUniformGrid, clickedPos);
@@ -434,11 +429,10 @@ void UniformGrid_onRightButtonDown(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonDownedElement->pos;
 
-		callDelegate<void*, point>(onRightButtonDownedElement->onRightButtonDownSystemDelegate, onRightButtonDownedElement, clickedPosRelativeElement);
-		onRightButtonDownedElement->onRightButtonDownEvent.call(onRightButtonDownedElement, clickedPosRelativeElement);
+		onRightButtonDownedElement->onRightButtonDown.call(onRightButtonDownedElement, clickedPosRelativeElement);
 	}
 }
-void UniformGrid_onRightButtonUp(void* elementPtr, point clickedPos)
+void UniformGrid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos)
 {
 	UniformGrid* rightButtonUpedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 	controlElement* onRightButtonUppedElement = UniformGrid_getElementsInPos(rightButtonUpedUniformGrid, clickedPos);
@@ -447,12 +441,11 @@ void UniformGrid_onRightButtonUp(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonUppedElement->pos;
 
-		callDelegate<void*, point>(onRightButtonUppedElement->onRightButtonUpSystemDelegate, onRightButtonUppedElement, clickedPosRelativeElement);
-		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
+		onRightButtonUppedElement->onRightButtonUp.call(onRightButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 
-void UniformGrid_onKeyDown(void* elementPtr, char key)
+void UniformGrid_Dispatch_onKeyDown(void* elementPtr, char key)
 {
 	UniformGrid* keyDownedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 
@@ -464,13 +457,13 @@ void UniformGrid_onKeyDown(void* elementPtr, char key)
 
 			if (presentChild != NULL)
 			{
-				callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
+				presentChild->onKeyDown.call(presentChild, key);
 			}
 		}
 	}
 }
 
-void UniformGrid_onKeyUp(void* elementPtr, char key)
+void UniformGrid_Dispatch_onKeyUp(void* elementPtr, char key)
 {
 	UniformGrid* keyDownedUniformGrid = static_cast<UniformGrid*>(elementPtr);
 
@@ -482,7 +475,7 @@ void UniformGrid_onKeyUp(void* elementPtr, char key)
 
 			if (presentChild != NULL)
 			{
-				callDelegate<void*, char>(presentChild->onKeyUpSystemDelegate, presentChild, key);
+				presentChild->onKeyUp.call(presentChild, key);
 			}
 		}
 	}

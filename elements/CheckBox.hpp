@@ -20,8 +20,8 @@ public:
 		checkedColor = _checkedColor;
 		notCheckedColor = _notCheckedColor;
 
-		onClickSystemDelegate = CheckBox_onClick;
-		onFocusSystemDelegate = Default_System_OnFocus;
+		onClick += CheckBox_onClick;
+		onFocus += Default_System_OnFocus;
 
 		registerElement();
 	}

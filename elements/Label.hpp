@@ -17,7 +17,7 @@ public:
 		background = _background;
 		textColor = _textColor;
 
-		onFocusSystemDelegate = Default_System_OnFocus;
+		onFocus += Default_System_OnFocus;
 
 		registerElement();
 	}

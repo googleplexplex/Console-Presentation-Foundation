@@ -28,12 +28,12 @@ void eventDispatcherMainLoop()
 			dynamicArray<controlElement*> prevElementsInFocus;
 			prevElementsInFocus = elementsInFocus;
 			elementsInFocus.clean();
-			callDelegate<void*, point>(mainContainer->onFocusSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+			mainContainer->onFocus.call(mainContainer, UserInput.mouseConsolePos);
 			for (int i = 0; i < prevElementsInFocus.count; i++)
 			{
 				if (elementsInFocus[i] != prevElementsInFocus[i] && prevElementsInFocus[i] != NULL)
 				{
-					callDelegate<void*, point>(prevElementsInFocus[i]->onFocusLostSystemDelegate, prevElementsInFocus[i], UserInput.mouseConsolePos);
+					mainContainer->onFocusLost.call(prevElementsInFocus[i], UserInput.mouseConsolePos);
 					break;
 				}
 			}
@@ -42,9 +42,9 @@ void eventDispatcherMainLoop()
 			if (UserActivity.keyboardStateChanged)
 			{
 				if (UserInput.keyboardPress)
-					callDelegate<void*, char>(mainContainer->onKeyDownSystemDelegate, mainContainer, UserInput.keyboardPressedKey);
+					mainContainer->onKeyDown.call(mainContainer, UserInput.keyboardPressedKey);
 				else
-					callDelegate<void*, char>(mainContainer->onKeyUpSystemDelegate, mainContainer, UserInput.keyboardPressedKey);
+					mainContainer->onKeyUp.call(mainContainer, UserInput.keyboardPressedKey);
 			}
 
 			//Mouse events
@@ -52,22 +52,22 @@ void eventDispatcherMainLoop()
 			{
 				if (UserInput.mouseLeftPressed)
 				{
-					callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-					callDelegate<void*, point>(mainContainer->onLeftButtonDownSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+					mainContainer->onClick.call(mainContainer, UserInput.mouseConsolePos);
+					mainContainer->onLeftButtonDown.call(mainContainer, UserInput.mouseConsolePos);
 				}
 				else {
-					callDelegate<void*, point>(mainContainer->onLeftButtonUpSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+					mainContainer->onLeftButtonUp.call(mainContainer, UserInput.mouseConsolePos);
 				}
 			}
 			if (UserActivity.mouseRightButtonStateChanged)
 			{
 				if (UserInput.mouseRightPressed)
 				{
-					callDelegate<void*, point>(mainContainer->onClickSystemDelegate, mainContainer, UserInput.mouseConsolePos);
-					callDelegate<void*, point>(mainContainer->onRightButtonDownSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+					mainContainer->onClick.call(mainContainer, UserInput.mouseConsolePos);
+					mainContainer->onRightButtonDown.call(mainContainer, UserInput.mouseConsolePos);
 				}
 				else {
-					callDelegate<void*, point>(mainContainer->onRightButtonUpSystemDelegate, mainContainer, UserInput.mouseConsolePos);
+					mainContainer->onRightButtonUp.call(mainContainer, UserInput.mouseConsolePos);
 				}
 			}
 		}

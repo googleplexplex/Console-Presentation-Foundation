@@ -16,9 +16,8 @@ public:
 		background = _foneColor;
 		textColor = _textColor;
 
-		onFocusSystemDelegate = Default_System_OnFocus;
-
-		onClickEvent += _onClick;
+		onFocus += Default_System_OnFocus;
+		onClick += _onClick;
 
 		registerElement();
 	}

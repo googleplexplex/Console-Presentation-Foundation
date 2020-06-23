@@ -5,15 +5,15 @@
 #include "helpers\helpFunctions.hpp"
 
 
-void StackPanel_onFocus(void* elementPtr, point clickedPos);
-void StackPanel_onFocusLost(void* elementPtr, point clickedPos);
-void StackPanel_onClick(void* elementPtr, point clickedPos);
-void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos);
-void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos);
-void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos);
-void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos);
-void StackPanel_onKeyDown(void* elementPtr, char key);
-void StackPanel_onKeyUp(void* elementPtr, char key);
+void StackPanel_Dispatch_onFocus(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onFocusLost(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onClick(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onLeftButtonDown(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onLeftButtonUp(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
+void StackPanel_Dispatch_onKeyDown(void* elementPtr, char key);
+void StackPanel_Dispatch_onKeyUp(void* elementPtr, char key);
 
 typedef enum stackPanelOrientationEnum
 {
@@ -32,15 +32,15 @@ public:
 		stackPanelOrientation = _stackPanelOrientation;
 		background = _background;
 
-		onFocusSystemDelegate = StackPanel_onFocus;
-		onFocusLostSystemDelegate = StackPanel_onFocusLost;
-		onClickSystemDelegate = StackPanel_onClick;
-		onLeftButtonDownSystemDelegate = StackPanel_onLeftButtonDown;
-		onLeftButtonUpSystemDelegate = StackPanel_onLeftButtonUp;
-		onRightButtonDownSystemDelegate = StackPanel_onRightButtonDown;
-		onRightButtonUpSystemDelegate = StackPanel_onRightButtonUp;
-		onKeyDownSystemDelegate = StackPanel_onKeyDown;
-		onKeyUpSystemDelegate = StackPanel_onKeyUp;
+		onFocus += StackPanel_Dispatch_onFocus;
+		onFocusLost += StackPanel_Dispatch_onFocusLost;
+		onClick += StackPanel_Dispatch_onClick;
+		onLeftButtonDown += StackPanel_Dispatch_onLeftButtonDown;
+		onLeftButtonUp += StackPanel_Dispatch_onLeftButtonUp;
+		onRightButtonDown += StackPanel_Dispatch_onRightButtonDown;
+		onRightButtonUp += StackPanel_Dispatch_onRightButtonUp;
+		onKeyDown += StackPanel_Dispatch_onKeyDown;
+		onKeyUp += StackPanel_Dispatch_onKeyUp;
 
 		registerElement();
 	}
@@ -146,7 +146,7 @@ controlElement* StackPanel_getElementsInPos(StackPanel* container, point pos)
 	return NULL;
 }
 
-void StackPanel_onClick(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onClick(void* elementPtr, point clickedPos)
 {
 	StackPanel* clickedStackPanel = static_cast<StackPanel*>(elementPtr);
 	controlElement* clickedElement = StackPanel_getElementsInPos(clickedStackPanel, clickedPos);
@@ -155,11 +155,10 @@ void StackPanel_onClick(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - clickedElement->pos;
 
-		callDelegate<void*, point>(clickedElement->onClickSystemDelegate, clickedElement, clickedPosRelativeElement);
-		clickedElement->onClickEvent.call(clickedElement, clickedPosRelativeElement);
+		clickedElement->onClick.call(clickedElement, clickedPosRelativeElement);
 	}
 }
-void StackPanel_onFocus(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onFocus(void* elementPtr, point clickedPos)
 {
 	StackPanel* focusedStackPanel = static_cast<StackPanel*>(elementPtr);
 	controlElement* elementInFocus = StackPanel_getElementsInPos(focusedStackPanel, clickedPos);
@@ -170,11 +169,10 @@ void StackPanel_onFocus(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - elementInFocus->pos;
 
-		callDelegate<void*, point>(elementInFocus->onFocusSystemDelegate, elementInFocus, clickedPosRelativeElement);
-		elementInFocus->onFocusEvent.call(elementInFocus, clickedPosRelativeElement);
+		elementInFocus->onFocus.call(elementInFocus, clickedPosRelativeElement);
 	}
 }
-void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onFocusLost(void* elementPtr, point clickedPos)
 {
 	StackPanel* focusLostedStackPanel = static_cast<StackPanel*>(elementPtr);
 
@@ -183,11 +181,10 @@ void StackPanel_onFocusLost(void* elementPtr, point clickedPos)
 		controlElement* presentChild = focusLostedStackPanel->getChild(i);
 		point focusLostPosRelativeElement = clickedPos - presentChild->pos;
 
-		callDelegate<void*, point>(presentChild->onFocusLostSystemDelegate, presentChild, focusLostPosRelativeElement);
-		presentChild->onFocusLostEvent.call(presentChild, focusLostPosRelativeElement);
+		presentChild->onFocusLost.call(presentChild, focusLostPosRelativeElement);
 	}
 }
-void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onLeftButtonDown(void* elementPtr, point clickedPos)
 {
 	StackPanel* leftButtonDownedStackPanel = static_cast<StackPanel*>(elementPtr);
 	controlElement* onLeftButtonDownedElement = StackPanel_getElementsInPos(leftButtonDownedStackPanel, clickedPos);
@@ -196,11 +193,10 @@ void StackPanel_onLeftButtonDown(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonDownedElement->pos;
 
-		callDelegate<void*, point>(onLeftButtonDownedElement->onLeftButtonDownSystemDelegate, onLeftButtonDownedElement, clickedPosRelativeElement);
-		onLeftButtonDownedElement->onLeftButtonDownEvent.call(onLeftButtonDownedElement, clickedPosRelativeElement);
+		onLeftButtonDownedElement->onLeftButtonDown.call(onLeftButtonDownedElement, clickedPosRelativeElement);
 	}
 }
-void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onLeftButtonUp(void* elementPtr, point clickedPos)
 {
 	StackPanel* leftButtonUpedStackPanel = static_cast<StackPanel*>(elementPtr);
 	controlElement* onLeftButtonUppedElement = StackPanel_getElementsInPos(leftButtonUpedStackPanel, clickedPos);
@@ -209,11 +205,10 @@ void StackPanel_onLeftButtonUp(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onLeftButtonUppedElement->pos;
 
-		callDelegate<void*, point>(onLeftButtonUppedElement->onLeftButtonUpSystemDelegate, onLeftButtonUppedElement, clickedPosRelativeElement);
-		onLeftButtonUppedElement->onLeftButtonUpEvent.call(onLeftButtonUppedElement, clickedPosRelativeElement);
+		onLeftButtonUppedElement->onLeftButtonUp.call(onLeftButtonUppedElement, clickedPosRelativeElement);
 	}
 }
-void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos)
 {
 	StackPanel* rightButtonDownedStackPanel = static_cast<StackPanel*>(elementPtr);
 	controlElement* onRightButtonDownedElement = StackPanel_getElementsInPos(rightButtonDownedStackPanel, clickedPos);
@@ -222,11 +217,10 @@ void StackPanel_onRightButtonDown(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonDownedElement->pos;
 
-		callDelegate<void*, point>(onRightButtonDownedElement->onRightButtonDownSystemDelegate, onRightButtonDownedElement, clickedPosRelativeElement);
-		onRightButtonDownedElement->onRightButtonDownEvent.call(onRightButtonDownedElement, clickedPosRelativeElement);
+		onRightButtonDownedElement->onRightButtonDown.call(onRightButtonDownedElement, clickedPosRelativeElement);
 	}
 }
-void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos)
+void StackPanel_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos)
 {
 	StackPanel* rightButtonUpedStackPanel = static_cast<StackPanel*>(elementPtr);
 	controlElement* onRightButtonUppedElement = StackPanel_getElementsInPos(rightButtonUpedStackPanel, clickedPos);
@@ -235,29 +229,30 @@ void StackPanel_onRightButtonUp(void* elementPtr, point clickedPos)
 	{
 		point clickedPosRelativeElement = clickedPos - onRightButtonUppedElement->pos;
 
-		callDelegate<void*, point>(onRightButtonUppedElement->onRightButtonUpSystemDelegate, onRightButtonUppedElement, clickedPosRelativeElement);
-		onRightButtonUppedElement->onRightButtonUpEvent.call(onRightButtonUppedElement, clickedPosRelativeElement);
+		onRightButtonUppedElement->onRightButtonUp.call(onRightButtonUppedElement, clickedPosRelativeElement);
 	}
 }
 
-void StackPanel_onKeyDown(void* elementPtr, char key)
+void StackPanel_Dispatch_onKeyDown(void* elementPtr, char key)
 {
 	StackPanel* keyDownedStackPanel = static_cast<StackPanel*>(elementPtr);
 
 	for (int i = 0; i < keyDownedStackPanel->getChildsCount(); i++)
 	{
 		controlElement* presentChild = keyDownedStackPanel->getChild(i);
-		callDelegate<void*, char>(presentChild->onKeyDownSystemDelegate, presentChild, key);
+
+		presentChild->onKeyDown.call(presentChild, key);
 	}
 }
 
-void StackPanel_onKeyUp(void* elementPtr, char key)
+void StackPanel_Dispatch_onKeyUp(void* elementPtr, char key)
 {
 	StackPanel* keyUpedStackPanel = static_cast<StackPanel*>(elementPtr);
 
 	for (int i = 0; i < keyUpedStackPanel->getChildsCount(); i++)
 	{
 		controlElement* presentChild = keyUpedStackPanel->getChild(i);
-		callDelegate(presentChild->onKeyUpSystemDelegate, (void*)presentChild, key);
+
+		presentChild->onKeyUp.call(presentChild, key);
 	}
 }
