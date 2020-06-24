@@ -1,10 +1,10 @@
 #pragma once
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
-#include "helpers\IInterpretedToString.hpp"
+#include "modules\IInterpretedToString.hpp"
 #include "shell\graphics.hpp"
-#include "helpers\helpFunctions.hpp"
-#include "helpers\dynamicArray.hpp"
+#include "modules\types.hpp"
+#include "modules\dynamicArray.hpp"
 
 
 class CharPtr_InterpretedToString : public IInterpretedToString
@@ -35,6 +35,7 @@ public:
 	}
 };
 
+
 void listBox_onClick(void* listBoxPtr, point clickedPos);
 
 class ListBox : public controlElement {
@@ -45,10 +46,10 @@ public:
 	symbolColor itemFoneColor;
 	symbolColor selectedItemTextColor;
 	symbolColor selectedItemFoneColor;
-	ListBox(unsigned int _sizex, unsigned int _elementsCount, symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
+	ListBox(symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
 	{
 		pos = emptyPoint;
-		size = { _sizex, _elementsCount };
+		size = emptyPoint;
 		selectedItem = -1;
 		itemTextColor = _itemTextColor;
 		itemFoneColor = _itemFoneColor;

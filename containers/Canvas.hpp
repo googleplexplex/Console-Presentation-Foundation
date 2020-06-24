@@ -2,7 +2,8 @@
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
-#include "helpers\helpFunctions.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
 
 
 void Canvas_Dispatch_onFocus(void* elementPtr, point clickedPos);

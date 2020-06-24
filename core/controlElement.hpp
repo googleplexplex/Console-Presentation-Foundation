@@ -1,8 +1,10 @@
 #pragma once
-#include "helpers\dynamicArray.hpp"
-#include "helpers\helpFunctions.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
+
+#define getBorder(val, min, max) ((val) > (min) && (max) > (val))
 
 void _setParent(void* _child, void* _parent);
 

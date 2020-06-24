@@ -2,7 +2,8 @@
 #include "core\controlElement.hpp"
 #include "core\containerElement.hpp"
 #include "shell\interactionShell.hpp"
-#include "helpers\dynamicArray.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
 
 const unsigned int eventDispatcherDelay = 50;
 

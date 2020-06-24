@@ -1,6 +1,6 @@
 #pragma once
-#include "helpers\dynamicArray.hpp"
-#include "helpers\helpFunctions.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
 
 template <typename argType>
 class event_oneDelegateArg;

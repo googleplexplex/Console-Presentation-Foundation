@@ -2,8 +2,8 @@
 #include <iostream>
 #include <windows.h>
 #include "shell\WinConIO.hpp"
-#include "helpers\helpFunctions.hpp"
-#include "helpers\dynamicArray.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
 
 HWND consoleHWND = GetConsoleWindow();
 HANDLE consoleHandle = (HANDLE)consoleHWND;

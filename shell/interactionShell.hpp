@@ -1,7 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <conio.h>
-#include "helpers\helpFunctions.hpp"
+#include "modules\types.hpp"
 #include "shell\graphics.hpp"
 
 bool getMouseLeftButtonState()

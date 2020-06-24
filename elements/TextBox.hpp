@@ -2,7 +2,9 @@
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
-#include "helpers\helpFunctions.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
+#include "modules\textModule.hpp"
 
 void TextBox_System_onKeyDown(void* textBoxPtr, char key);
 

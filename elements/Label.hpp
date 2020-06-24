@@ -2,8 +2,10 @@
 #include "core\controlElement.hpp"
 #include "core\event.hpp"
 #include "shell\graphics.hpp"
-#include "helpers\textModule.hpp"
-#include "helpers\helpFunctions.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
+#include "modules\textModule.hpp"
+#include "modules\lowLevelStrMethods.hpp"
 
 class Label : public controlElement, public textModule
 {

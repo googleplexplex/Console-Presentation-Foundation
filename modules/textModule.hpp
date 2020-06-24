@@ -1,6 +1,8 @@
 #pragma once
 #include "shell\graphics.hpp"
-#include "helpers\helpFunctions.hpp"
+#include "modules\dynamicArray.hpp"
+#include "modules\types.hpp"
+#include "modules\lowLevelStrMethods.hpp"
 
 constexpr char backspace = 8;
 constexpr char tab = 9;
