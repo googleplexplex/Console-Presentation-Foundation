@@ -18,8 +18,6 @@ public:
 		textColor = _textColor;
 
 		onFocus += Default_System_OnFocus;
-
-		registerElement();
 	}
 
 	//Drawing methods

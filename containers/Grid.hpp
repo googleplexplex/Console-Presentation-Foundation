@@ -40,7 +40,7 @@ public:
 
 		setRowsColumnsCount(rowsCount, columnsCount);
 
-		onFocus += Grid_Dispatch_onFocus;
+		/*onFocus += Grid_Dispatch_onFocus;
 		onFocusLost += Grid_Dispatch_onFocusLost;
 		onClick += Grid_Dispatch_onClick;
 		onLeftButtonDown += Grid_Dispatch_onLeftButtonDown;
@@ -48,9 +48,7 @@ public:
 		onRightButtonDown += Grid_Dispatch_onRightButtonDown;
 		onRightButtonUp += Grid_Dispatch_onRightButtonUp;
 		onKeyDown += Grid_Dispatch_onKeyDown;
-		onKeyUp += Grid_Dispatch_onKeyUp;
-
-		registerElement();
+		onKeyUp += Grid_Dispatch_onKeyUp;*/
 	}
 
 

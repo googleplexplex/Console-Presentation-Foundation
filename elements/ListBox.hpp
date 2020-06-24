@@ -58,8 +58,6 @@ public:
 
 		onClick += listBox_onClick;
 		onFocus += Default_System_OnFocus;
-
-		registerElement();
 	}
 
 

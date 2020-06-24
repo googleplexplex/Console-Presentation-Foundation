@@ -38,8 +38,6 @@ public:
 		onRightButtonUp += UniformGrid_Dispatch_onRightButtonUp;
 		onKeyDown += UniformGrid_Dispatch_onKeyDown;
 		onKeyUp += UniformGrid_Dispatch_onKeyUp;
-
-		registerElement();
 	}
 
 

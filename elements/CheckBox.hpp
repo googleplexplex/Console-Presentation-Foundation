@@ -22,8 +22,6 @@ public:
 
 		onClick += CheckBox_onClick;
 		onFocus += Default_System_OnFocus;
-
-		registerElement();
 	}
 
 	//Drawing methods

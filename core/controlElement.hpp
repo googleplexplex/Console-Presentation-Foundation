@@ -28,11 +28,6 @@ public:
 	onKeyDown_EventType onKeyDown;
 	onKeyUp_EventType onKeyUp;
 
-	void registerElement()
-	{
-		addElementZone(getRect());
-	}
-
 	virtual void Draw(rectangle& drawFrame) = 0;
 	bool entersTheArea(point point)
 	{

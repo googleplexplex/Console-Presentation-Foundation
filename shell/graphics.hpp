@@ -187,18 +187,6 @@ struct consoleCursorInfo
 	}
 };
 
-dynamicArray<rectangle> elementsZones; //TOHIDE
-void addElementZone(rectangle elementZone)
-{
-	elementsZones.add(elementZone); //TOUP
-}
-void consoleClearElements(rectangle drawFrame)
-{
-	for (int i = 0; i < elementsZones.count; i++)
-	{
-		consolePrintRect(drawFrame, elementsZones[i], emptyAsciiChar, white);
-	}
-}
 void consoleClearAll()
 {
 	setAllConsoleCI();

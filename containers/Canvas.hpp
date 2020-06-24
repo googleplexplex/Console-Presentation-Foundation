@@ -33,8 +33,6 @@ public:
 		onRightButtonUp += Canvas_Dispatch_onRightButtonUp;
 		onKeyDown += Canvas_Dispatch_onKeyDown;
 		onKeyUp += Canvas_Dispatch_onKeyUp;
-
-		registerElement();
 	}
 
 

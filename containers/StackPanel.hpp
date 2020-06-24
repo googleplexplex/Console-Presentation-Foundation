@@ -41,8 +41,6 @@ public:
 		onRightButtonUp += StackPanel_Dispatch_onRightButtonUp;
 		onKeyDown += StackPanel_Dispatch_onKeyDown;
 		onKeyUp += StackPanel_Dispatch_onKeyUp;
-
-		registerElement();
 	}
 
 

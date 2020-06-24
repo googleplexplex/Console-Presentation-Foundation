@@ -18,8 +18,6 @@ public:
 
 		onFocus += Default_System_OnFocus;
 		onClick += _onClick;
-
-		registerElement();
 	}
 
 
