@@ -74,7 +74,6 @@ void eventDispatcherMainLoop()
 		}
 
 		//Output
-		consoleClearAll();
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
 		drawAllElements();
 		Sleep(eventDispatcherDelay);

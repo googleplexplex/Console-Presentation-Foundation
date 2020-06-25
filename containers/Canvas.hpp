@@ -43,6 +43,8 @@ public:
 		childs.add(&addedChild);
 		addedChild.parent = this;
 		addedChild.pos = pos + childPos;
+
+		needToDraw = true;
 	}
 	void addChild(controlElement& addedChild)
 	{
@@ -54,6 +56,8 @@ public:
 		childs.del(&deletedChild);
 		deletedChild.parent = NULL;
 		deletedChild.pos = { 0, 0 };
+
+		needToDraw = true;
 	}
 	void delChild(point deletedElementPos)
 	{
@@ -84,9 +88,11 @@ public:
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			if(childs[i]->Visible)
+			if(childs[i]->Visible && childs[i]->needToDraw)
 				childs[i]->Draw(thisElementRect);
 		}
+
+		needToDraw = false;
 	}
 };
 

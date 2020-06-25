@@ -14,11 +14,12 @@ class controlElement
 public:
 	point pos;
 	point size;
+	symbolColor background;
 public:
 	bool Visible = true;
 	bool Handled = true;
+	bool needToDraw = true;
 	void* parent;
-	symbolColor background;
 
 	onFocus_EventType onFocus;
 	onFocusLost_EventType onFocusLost;
@@ -41,6 +42,13 @@ public:
 	{
 		_setParent(this, parent);
 	}
+	void setBackground(symbolColor newBackground)
+	{
+		background = newBackground;
+
+		if (background != newBackground)
+			needToDraw = true;
+	}
 
 	point getPos()
 	{
@@ -57,5 +65,9 @@ public:
 	void* getParent()
 	{
 		return parent;
+	}
+	symbolColor getBackground()
+	{
+		return background;
 	}
 };

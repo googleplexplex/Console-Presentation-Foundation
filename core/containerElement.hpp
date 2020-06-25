@@ -39,6 +39,6 @@ void drawAllElements()
 		return;
 
 	rectangle mainContainerRect = mainContainer->getRect();
-	if(mainContainer->Visible)
+	if(mainContainer->Visible && mainContainer->needToDraw)
 		mainContainer->Draw(mainContainerRect);
 }

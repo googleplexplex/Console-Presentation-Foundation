@@ -52,6 +52,7 @@ public:
 		addedChild.parent = this;
 
 		updatePositions();
+		needToDraw = true;
 	}
 
 	void delChild(unsigned int index)
@@ -60,6 +61,7 @@ public:
 		childs.delElementIn(index);
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void delChild(controlElement& deletedChild)
 	{
@@ -67,6 +69,7 @@ public:
 		deletedChild.parent = NULL;
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void delChild(point childPos)
 	{
@@ -75,6 +78,8 @@ public:
 			if (childs[i]->entersTheArea(childPos))
 			{
 				delChild(*(childs[i]));
+
+				needToDraw = true;
 				return;
 			}
 		}
@@ -98,9 +103,11 @@ public:
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			if(childs[i]->Visible)
+			if(childs[i]->Visible && childs[i]->needToDraw)
 				childs[i]->Draw(thisElementRect);
 		}
+
+		needToDraw = false;
 	}
 
 

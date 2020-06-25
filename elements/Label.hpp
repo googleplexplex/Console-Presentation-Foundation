@@ -4,11 +4,10 @@
 #include "shell\graphics.hpp"
 #include "modules\dynamicArray.hpp"
 #include "modules\types.hpp"
-#include "modules\textModule.hpp"
+#include "modules\textControlElement.hpp"
 #include "modules\lowLevelStrMethods.hpp"
 
-class Label : public controlElement, public textModule
-{
+class Label : public textControlElement {
 public:
 	Label(char* _text = (char*)"Label", symbolColor _textColor = white, symbolColor _background = black)
 	{
@@ -26,5 +25,7 @@ public:
 	void Draw(rectangle drawFrame)
 	{
 		consolePrintStr(drawFrame, pos, textLength, text, collectColor(textColor, background));
+
+		needToDraw = false;
 	}
 };

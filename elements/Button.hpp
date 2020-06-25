@@ -4,10 +4,10 @@
 #include "shell\graphics.hpp"
 #include "modules\dynamicArray.hpp"
 #include "modules\types.hpp"
-#include "modules\textModule.hpp"
+#include "modules\textControlElement.hpp"
 #include "modules\lowLevelStrMethods.hpp"
 
-class Button : public controlElement, public textModule {
+class Button : public textControlElement {
 public:
 	Button(char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)
 	{
@@ -30,6 +30,8 @@ public:
 		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, background);
 
 		consolePrintStr(drawFrame, getTextPos(), textLength, text, collectColor(textColor, background));
+
+		needToDraw = false;
 	}
 
 private:

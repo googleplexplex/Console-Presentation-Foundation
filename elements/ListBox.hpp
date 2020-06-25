@@ -41,11 +41,11 @@ void listBox_onClick(void* listBoxPtr, point clickedPos);
 class ListBox : public controlElement {
 	dynamicArray<IInterpretedToString*> items;
 	unsigned int selectedItem;
-public:
 	symbolColor itemTextColor;
 	symbolColor itemFoneColor;
 	symbolColor selectedItemTextColor;
 	symbolColor selectedItemFoneColor;
+public:
 	ListBox(symbolColor _itemTextColor = white, symbolColor _itemFoneColor = black, symbolColor _selectedItemTextColor = black, symbolColor _selectedItemFoneColor = white, symbolColor _background = black)
 	{
 		pos = emptyPoint;
@@ -76,6 +76,8 @@ public:
 			rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
 			consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
 		}
+
+		needToDraw = false;
 	}
 
 
@@ -145,6 +147,7 @@ public:
 	{
 		return items[index];
 	}
+
 	IInterpretedToString* findItem(IInterpretedToString* findedObject)
 	{
 		char* findedObjectString = findedObject->ToString();
@@ -168,7 +171,77 @@ public:
 		}
 	}
 
-	friend void listBox_onClick(void* listBoxPtr, point clickedPos);
+	IInterpretedToString* getSelectedItem()
+	{
+		return items[selectedItem];
+	}
+
+
+	//Listbox Setters/Getters
+	void setSelectedItem(unsigned int newSelectedItem)
+	{
+		selectedItem = newSelectedItem;
+
+		if (selectedItem != newSelectedItem)
+			needToDraw = true;
+	}
+
+	void setItemTextColor(symbolColor newItemTextColor)
+	{
+		itemTextColor = newItemTextColor;
+
+		if(itemTextColor != newItemTextColor)
+			needToDraw = true;
+	}
+
+	void setItemFoneColor(symbolColor newItemFoneColor)
+	{
+		itemFoneColor = newItemFoneColor;
+
+		if(itemFoneColor != newItemFoneColor)
+			needToDraw = true;
+	}
+
+	void setSelectedItemTextColor(symbolColor newSelectedItemTextColor)
+	{
+		selectedItemTextColor = newSelectedItemTextColor;
+
+		if(selectedItemTextColor != newSelectedItemTextColor)
+			needToDraw = true;
+	}
+
+	void setSelectedItemFoneColor(symbolColor newSelectedItemFoneColor)
+	{
+		selectedItemFoneColor = newSelectedItemFoneColor;
+
+		if(selectedItemFoneColor != newSelectedItemFoneColor)
+			needToDraw = true;
+	}
+
+	unsigned int getSelectedItemIndex()
+	{
+		return selectedItem;
+	}
+
+	symbolColor getItemTextColor()
+	{
+		return itemTextColor;
+	}
+
+	symbolColor getItemFoneColor()
+	{
+		return itemFoneColor;
+	}
+
+	symbolColor getSelectedItemTextColor()
+	{
+		return selectedItemTextColor;
+	}
+
+	symbolColor getSelectedItemFoneColor()
+	{
+		return selectedItemFoneColor;
+	}
 };
 
 
@@ -177,8 +250,6 @@ void listBox_onClick(void* listBoxPtr, point clickedPos)
 {
 	ListBox* listBox = static_cast<ListBox*>(listBoxPtr);
 
-	if (clickedPos.y < listBox->items.count)
-	{
-		listBox->selectedItem = clickedPos.y;
-	}
+	if (clickedPos.y < listBox->getItemsCount())
+		listBox->setSelectedItem(clickedPos.y);
 }

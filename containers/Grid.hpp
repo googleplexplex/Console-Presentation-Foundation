@@ -62,10 +62,11 @@ public:
 			{
 				childs[row][column] = new GridElement({ &element, RowSpan, ColumnSpan });
 				childs[row][column]->element->parent = this;
+
+				updatePositions();
+				needToDraw = true;
 			}
 		}
-
-		updatePositions();
 	}
 	void addChild(controlElement& element, unsigned int row, unsigned int column)
 	{
@@ -73,7 +74,7 @@ public:
 	}
 	void addChild(controlElement& addedChild)
 	{
-		addChild(addedChild, 1, 1, 1, 1);
+		addChild(addedChild, 0, 0, 1, 1);
 	}
 
 	void delChild(controlElement& deletedChild)
@@ -86,6 +87,8 @@ public:
 				{
 					childs[i][j]->element->parent = NULL;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
+
+					needToDraw = true;
 				}
 			}
 		}
@@ -100,6 +103,8 @@ public:
 				{
 					childs[i][j]->element->parent = NULL;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
+
+					needToDraw = true;
 				}
 			}
 		}
@@ -173,10 +178,12 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->Visible)
+				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->Visible && childs[i][j]->element->needToDraw)
 					childs[i][j]->element->Draw(thisElementRect);
 			}
 		}
+		
+		needToDraw = false;
 	}
 
 	void showGrid(symbolColor gridColor = blue)
@@ -258,6 +265,7 @@ public:
 		heights[elementIndex] = newHeight;
 
 		updatePositions();
+		needToDraw = true;
 	}
 
 	unsigned int getHeight(unsigned int elementIndex)
@@ -282,6 +290,7 @@ public:
 		widths[elementIndex] = newWidth;
 
 		updatePositions();
+		needToDraw = true;
 	}
 
 	unsigned int getWidth(unsigned int elementIndex)
@@ -335,6 +344,7 @@ public:
 		heights.add(size);
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void addRow()
 	{
@@ -361,6 +371,7 @@ public:
 		}
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void addRows(unsigned int rowsCount)
 	{
@@ -371,7 +382,9 @@ public:
 	{
 		heights.delElementIn(rowIndex);
 		childs.delElementIn(rowIndex);
+
 		updatePositions();
+		needToDraw = true;
 	}
 
 	unsigned int getRowsCount()
@@ -392,6 +405,7 @@ public:
 		widths.add(size);
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void addColumn()
 	{
@@ -410,6 +424,7 @@ public:
 		widths.add(columnsSize, columnsCount);
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void addColumns(unsigned int columnsCount)
 	{
@@ -428,6 +443,7 @@ public:
 		widths.delElementIn(columnIndex);
 
 		updatePositions();
+		needToDraw = true;
 	}
 
 	unsigned int getColumnsCount()
@@ -448,6 +464,7 @@ public:
 		widths.set(size, columnsCount);
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void setRowsColumnsCount(unsigned int rowsCount, unsigned int columnsCount)
 	{

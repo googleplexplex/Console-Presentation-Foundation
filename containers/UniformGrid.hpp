@@ -58,6 +58,7 @@ public:
 					childs[i][j]->parent = this;
 
 					updatePositions();
+					needToDraw = true;
 					return;
 				}
 			}
@@ -73,6 +74,7 @@ public:
 				childs[row][column]->parent = this;
 
 				updatePositions();
+				needToDraw = true;
 			}
 		}
 	}
@@ -88,6 +90,7 @@ public:
 				childs[i][findResult]->parent = NULL;
 				childs[i][findResult] = NULL;
 
+				needToDraw = true;
 				return;
 			}
 		}
@@ -102,6 +105,8 @@ public:
 				{
 					childs[i][j]->parent = NULL;
 					childs[i][j] = NULL;
+
+					needToDraw = true;
 				}
 			}
 		}
@@ -113,6 +118,8 @@ public:
 		{
 			childs[row][column]->parent = NULL;
 			childs[row][column] = NULL;
+
+			needToDraw = true;
 		}
 	}
 
@@ -154,10 +161,12 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j] != NULL && childs[i][j]->Visible)
+				if (childs[i][j] != NULL && childs[i][j]->Visible && childs[i][j]->needToDraw)
 					childs[i][j]->Draw(thisElementRect);
 			}
 		}
+
+		needToDraw = false;
 	}
 
 	void showGrid(symbolColor gridColor = blue)
@@ -242,6 +251,7 @@ public:
 		}
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void addRow()
 	{
@@ -251,7 +261,9 @@ public:
 	void delRow(int rowIndex)
 	{
 		childs.delElementIn(rowIndex);
+
 		updatePositions();
+		needToDraw = true;
 	}
 
 	unsigned int getRowsCount()
@@ -271,6 +283,7 @@ public:
 		}
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void addColumn()
 	{
@@ -288,6 +301,7 @@ public:
 		}
 
 		updatePositions();
+		needToDraw = true;
 	}
 
 	unsigned int getColumnsCount()
@@ -306,6 +320,7 @@ public:
 		}
 
 		updatePositions();
+		needToDraw = true;
 	}
 	void setRowsColumnsCount(int rowsCount, int columnsCount)
 	{

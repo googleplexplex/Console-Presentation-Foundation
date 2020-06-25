@@ -29,24 +29,21 @@ bool isNum(char charset)
 	return (findResult != -1);
 }
 
-class textModule
+class textControlElement : public controlElement
 {
 protected:
 	char* text;
 	unsigned int textLength;
-public:
 	symbolColor textColor;
-
-	~textModule()
-	{
-		delete[] text;
-	}
+public:
 
 	void setText(char* settedText, unsigned int settedTextLength)
 	{
 		textLength = settedTextLength;
 		delete text;
 		text = stringCopy(settedText, textLength);
+
+		needToDraw = true;
 	}
 	void setText(char* settedText)
 	{
@@ -63,6 +60,9 @@ public:
 	void setTextColor(symbolColor settedTextColor)
 	{
 		textColor = settedTextColor;
+
+		if (textColor != settedTextColor)
+			needToDraw = true;
 	}
 	void addToText(char addedCharset)
 	{
@@ -73,6 +73,8 @@ public:
 		text[textLength + 1] = NULL;
 		textLength++;
 		delete oldText;
+
+		needToDraw = true;
 	}
 	void addToText(char* addedString, unsigned int addedStringLength)
 	{
@@ -83,6 +85,8 @@ public:
 		text[textLength + addedStringLength] = NULL;
 		textLength += addedStringLength;
 		delete oldText;
+
+		needToDraw = true;
 	}
 	void popText()
 	{
@@ -94,6 +98,8 @@ public:
 		text[textLength - 1] = NULL;
 		textLength--;
 		delete oldText;
+
+		needToDraw = true;
 	}
 
 	char* getText()

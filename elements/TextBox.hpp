@@ -4,11 +4,11 @@
 #include "shell\graphics.hpp"
 #include "modules\dynamicArray.hpp"
 #include "modules\types.hpp"
-#include "modules\textModule.hpp"
+#include "modules\textControlElement.hpp"
 
 void TextBox_System_onKeyDown(void* textBoxPtr, char key);
 
-class TextBox : public controlElement, public textModule {
+class TextBox : public textControlElement {
 public:
 	onTextChanged_EventType onTextChanged;
 	unsigned int MaxLength;
@@ -33,14 +33,14 @@ public:
 	void Draw(rectangle& drawFrame)
 	{
 		rectangle thisElementRect = getRect();
-		if (Visible)
-			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
-		
+
 		unsigned long int sizeS = size.x * size.y;
 		if(sizeS < textLength)
 			consolePrintStrInRect(drawFrame, thisElementRect, text + textLength - sizeS, sizeS, collectColor(textColor, background), filledCharacter_5_5, background);
 		else
 			consolePrintStrInRect(drawFrame, thisElementRect, text, textLength, collectColor(textColor, background), filledCharacter_5_5, background);
+
+		needToDraw = false;
 	}
 };
 
