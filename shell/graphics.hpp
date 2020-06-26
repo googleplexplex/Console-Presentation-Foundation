@@ -193,13 +193,16 @@ void consoleClearAll()
 }
 
 point prevCursorPos = emptyPoint;
+CHAR_INFO charUnderMouse = emptyCharInfo;
 symbolColor cursorColor = white;
 void showCursor(rectangle drawFrame, point cursorPos)
 {
-	setCharInConsoleA(toCoord(prevCursorPos), filledCharacter_5_5, black);
+	setCharInConsoleCI(toCoord(prevCursorPos), charUnderMouse);
 	if (getTo(drawFrame, cursorPos))
 	{
-		setCharInConsoleA(toCoord(cursorPos), filledCharacter_5_5, cursorColor);
 		prevCursorPos = cursorPos;
+		charUnderMouse = getCharFromConsoleCI(toCoord(cursorPos));
+
+		setCharInConsoleA(toCoord(cursorPos), filledCharacter_5_5, cursorColor);
 	}
 }
