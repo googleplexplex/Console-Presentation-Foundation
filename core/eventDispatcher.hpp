@@ -74,7 +74,9 @@ void eventDispatcherMainLoop()
 		}
 
 		//Output
+#ifdef SHOW_MOUSE
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
+#endif
 		drawAllElements();
 		Sleep(eventDispatcherDelay);
 	}

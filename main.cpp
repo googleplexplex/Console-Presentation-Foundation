@@ -1,4 +1,5 @@
 #include <iostream>
+#define SHOW_MOUSE
 #include "include.hpp"
 using namespace std;
 
