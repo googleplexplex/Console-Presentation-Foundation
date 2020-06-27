@@ -1,6 +1,7 @@
 #pragma once
 
 //System
+#include "core/event.hpp"
 #include "core/eventDispatcher.hpp"
 
 //Elements

@@ -30,6 +30,8 @@ public:
 	onRightButtonUp_EventType onRightButtonUp;
 	onKeyDown_EventType onKeyDown;
 	onKeyUp_EventType onKeyUp;
+	beforeDraw_EventType beforeDraw;
+	afterDraw_EventType afterDraw;
 
 	virtual void Draw(rectangle& drawFrame) = 0;
 	bool entersTheArea(point point)
@@ -38,9 +40,9 @@ public:
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
 
-	void setParent(controlElement* parent)
+	void setParent(controlElement& parent)
 	{
-		_setParent(this, parent);
+		_setParent(this, &parent);
 	}
 	void setBackground(symbolColor newBackground)
 	{

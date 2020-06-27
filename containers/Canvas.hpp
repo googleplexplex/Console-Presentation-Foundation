@@ -15,6 +15,8 @@ void Canvas_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void Canvas_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void Canvas_Dispatch_onKeyDown(void* elementPtr, char key);
 void Canvas_Dispatch_onKeyUp(void* elementPtr, char key);
+void Canvas_Dispatch_beforeDraw(void* elementPtr);
+void Canvas_Dispatch_afterDraw(void* elementPtr);
 
 class Canvas : public containerElement {
 	dynamicArray<controlElement*> childs;
@@ -34,6 +36,8 @@ public:
 		onRightButtonUp += Canvas_Dispatch_onRightButtonUp;
 		onKeyDown += Canvas_Dispatch_onKeyDown;
 		onKeyUp += Canvas_Dispatch_onKeyUp;
+		beforeDraw += Canvas_Dispatch_beforeDraw;
+		afterDraw += Canvas_Dispatch_afterDraw;
 	}
 
 
@@ -220,5 +224,29 @@ void Canvas_Dispatch_onKeyUp(void* elementPtr, char key)
 		controlElement* presentChild = keyUpedCanvas->getChild(i);
 
 		presentChild->onKeyUp.call(presentChild, key);
+	}
+}
+
+void Canvas_Dispatch_beforeDraw(void* elementPtr)
+{
+	Canvas* keyUpedCanvas = static_cast<Canvas*>(elementPtr);
+
+	for (int i = 0; i < keyUpedCanvas->getChildsCount(); i++)
+	{
+		controlElement* presentChild = keyUpedCanvas->getChild(i);
+
+		presentChild->beforeDraw.call(presentChild);
+	}
+}
+
+void Canvas_Dispatch_afterDraw(void* elementPtr)
+{
+	Canvas* keyUpedCanvas = static_cast<Canvas*>(elementPtr);
+
+	for (int i = 0; i < keyUpedCanvas->getChildsCount(); i++)
+	{
+		controlElement* presentChild = keyUpedCanvas->getChild(i);
+
+		presentChild->afterDraw.call(presentChild);
 	}
 }

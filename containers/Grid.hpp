@@ -15,6 +15,8 @@ void Grid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void Grid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void Grid_Dispatch_onKeyDown(void* elementPtr, char key);
 void Grid_Dispatch_onKeyUp(void* elementPtr, char key);
+void Grid_Dispatch_beforeDraw(void* elementPtr);
+void Grid_Dispatch_afterDraw(void* elementPtr);
 
 struct GridElement
 {
@@ -41,15 +43,17 @@ public:
 
 		setRowsColumnsCount(rowsCount, columnsCount);
 
-		/*onFocus += Grid_Dispatch_onFocus;
-		onFocusLost += Grid_Dispatch_onFocusLost;
-		onClick += Grid_Dispatch_onClick;
-		onLeftButtonDown += Grid_Dispatch_onLeftButtonDown;
-		onLeftButtonUp += Grid_Dispatch_onLeftButtonUp;
-		onRightButtonDown += Grid_Dispatch_onRightButtonDown;
-		onRightButtonUp += Grid_Dispatch_onRightButtonUp;
-		onKeyDown += Grid_Dispatch_onKeyDown;
-		onKeyUp += Grid_Dispatch_onKeyUp;*/
+		onFocus.add(Grid_Dispatch_onFocus);
+		onFocusLost.add(Grid_Dispatch_onFocusLost);
+		onClick.add(Grid_Dispatch_onClick);
+		onLeftButtonDown.add(Grid_Dispatch_onLeftButtonDown);
+		onLeftButtonUp.add(Grid_Dispatch_onLeftButtonUp);
+		onRightButtonDown.add(Grid_Dispatch_onRightButtonDown);
+		onRightButtonUp.add(Grid_Dispatch_onRightButtonUp);
+		onKeyDown.add(Grid_Dispatch_onKeyDown);
+		onKeyUp.add(Grid_Dispatch_onKeyUp);
+		beforeDraw.add(Grid_Dispatch_beforeDraw);
+		afterDraw.add(Grid_Dispatch_afterDraw);
 	}
 
 
@@ -631,6 +635,40 @@ void Grid_Dispatch_onKeyUp(void* elementPtr, char key)
 				return;
 
 			presentChild->onKeyUp.call(presentChild, key);
+		}
+	}
+}
+
+void Grid_Dispatch_beforeDraw(void* elementPtr)
+{
+	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
+
+	for (int i = 0; i < keyDownedGrid->getRowsCount(); i++)
+	{
+		for (int j = 0; j < keyDownedGrid->getColumnsCount(); j++)
+		{
+			controlElement* presentChild = keyDownedGrid->getChild(i, j);
+			if (presentChild == NULL)
+				return;
+
+			presentChild->beforeDraw.call(presentChild);
+		}
+	}
+}
+
+void Grid_Dispatch_afterDraw(void* elementPtr)
+{
+	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
+
+	for (int i = 0; i < keyDownedGrid->getRowsCount(); i++)
+	{
+		for (int j = 0; j < keyDownedGrid->getColumnsCount(); j++)
+		{
+			controlElement* presentChild = keyDownedGrid->getChild(i, j);
+			if (presentChild == NULL)
+				return;
+
+			presentChild->afterDraw.call(presentChild);
 		}
 	}
 }

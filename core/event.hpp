@@ -21,6 +21,9 @@ typedef void(*onKeyDown_DelegateType)(void*, char);
 typedef void(*onKeyUp_DelegateType)(void*, char);
 //The delegate of text box event should look like "void onTextChanged(void* element)"
 typedef void(*onTextChanged_DelegateType)(void*);
+//The delegate of draw event should look like "void beforeDraw(void* element)"
+typedef void(*beforeDraw_DelegateType)(void*);
+typedef void(*afterDraw_DelegateType)(void*);
 
 typedef event_twoDelegateArg<void*, point>	onFocus_EventType;
 typedef event_twoDelegateArg<void*, point>	onFocusLost_EventType;
@@ -32,6 +35,8 @@ typedef event_twoDelegateArg<void*, point>	onRightButtonUp_EventType;
 typedef event_twoDelegateArg<void*, char>	onKeyDown_EventType;
 typedef event_twoDelegateArg<void*, char>	onKeyUp_EventType;
 typedef event_oneDelegateArg<void*>			onTextChanged_EventType;
+typedef event_oneDelegateArg<void*>			beforeDraw_EventType;
+typedef event_oneDelegateArg<void*>			afterDraw_EventType;
 
 
 template <typename delegateArgType>
@@ -61,20 +66,29 @@ public:
 		}
 	}
 
+	void add(void(*addedDelegate)(argType))
+	{
+		if (addedDelegate != NULL)
+			delegates.add(addedDelegate);
+	}
+	void del(void(*deletedDelegate)(argType))
+	{
+		delegates.del(deletedDelegate);
+	}
+
 	friend event_oneDelegateArg<argType>& operator+=(event_oneDelegateArg<argType>& left, void(*right)(argType));
 	friend event_oneDelegateArg<argType>& operator-=(event_oneDelegateArg<argType>& left, void(*right)(argType));
 };
 template <typename argType>
 event_oneDelegateArg<argType>& operator+=(event_oneDelegateArg<argType>& left, void(*right)(argType))
 {
-	if (right != NULL)
-		left.delegates.add(right);
+	left.add(right);
 	return *this;
 }
 template <typename argType>
 event_oneDelegateArg<argType>& operator-=(event_oneDelegateArg<argType>& left, void(*right)(argType))
 {
-	left.delegates.del(right);
+	left.del(right);
 	return *this;
 }
 
@@ -92,19 +106,28 @@ public:
 		}
 	}
 
+	void add(void(*addedDelegate)(fArgType, sArgType))
+	{
+		if (addedDelegate != NULL)
+			delegates.add(addedDelegate);
+	}
+	void del(void(*deletedDelegate)(fArgType, sArgType))
+	{
+		delegates.del(deletedDelegate);
+	}
+
 	friend event_twoDelegateArg<fArgType, sArgType>& operator+=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType));
 	friend event_twoDelegateArg<fArgType, sArgType>& operator-=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType));
 };
 template <typename fArgType, typename sArgType>
 event_twoDelegateArg<fArgType, sArgType>& operator+=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType))
 {
-	if (right != NULL)
-		left.delegates.add(right);
+	left.add(right);
 	return *this;
 }
 template <typename fArgType, typename sArgType>
 event_twoDelegateArg<fArgType, sArgType>& operator-=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType))
 {
-	left.delegates.del(right);
+	left.del(right);
 	return *this;
 }

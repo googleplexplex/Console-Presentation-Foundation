@@ -1,10 +1,10 @@
 #pragma once
 #include "core\controlElement.hpp"
-#include "core\event.hpp"
 #include "modules\IInterpretedToString.hpp"
 #include "shell\graphics.hpp"
 #include "modules\types.hpp"
 #include "modules\dynamicArray.hpp"
+#include "core\event.hpp"
 
 
 class CharPtr_InterpretedToString : public IInterpretedToString
@@ -57,28 +57,13 @@ public:
 		selectedItemFoneColor = _selectedItemFoneColor;
 		background = _background;
 
-		onClick += listBox_onClick;
-		onFocus += Default_System_OnFocus;
+		onClick.add(listBox_onClick);
+		onFocus.add(Default_System_OnFocus);
 	}
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
-	{
-		for (int i = 0; i < items.count || i < size.y; i++)
-		{
-			char* itemString = items[i]->ToString();
-			consolePrintStrInLine(drawFrame, { pos.x, pos.y + i}, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
-		}
-
-		if (size.y > items.count)
-		{
-			rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
-			consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
-		}
-
-		needToDraw = false;
-	}
+	void Draw(rectangle& drawFrame);
 
 
 	//List box methods
@@ -243,6 +228,22 @@ public:
 		return selectedItemFoneColor;
 	}
 };
+void ListBox::Draw(rectangle& drawFrame)
+{
+	for (int i = 0; i < items.count && i < size.y; i++)
+	{
+		char* itemString = items[i]->ToString();
+		consolePrintStrInLine(drawFrame, { pos.x, pos.y + i }, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
+	}
+
+	if (size.y > items.count)
+	{
+		rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
+		consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
+	}
+
+	needToDraw = false;
+}
 
 
 //System delegates
