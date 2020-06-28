@@ -62,7 +62,7 @@ public:
 					childs[i][j]->parent = this;
 
 					updatePositions();
-					needToDraw = true;
+					setAllTreeInDrawQueue();
 					return;
 				}
 			}
@@ -78,7 +78,7 @@ public:
 				childs[row][column]->parent = this;
 
 				updatePositions();
-				needToDraw = true;
+				setAllTreeInDrawQueue();
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public:
 				childs[i][findResult]->parent = NULL;
 				childs[i][findResult] = NULL;
 
-				needToDraw = true;
+				setAllTreeInDrawQueue();
 				return;
 			}
 		}
@@ -110,7 +110,7 @@ public:
 					childs[i][j]->parent = NULL;
 					childs[i][j] = NULL;
 
-					needToDraw = true;
+					setAllTreeInDrawQueue();
 				}
 			}
 		}
@@ -123,7 +123,7 @@ public:
 			childs[row][column]->parent = NULL;
 			childs[row][column] = NULL;
 
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 		}
 	}
 
@@ -255,7 +255,7 @@ public:
 		}
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addRow()
 	{
@@ -267,7 +267,7 @@ public:
 		childs.delElementIn(rowIndex);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	unsigned int getRowsCount()
@@ -287,7 +287,7 @@ public:
 		}
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addColumn()
 	{
@@ -305,7 +305,7 @@ public:
 		}
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	unsigned int getColumnsCount()
@@ -324,7 +324,7 @@ public:
 		}
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void setRowsColumnsCount(int rowsCount, int columnsCount)
 	{

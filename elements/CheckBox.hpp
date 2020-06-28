@@ -42,7 +42,7 @@ public:
 		Checked = newState;
 
 		if (Checked != newState)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	void setCheckedColor(symbolColor newCheckedColor)
@@ -50,7 +50,7 @@ public:
 		checkedColor = newCheckedColor;
 
 		if(checkedColor != newCheckedColor)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	void setNotCheckedColor(symbolColor newNotCheckedColor)
@@ -58,7 +58,7 @@ public:
 		notCheckedColor = newNotCheckedColor;
 
 		if(notCheckedColor != newNotCheckedColor)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	bool isChecked()

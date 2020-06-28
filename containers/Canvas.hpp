@@ -48,7 +48,7 @@ public:
 		addedChild.parent = this;
 		addedChild.pos = pos + childPos;
 
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addChild(controlElement& addedChild)
 	{
@@ -61,7 +61,7 @@ public:
 		deletedChild.parent = NULL;
 		deletedChild.pos = { 0, 0 };
 
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void delChild(point deletedElementPos)
 	{

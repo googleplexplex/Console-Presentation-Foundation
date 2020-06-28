@@ -49,7 +49,14 @@ public:
 		background = newBackground;
 
 		if (background != newBackground)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
+	}
+	void setAllTreeInDrawQueue()
+	{
+		needToDraw = true;
+
+		if (parent != NULL)
+			((controlElement*)parent)->setAllTreeInDrawQueue();
 	}
 
 	point getPos()

@@ -68,7 +68,7 @@ public:
 				childs[row][column]->element->parent = this;
 
 				updatePositions();
-				needToDraw = true;
+				setAllTreeInDrawQueue();
 			}
 		}
 	}
@@ -92,7 +92,7 @@ public:
 					childs[i][j]->element->parent = NULL;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 
-					needToDraw = true;
+					setAllTreeInDrawQueue();
 				}
 			}
 		}
@@ -108,7 +108,7 @@ public:
 					childs[i][j]->element->parent = NULL;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 
-					needToDraw = true;
+					setAllTreeInDrawQueue();
 				}
 			}
 		}
@@ -269,7 +269,7 @@ public:
 		heights[elementIndex] = newHeight;
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	unsigned int getHeight(unsigned int elementIndex)
@@ -294,7 +294,7 @@ public:
 		widths[elementIndex] = newWidth;
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	unsigned int getWidth(unsigned int elementIndex)
@@ -348,7 +348,7 @@ public:
 		heights.add(size);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addRow()
 	{
@@ -375,7 +375,7 @@ public:
 		}
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addRows(unsigned int rowsCount)
 	{
@@ -388,7 +388,7 @@ public:
 		childs.delElementIn(rowIndex);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	unsigned int getRowsCount()
@@ -409,7 +409,7 @@ public:
 		widths.add(size);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addColumn()
 	{
@@ -428,7 +428,7 @@ public:
 		widths.add(columnsSize, columnsCount);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void addColumns(unsigned int columnsCount)
 	{
@@ -447,7 +447,7 @@ public:
 		widths.delElementIn(columnIndex);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	unsigned int getColumnsCount()
@@ -468,7 +468,7 @@ public:
 		widths.set(size, columnsCount);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void setRowsColumnsCount(unsigned int rowsCount, unsigned int columnsCount)
 	{

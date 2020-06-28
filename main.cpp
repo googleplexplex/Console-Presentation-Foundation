@@ -19,47 +19,47 @@ public:
 		onFocus.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onFocus", 0);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onFocusLost.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onFocusLost", 0);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onClick.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onCilick", 1);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onLeftButtonDown.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onLeftButtonDown", 2);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onLeftButtonUp.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onLeftButtonUp", 2);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onRightButtonDown.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onRightButtonDown", 2);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onRightButtonUp.add([](void* elementPtr, point focusedMousePoint)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onRightButtonUp", 2);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onKeyDown.add([](void* elementPtr, char key)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onKeyDown", 3);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		onKeyUp.add([](void* elementPtr, char key)
 		{
 			((eventShowClass*)elementPtr)->insertItem("onKeyUp", 3);
-			((eventShowClass*)elementPtr)->needToDraw = true;
+			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
 		});
 		afterDraw.add([](void* elementPtr)
 		{
@@ -68,11 +68,6 @@ public:
 				((eventShowClass*)elementPtr)->insertItem("-", i);
 			}
 		});
-	}
-
-	void Draw(rectangle& drawRect)
-	{
-		//...
 	}
 };
 

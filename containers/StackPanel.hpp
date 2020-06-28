@@ -56,7 +56,7 @@ public:
 		addedChild.parent = this;
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 
 	void delChild(unsigned int index)
@@ -65,7 +65,7 @@ public:
 		childs.delElementIn(index);
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void delChild(controlElement& deletedChild)
 	{
@@ -73,7 +73,7 @@ public:
 		deletedChild.parent = NULL;
 
 		updatePositions();
-		needToDraw = true;
+		setAllTreeInDrawQueue();
 	}
 	void delChild(point childPos)
 	{
@@ -83,7 +83,7 @@ public:
 			{
 				delChild(*(childs[i]));
 
-				needToDraw = true;
+				setAllTreeInDrawQueue();
 				return;
 			}
 		}

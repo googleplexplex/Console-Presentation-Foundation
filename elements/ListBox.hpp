@@ -16,13 +16,13 @@ public:
 	{
 		string = NULL;
 	}
-	CharPtr_InterpretedToString(char* string)
+	CharPtr_InterpretedToString(char* _string)
 	{
-		string = stringCopy(string, strlen(string));
+		string = stringCopy(_string, strlen(_string));
 	}
-	CharPtr_InterpretedToString(char* string, int stringSize)
+	CharPtr_InterpretedToString(char* _string, int stringSize)
 	{
-		string = stringCopy(string, stringSize);
+		string = stringCopy(_string, stringSize);
 	}
 	~CharPtr_InterpretedToString()
 	{
@@ -63,7 +63,22 @@ public:
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame);
+	void Draw(rectangle& drawFrame)
+	{
+		for (int i = 0; i < items.count && i < size.y; i++)
+		{
+			char* itemString = items[i]->ToString();
+			consolePrintStrInLine(drawFrame, { pos.x, pos.y + i}, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
+		}
+
+		if (size.y > items.count)
+		{
+			rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
+			consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
+		}
+
+		needToDraw = false;
+	}
 
 
 	//List box methods
@@ -168,7 +183,7 @@ public:
 		selectedItem = newSelectedItem;
 
 		if (selectedItem != newSelectedItem)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	void setItemTextColor(symbolColor newItemTextColor)
@@ -176,7 +191,7 @@ public:
 		itemTextColor = newItemTextColor;
 
 		if(itemTextColor != newItemTextColor)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	void setItemFoneColor(symbolColor newItemFoneColor)
@@ -184,7 +199,7 @@ public:
 		itemFoneColor = newItemFoneColor;
 
 		if(itemFoneColor != newItemFoneColor)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	void setSelectedItemTextColor(symbolColor newSelectedItemTextColor)
@@ -192,7 +207,7 @@ public:
 		selectedItemTextColor = newSelectedItemTextColor;
 
 		if(selectedItemTextColor != newSelectedItemTextColor)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	void setSelectedItemFoneColor(symbolColor newSelectedItemFoneColor)
@@ -200,7 +215,7 @@ public:
 		selectedItemFoneColor = newSelectedItemFoneColor;
 
 		if(selectedItemFoneColor != newSelectedItemFoneColor)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	unsigned int getSelectedItemIndex()
@@ -228,22 +243,6 @@ public:
 		return selectedItemFoneColor;
 	}
 };
-void ListBox::Draw(rectangle& drawFrame)
-{
-	for (int i = 0; i < items.count && i < size.y; i++)
-	{
-		char* itemString = items[i]->ToString();
-		consolePrintStrInLine(drawFrame, { pos.x, pos.y + i }, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
-	}
-
-	if (size.y > items.count)
-	{
-		rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
-		consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
-	}
-
-	needToDraw = false;
-}
 
 
 //System delegates

@@ -45,14 +45,14 @@ public:
 		textOrientationX = newTextOrientationX;
 
 		if (textOrientationX != newTextOrientationX)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 	orientationYEnum setTextOrientationY(orientationYEnum newTextOrientationY)
 	{
 		return textOrientationY;
 
 		if (textOrientationY != newTextOrientationY)
-			needToDraw = true;
+			setAllTreeInDrawQueue();
 	}
 
 	orientationXEnum getTextOrientationX()
