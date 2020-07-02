@@ -13,15 +13,16 @@ void Default_System_OnFocus(void* elementPtr, point clickedPos)
 	elementsInFocus.add(static_cast<controlElement*>(elementPtr));
 }
 
-UserInputStruct prevDispatchUserIO;
+UserInputStruct prevDispatchUserInput;
 void eventDispatcherMainLoop()
 {
 	while (true)
 	{
 		//Get all user Actions
 		UserInputStruct UserInput;
-		UserInput.getIO();
-		UserActivityStruct UserActivity = getUserActivity(prevDispatchUserIO, UserInput);
+		UserInput.getInput();
+		UserActivityStruct UserActivity = getUserActivity(prevDispatchUserInput, UserInput);
+		prevDispatchUserInput = UserInput;
 
 		if (mainContainer->Handled)
 		{

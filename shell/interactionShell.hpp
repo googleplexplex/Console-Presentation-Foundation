@@ -112,7 +112,7 @@ struct UserInputStruct
 		keyboardPress = 0;
 		keyboardPressedKey = 0;
 	}
-	void getIO()
+	void getInput()
 	{
 		//Mouse
 		mouseConsolePos = toPoint(getMouseConsolePos());
