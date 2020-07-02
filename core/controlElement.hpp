@@ -33,7 +33,7 @@ public:
 	beforeDraw_EventType beforeDraw;
 	afterDraw_EventType afterDraw;
 
-	virtual void Draw(rectangle& drawFrame) = 0;
+	virtual void Draw() = 0;
 	bool entersTheArea(point point)
 	{
 		return getBorder(point.x, pos.x, pos.x + size.x - 1)

@@ -96,17 +96,17 @@ public:
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
+	void Draw()
 	{
 		rectangle thisElementRect = getRect();
-		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+		consolePrintRect(thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < childs.count; i++)
 		{
 			if (childs[i]->Visible && childs[i]->needToDraw)
 			{
 				childs[i]->beforeDraw.call(childs[i]);
-				childs[i]->Draw(thisElementRect);
+				childs[i]->Draw();
 				childs[i]->afterDraw.call(childs[i]);
 			}
 		}

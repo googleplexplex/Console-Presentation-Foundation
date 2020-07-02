@@ -76,7 +76,7 @@ void eventDispatcherMainLoop()
 
 		//Output
 #ifdef SHOW_MOUSE
-		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
+		showCursor(toPoint(getMouseConsolePos()));
 #endif
 		mainContainer->beforeDraw.call(mainContainer);
 		drawAllElements();

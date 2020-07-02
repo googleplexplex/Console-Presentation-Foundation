@@ -26,12 +26,12 @@ public:
 	}
 
 	//Drawing methods
-	void Draw(rectangle drawFrame)
+	void Draw()
 	{
 		if (Checked)
-			consolePrintCharset(drawFrame, pos, filledCharacter_5_5, checkedColor);
+			consolePrintCharset(pos, filledCharacter_5_5, checkedColor);
 		else
-			consolePrintCharset(drawFrame, pos, filledCharacter_5_5, notCheckedColor);
+			consolePrintCharset(pos, filledCharacter_5_5, notCheckedColor);
 
 		needToDraw = false;
 	}

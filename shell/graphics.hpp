@@ -72,7 +72,10 @@ SMALL_RECT inline toSmallRect(rectangle rect)
 	return { short(rect.firstPos.x), short(rect.firstPos.y), short(rect.secondPos.x), short(rect.secondPos.y) };
 }
 
-rectangle _drawFrame = { {0, 0}, toPoint(getConsoleSize()) };
+rectangle getConsoleSizeRectangle()
+{
+	return { { 0, 0 }, toPoint(getConsoleSize()) };
+}
 
 void inline setTo(short x, short y)
 {
@@ -82,15 +85,23 @@ void inline setTo(point point)
 {
 	SetConsoleCursorPosition(stdHandle, toCoord(point));
 }
-bool getTo(rectangle drawFrame, int x, int y)
+bool getTo(rectangle drawFrame, unsigned int x, unsigned int y)
 {
 	if (x < drawFrame.firstPos.x || y < drawFrame.firstPos.y || x >= drawFrame.secondPos.x || y >= drawFrame.secondPos.y)
 		return false;
 	return true;
 }
-bool getTo(rectangle drawFrame, point point)
+bool getTo(rectangle drawFrame, point _point)
 {
-	return getTo(drawFrame, point.x, point.y);
+	return getTo(drawFrame, _point.x, _point.y);
+}
+bool getTo(unsigned int x, unsigned int y)
+{
+	return getTo(getConsoleSizeRectangle(), x, y);
+}
+bool getTo(point _point)
+{
+	return getTo(getConsoleSizeRectangle(), _point);
 }
 point getConsoleCursorPosition()
 {
@@ -101,44 +112,44 @@ point getConsoleCursorPosition()
 
 
 symbolColor presentTextAttribute = white;
-void consolePrintCharset(rectangle& drawFrame, point pos, char printedCharset, symbolColor printedCharColor = presentTextAttribute)
+void consolePrintCharset(point pos, char printedCharset, symbolColor printedCharColor = presentTextAttribute)
 {
-	if (getTo(drawFrame, pos))
+	if (getTo(pos))
 		setCharInConsoleA(toCoord(pos), printedCharset, (WORD)printedCharColor);
 }
-void consolePrintStr(rectangle& drawFrame, point pos, int size, char* printedStr, symbolColor printedStrColor = presentTextAttribute)
+void consolePrintStr(point pos, int size, char* printedStr, symbolColor printedStrColor = presentTextAttribute)
 {
-	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x, pos.y + size }))
+	if (getTo(pos) && getTo({ pos.x, pos.y + size }))
 		setStringInConsoleA(toCoord(pos), printedStr, size, (WORD)printedStrColor);
 }
-void consolePrintRect(rectangle& drawFrame, rectangle& rect, char lineCharset = filledCharacter_5_5, symbolColor lineCharsetColor = presentTextAttribute)
+void consolePrintRect(rectangle& rect, char lineCharset = filledCharacter_5_5, symbolColor lineCharsetColor = presentTextAttribute)
 {
-	if (getTo(drawFrame, rect.firstPos) && getTo(drawFrame, rect.secondPos))
+	if (getTo(rect.firstPos) && getTo(rect.secondPos))
 	{
 		SMALL_RECT srrect = toSmallRect(rect);
 		setRectInConsoleA(srrect, lineCharset, (WORD)lineCharsetColor);
 	}
 }
-void consolePrintLine(rectangle& drawFrame, point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
+void consolePrintLine(point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
 {
-	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x + size, pos.y }))
+	if (getTo(pos) && getTo({ pos.x + size, pos.y }))
 		setLineInConsoleA(toCoord(pos), lineCharset, size, (WORD)printedLineColor);
 }
-void consolePrintVerticalLine(rectangle& drawFrame, point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
+void consolePrintVerticalLine(point pos, int size, char lineCharset = filledCharacter_5_5, symbolColor printedLineColor = presentTextAttribute)
 {
 	rectangle varticalLineRect = { pos, { pos.x + 1, pos.y + size} };
-	consolePrintRect(drawFrame, varticalLineRect, lineCharset, printedLineColor);
+	consolePrintRect(varticalLineRect, lineCharset, printedLineColor);
 }
-void consolePrintStrInLine(rectangle& drawFrame, point pos, int lineSize, char* printedStr, int strSize, symbolColor strColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
+void consolePrintStrInLine(point pos, int lineSize, char* printedStr, int strSize, symbolColor strColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
 {
-	if (getTo(drawFrame, pos) && getTo(drawFrame, { pos.x + strSize, pos.y }))
+	if (getTo(pos) && getTo({ pos.x + strSize, pos.y }))
 	{
-		consolePrintStr(drawFrame, pos, strSize, printedStr, strColor);
+		consolePrintStr(pos, strSize, printedStr, strColor);
 		if(lineSize > strSize)
-			consolePrintLine(drawFrame, { pos.x, pos.y + strSize }, lineSize - strSize, filledChar, filledCharColor);
+			consolePrintLine({ pos.x, pos.y + strSize }, lineSize - strSize, filledChar, filledCharColor);
 	}
 }
-void consolePrintStrInRect(rectangle& drawFrame, rectangle& rect, char* printedStr, int printedStrSize, symbolColor printedStrColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
+void consolePrintStrInRect(rectangle& rect, char* printedStr, int printedStrSize, symbolColor printedStrColor = presentTextAttribute, char filledChar = emptyAsciiChar, symbolColor filledCharColor = presentTextAttribute)
 {
 	SMALL_RECT srrect = toSmallRect(rect);
 	CHAR_INFO filledCharInfo = { filledChar, (WORD)filledCharColor };
@@ -195,10 +206,10 @@ void consoleClearAll()
 point prevCursorPos = emptyPoint;
 CHAR_INFO charUnderMouse = emptyCharInfo;
 symbolColor cursorColor = white;
-void showCursor(rectangle drawFrame, point cursorPos)
+void showCursor(point cursorPos)
 {
 	setCharInConsoleCI(toCoord(prevCursorPos), charUnderMouse);
-	if (getTo(drawFrame, cursorPos))
+	if (getTo(cursorPos))
 	{
 		prevCursorPos = cursorPos;
 		charUnderMouse = getCharFromConsoleCI(toCoord(cursorPos));

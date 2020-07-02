@@ -165,14 +165,14 @@ public:
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
+	void Draw()
 	{
 		rectangle thisElementRect = getRect();
 
 		if (ShowGridLines)
 			showGrid();
 		else
-			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+			consolePrintRect(thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
@@ -181,7 +181,7 @@ public:
 				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->Visible && childs[i][j]->element->needToDraw)
 				{
 					childs[i][j]->element->beforeDraw.call(childs[i][j]->element);
-					childs[i][j]->element->Draw(thisElementRect);
+					childs[i][j]->element->Draw();
 					childs[i][j]->element->afterDraw.call(childs[i][j]->element);
 				}
 			}
@@ -202,8 +202,8 @@ public:
 			{
 				point presentSize = { widths[j] * onePointSize.x, heights[i] * onePointSize.y };
 
-				consolePrintLine(thisElementRect, presentPos, presentSize.x - 1, filledCharacter_5_5, blue);
-				consolePrintVerticalLine(thisElementRect, presentPos, presentSize.y - 1, filledCharacter_5_5, blue);
+				consolePrintLine(presentPos, presentSize.x - 1, filledCharacter_5_5, blue);
+				consolePrintVerticalLine(presentPos, presentSize.y - 1, filledCharacter_5_5, blue);
 
 				presentPos.x += widths[j] * onePointSize.x;
 			}

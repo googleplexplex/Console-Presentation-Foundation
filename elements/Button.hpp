@@ -24,12 +24,12 @@ public:
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
+	void Draw()
 	{
 		rectangle thisElementRect = getRect();
-		consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, background);
+		consolePrintRect(thisElementRect, filledCharacter_5_5, background);
 
-		consolePrintStr(drawFrame, getTextPos(), textLength, text, collectColor(textColor, background));
+		consolePrintStr(getTextPos(), textLength, text, collectColor(textColor, background));
 
 		needToDraw = false;
 	}

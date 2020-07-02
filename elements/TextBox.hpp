@@ -30,15 +30,15 @@ public:
 	}
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
+	void Draw()
 	{
 		rectangle thisElementRect = getRect();
 
 		unsigned long int sizeS = size.x * size.y;
 		if(sizeS < textLength)
-			consolePrintStrInRect(drawFrame, thisElementRect, text + textLength - sizeS, sizeS, collectColor(textColor, background), filledCharacter_5_5, background);
+			consolePrintStrInRect(thisElementRect, text + textLength - sizeS, sizeS, collectColor(textColor, background), filledCharacter_5_5, background);
 		else
-			consolePrintStrInRect(drawFrame, thisElementRect, text, textLength, collectColor(textColor, background), filledCharacter_5_5, background);
+			consolePrintStrInRect(thisElementRect, text, textLength, collectColor(textColor, background), filledCharacter_5_5, background);
 
 		needToDraw = false;
 	}

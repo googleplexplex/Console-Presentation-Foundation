@@ -22,9 +22,9 @@ public:
 	}
 
 	//Drawing methods
-	void Draw(rectangle drawFrame)
+	void Draw()
 	{
-		consolePrintStr(drawFrame, pos, textLength, text, collectColor(textColor, background));
+		consolePrintStr(pos, textLength, text, collectColor(textColor, background));
 
 		needToDraw = false;
 	}

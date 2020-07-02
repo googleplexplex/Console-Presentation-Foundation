@@ -148,14 +148,14 @@ public:
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
+	void Draw()
 	{
 		rectangle thisElementRect = getRect();
 
 		if (ShowGridLines)
 			showGrid();
 		else
-			consolePrintRect(drawFrame, thisElementRect, filledCharacter_5_5, collectColor(black, background));
+			consolePrintRect(thisElementRect, filledCharacter_5_5, collectColor(black, background));
 
 		for (int i = 0; i < getRowsCount(); i++)
 		{
@@ -164,7 +164,7 @@ public:
 				if (childs[i][j] != NULL && childs[i][j]->Visible && childs[i][j]->needToDraw)
 				{
 					childs[i][j]->beforeDraw.call(childs[i][j]);
-					childs[i][j]->Draw(thisElementRect);
+					childs[i][j]->Draw();
 					childs[i][j]->afterDraw.call(childs[i][j]);
 				}
 			}
@@ -183,8 +183,8 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				consolePrintLine(thisElementRect, presentPos, oneElementSize.x - 1, filledCharacter_5_5, blue);
-				consolePrintVerticalLine(thisElementRect, presentPos, oneElementSize.y - 1, filledCharacter_5_5, blue);
+				consolePrintLine(presentPos, oneElementSize.x - 1, filledCharacter_5_5, blue);
+				consolePrintVerticalLine(presentPos, oneElementSize.y - 1, filledCharacter_5_5, blue);
 
 				presentPos.x += oneElementSize.x;
 			}

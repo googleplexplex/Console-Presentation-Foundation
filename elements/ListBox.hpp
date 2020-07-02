@@ -63,18 +63,18 @@ public:
 
 
 	//Drawing methods
-	void Draw(rectangle& drawFrame)
+	void Draw()
 	{
 		for (int i = 0; i < items.count && i < size.y; i++)
 		{
 			char* itemString = items[i]->ToString();
-			consolePrintStrInLine(drawFrame, { pos.x, pos.y + i}, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
+			consolePrintStrInLine({ pos.x, pos.y + i}, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
 		}
 
 		if (size.y > items.count)
 		{
 			rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
-			consolePrintRect(drawFrame, listBoxDownRect, filledCharacter_5_5, background);
+			consolePrintRect(listBoxDownRect, filledCharacter_5_5, background);
 		}
 
 		needToDraw = false;
