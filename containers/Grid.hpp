@@ -15,8 +15,6 @@ void Grid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void Grid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void Grid_Dispatch_onKeyDown(void* elementPtr, char key);
 void Grid_Dispatch_onKeyUp(void* elementPtr, char key);
-void Grid_Dispatch_beforeDraw(void* elementPtr);
-void Grid_Dispatch_afterDraw(void* elementPtr);
 
 struct GridElement
 {
@@ -52,8 +50,6 @@ public:
 		onRightButtonUp.add(Grid_Dispatch_onRightButtonUp);
 		onKeyDown.add(Grid_Dispatch_onKeyDown);
 		onKeyUp.add(Grid_Dispatch_onKeyUp);
-		beforeDraw.add(Grid_Dispatch_beforeDraw);
-		afterDraw.add(Grid_Dispatch_afterDraw);
 	}
 
 
@@ -183,7 +179,11 @@ public:
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
 				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->Visible && childs[i][j]->element->needToDraw)
+				{
+					childs[i][j]->element->beforeDraw.call(childs[i][j]->element);
 					childs[i][j]->element->Draw(thisElementRect);
+					childs[i][j]->element->afterDraw.call(childs[i][j]->element);
+				}
 			}
 		}
 		
@@ -635,40 +635,6 @@ void Grid_Dispatch_onKeyUp(void* elementPtr, char key)
 				return;
 
 			presentChild->onKeyUp.call(presentChild, key);
-		}
-	}
-}
-
-void Grid_Dispatch_beforeDraw(void* elementPtr)
-{
-	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
-
-	for (int i = 0; i < keyDownedGrid->getRowsCount(); i++)
-	{
-		for (int j = 0; j < keyDownedGrid->getColumnsCount(); j++)
-		{
-			controlElement* presentChild = keyDownedGrid->getChild(i, j);
-			if (presentChild == NULL)
-				return;
-
-			presentChild->beforeDraw.call(presentChild);
-		}
-	}
-}
-
-void Grid_Dispatch_afterDraw(void* elementPtr)
-{
-	Grid* keyDownedGrid = static_cast<Grid*>(elementPtr);
-
-	for (int i = 0; i < keyDownedGrid->getRowsCount(); i++)
-	{
-		for (int j = 0; j < keyDownedGrid->getColumnsCount(); j++)
-		{
-			controlElement* presentChild = keyDownedGrid->getChild(i, j);
-			if (presentChild == NULL)
-				return;
-
-			presentChild->afterDraw.call(presentChild);
 		}
 	}
 }

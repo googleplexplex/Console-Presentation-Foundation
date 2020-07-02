@@ -34,7 +34,7 @@ void eventDispatcherMainLoop()
 			{
 				if (elementsInFocus[i] != prevElementsInFocus[i] && prevElementsInFocus[i] != NULL)
 				{
-					mainContainer->onFocusLost.call(prevElementsInFocus[i], UserInput.mouseConsolePos);
+					prevElementsInFocus[i]->onFocusLost.call(prevElementsInFocus[i], UserInput.mouseConsolePos);
 					break;
 				}
 			}
@@ -77,7 +77,10 @@ void eventDispatcherMainLoop()
 #ifdef SHOW_MOUSE
 		showCursor(consoleSizeRectangle(), toPoint(getMouseConsolePos()));
 #endif
+		mainContainer->beforeDraw.call(mainContainer);
 		drawAllElements();
+		mainContainer->afterDraw.call(mainContainer);
+
 		Sleep(eventDispatcherDelay);
 	}
 }

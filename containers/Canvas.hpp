@@ -36,8 +36,6 @@ public:
 		onRightButtonUp += Canvas_Dispatch_onRightButtonUp;
 		onKeyDown += Canvas_Dispatch_onKeyDown;
 		onKeyUp += Canvas_Dispatch_onKeyUp;
-		beforeDraw += Canvas_Dispatch_beforeDraw;
-		afterDraw += Canvas_Dispatch_afterDraw;
 	}
 
 
@@ -92,8 +90,12 @@ public:
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			if(childs[i]->Visible && childs[i]->needToDraw)
+			if (childs[i]->Visible && childs[i]->needToDraw)
+			{
+				childs[i]->beforeDraw.call(childs[i]);
 				childs[i]->Draw(thisElementRect);
+				childs[i]->afterDraw.call(childs[i]);
+			}
 		}
 
 		needToDraw = false;
@@ -224,29 +226,5 @@ void Canvas_Dispatch_onKeyUp(void* elementPtr, char key)
 		controlElement* presentChild = keyUpedCanvas->getChild(i);
 
 		presentChild->onKeyUp.call(presentChild, key);
-	}
-}
-
-void Canvas_Dispatch_beforeDraw(void* elementPtr)
-{
-	Canvas* keyUpedCanvas = static_cast<Canvas*>(elementPtr);
-
-	for (int i = 0; i < keyUpedCanvas->getChildsCount(); i++)
-	{
-		controlElement* presentChild = keyUpedCanvas->getChild(i);
-
-		presentChild->beforeDraw.call(presentChild);
-	}
-}
-
-void Canvas_Dispatch_afterDraw(void* elementPtr)
-{
-	Canvas* keyUpedCanvas = static_cast<Canvas*>(elementPtr);
-
-	for (int i = 0; i < keyUpedCanvas->getChildsCount(); i++)
-	{
-		controlElement* presentChild = keyUpedCanvas->getChild(i);
-
-		presentChild->afterDraw.call(presentChild);
 	}
 }

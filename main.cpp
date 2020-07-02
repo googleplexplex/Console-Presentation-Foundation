@@ -7,65 +7,74 @@ class eventShowClass : public ListBox
 {
 public:
 	eventShowClass()
-		: ListBox()
 	{
 		onClick.del(listBox_onClick);
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			addItem("-");
 		}
 
 		onFocus.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onFocus", 0);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(0, "onFocus");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onFocusLost.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onFocusLost", 0);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(0, "onFocusLost");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onClick.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onCilick", 1);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(1, "onClick");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onLeftButtonDown.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onLeftButtonDown", 2);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(2, "onLeftButtonDown");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onLeftButtonUp.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onLeftButtonUp", 2);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(2, "onLeftButtonUp");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onRightButtonDown.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onRightButtonDown", 2);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(3, "onRightButtonDown");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onRightButtonUp.add([](void* elementPtr, point focusedMousePoint)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onRightButtonUp", 2);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(3, "onRightButtonUp");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onKeyDown.add([](void* elementPtr, char key)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onKeyDown", 3);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(4, "onKeyDown");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		onKeyUp.add([](void* elementPtr, char key)
 		{
-			((eventShowClass*)elementPtr)->insertItem("onKeyUp", 3);
-			((eventShowClass*)elementPtr)->setAllTreeInDrawQueue();
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			thisObject.setItem(4, "onKeyUp");
+			thisObject.setAllTreeInDrawQueue();
 		});
 		afterDraw.add([](void* elementPtr)
 		{
-			for (int i = 0; i < 4; i++)
+			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
+			for (int i = 0; i < 5; i++)
 			{
-				((eventShowClass*)elementPtr)->insertItem("-", i);
+				thisObject.setItem(i, "-");
 			}
 		});
 	}

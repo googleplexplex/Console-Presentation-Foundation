@@ -15,8 +15,6 @@ void StackPanel_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void StackPanel_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void StackPanel_Dispatch_onKeyDown(void* elementPtr, char key);
 void StackPanel_Dispatch_onKeyUp(void* elementPtr, char key);
-void StackPanel_Dispatch_beforeDraw(void* elementPtr);
-void StackPanel_Dispatch_afterDraw(void* elementPtr);
 
 typedef enum stackPanelOrientationEnum
 {
@@ -44,8 +42,6 @@ public:
 		onRightButtonUp += StackPanel_Dispatch_onRightButtonUp;
 		onKeyDown += StackPanel_Dispatch_onKeyDown;
 		onKeyUp += StackPanel_Dispatch_onKeyUp;
-		beforeDraw += StackPanel_Dispatch_beforeDraw;
-		afterDraw += StackPanel_Dispatch_afterDraw;
 	}
 
 
@@ -107,8 +103,12 @@ public:
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			if(childs[i]->Visible && childs[i]->needToDraw)
+			if (childs[i]->Visible && childs[i]->needToDraw)
+			{
+				childs[i]->beforeDraw.call(childs[i]);
 				childs[i]->Draw(thisElementRect);
+				childs[i]->afterDraw.call(childs[i]);
+			}
 		}
 
 		needToDraw = false;
@@ -264,29 +264,5 @@ void StackPanel_Dispatch_onKeyUp(void* elementPtr, char key)
 		controlElement* presentChild = keyUpedStackPanel->getChild(i);
 
 		presentChild->onKeyUp.call(presentChild, key);
-	}
-}
-
-void StackPanel_Dispatch_beforeDraw(void* elementPtr)
-{
-	StackPanel* keyUpedStackPanel = static_cast<StackPanel*>(elementPtr);
-
-	for (int i = 0; i < keyUpedStackPanel->getChildsCount(); i++)
-	{
-		controlElement* presentChild = keyUpedStackPanel->getChild(i);
-
-		presentChild->beforeDraw.call(presentChild);
-	}
-}
-
-void StackPanel_Dispatch_afterDraw(void* elementPtr)
-{
-	StackPanel* keyUpedStackPanel = static_cast<StackPanel*>(elementPtr);
-
-	for (int i = 0; i < keyUpedStackPanel->getChildsCount(); i++)
-	{
-		controlElement* presentChild = keyUpedStackPanel->getChild(i);
-
-		presentChild->afterDraw.call(presentChild);
 	}
 }

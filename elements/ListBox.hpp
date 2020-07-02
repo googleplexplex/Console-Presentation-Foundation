@@ -94,6 +94,18 @@ public:
 	{
 		addItem(new CharPtr_InterpretedToString((char*)item));
 	}
+	void setItem(unsigned int index, IInterpretedToString* newItem)
+	{
+		items[index] = newItem;
+	}
+	void setItem(unsigned int index, char* newItem)
+	{
+		setItem(index, new CharPtr_InterpretedToString(newItem));
+	}
+	void setItem(unsigned int index, const char* newItem)
+	{
+		setItem(index, new CharPtr_InterpretedToString((char*)newItem));
+	}
 	void insertItem(IInterpretedToString* item, unsigned int insertedIndex)
 	{
 		items.insert(item, insertedIndex);
@@ -143,7 +155,7 @@ public:
 	{
 		return items.count;
 	}
-	IInterpretedToString* getItem(unsigned int index)
+	IInterpretedToString*& getItem(unsigned int index)
 	{
 		return items[index];
 	}

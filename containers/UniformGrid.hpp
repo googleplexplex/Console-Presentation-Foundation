@@ -15,8 +15,6 @@ void UniformGrid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void UniformGrid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void UniformGrid_Dispatch_onKeyDown(void* elementPtr, char key);
 void UniformGrid_Dispatch_onKeyUp(void* elementPtr, char key);
-void UniformGrid_Dispatch_beforeDraw(void* elementPtr);
-void UniformGrid_Dispatch_afterDraw(void* elementPtr);
 
 class UniformGrid : public containerElement {
 	dynamicArray<dynamicArray<controlElement*>> childs;
@@ -41,8 +39,6 @@ public:
 		onRightButtonUp += UniformGrid_Dispatch_onRightButtonUp;
 		onKeyDown += UniformGrid_Dispatch_onKeyDown;
 		onKeyUp += UniformGrid_Dispatch_onKeyUp;
-		beforeDraw += UniformGrid_Dispatch_beforeDraw;
-		afterDraw += UniformGrid_Dispatch_afterDraw;
 	}
 
 
@@ -166,7 +162,11 @@ public:
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
 				if (childs[i][j] != NULL && childs[i][j]->Visible && childs[i][j]->needToDraw)
+				{
+					childs[i][j]->beforeDraw.call(childs[i][j]);
 					childs[i][j]->Draw(thisElementRect);
+					childs[i][j]->afterDraw.call(childs[i][j]);
+				}
 			}
 		}
 
@@ -494,42 +494,6 @@ void UniformGrid_Dispatch_onKeyUp(void* elementPtr, char key)
 			if (presentChild != NULL)
 			{
 				presentChild->onKeyUp.call(presentChild, key);
-			}
-		}
-	}
-}
-
-void UniformGrid_Dispatch_beforeDraw(void* elementPtr)
-{
-	UniformGrid* keyDownedUniformGrid = static_cast<UniformGrid*>(elementPtr);
-
-	for (int i = 0; i < keyDownedUniformGrid->getRowsCount(); i++)
-	{
-		for (int j = 0; j < keyDownedUniformGrid->getColumnsCount(); j++)
-		{
-			controlElement* presentChild = keyDownedUniformGrid->getChild(i, j);
-
-			if (presentChild != NULL)
-			{
-				presentChild->beforeDraw.call(presentChild);
-			}
-		}
-	}
-}
-
-void UniformGrid_Dispatch_afterDraw(void* elementPtr)
-{
-	UniformGrid* keyDownedUniformGrid = static_cast<UniformGrid*>(elementPtr);
-
-	for (int i = 0; i < keyDownedUniformGrid->getRowsCount(); i++)
-	{
-		for (int j = 0; j < keyDownedUniformGrid->getColumnsCount(); j++)
-		{
-			controlElement* presentChild = keyDownedUniformGrid->getChild(i, j);
-
-			if (presentChild != NULL)
-			{
-				presentChild->afterDraw.call(presentChild);
 			}
 		}
 	}
