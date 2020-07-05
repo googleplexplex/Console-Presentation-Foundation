@@ -18,7 +18,7 @@ public:
 		background = _background;
 		textColor = _textColor;
 
-		onFocus += Default_System_OnFocus;
+		onFocus.add(Default_System_OnFocus);
 	}
 
 	//Drawing methods

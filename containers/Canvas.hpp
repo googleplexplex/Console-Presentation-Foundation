@@ -25,15 +25,15 @@ public:
 		size = emptyPoint;
 		background = _background;
 
-		onFocus += Canvas_Dispatch_onFocus;
-		onFocusLost += Canvas_Dispatch_onFocusLost;
-		onClick += Canvas_Dispatch_onClick;
-		onLeftButtonDown += Canvas_Dispatch_onLeftButtonDown;
-		onLeftButtonUp += Canvas_Dispatch_onLeftButtonUp;
-		onRightButtonDown += Canvas_Dispatch_onRightButtonDown;
-		onRightButtonUp += Canvas_Dispatch_onRightButtonUp;
-		onKeyDown += Canvas_Dispatch_onKeyDown;
-		onKeyUp += Canvas_Dispatch_onKeyUp;
+		onFocus.add(Canvas_Dispatch_onFocus);
+		onFocusLost.add(Canvas_Dispatch_onFocusLost);
+		onClick.add(Canvas_Dispatch_onClick);
+		onLeftButtonDown.add(Canvas_Dispatch_onLeftButtonDown);
+		onLeftButtonUp.add(Canvas_Dispatch_onLeftButtonUp);
+		onRightButtonDown.add(Canvas_Dispatch_onRightButtonDown);
+		onRightButtonUp.add(Canvas_Dispatch_onRightButtonUp);
+		onKeyDown.add(Canvas_Dispatch_onKeyDown);
+		onKeyUp.add(Canvas_Dispatch_onKeyUp);
 	}
 
 

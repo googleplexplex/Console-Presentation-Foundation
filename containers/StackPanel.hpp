@@ -33,15 +33,15 @@ public:
 		stackPanelOrientation = _stackPanelOrientation;
 		background = _background;
 
-		onFocus += StackPanel_Dispatch_onFocus;
-		onFocusLost += StackPanel_Dispatch_onFocusLost;
-		onClick += StackPanel_Dispatch_onClick;
-		onLeftButtonDown += StackPanel_Dispatch_onLeftButtonDown;
-		onLeftButtonUp += StackPanel_Dispatch_onLeftButtonUp;
-		onRightButtonDown += StackPanel_Dispatch_onRightButtonDown;
-		onRightButtonUp += StackPanel_Dispatch_onRightButtonUp;
-		onKeyDown += StackPanel_Dispatch_onKeyDown;
-		onKeyUp += StackPanel_Dispatch_onKeyUp;
+		onFocus.add(StackPanel_Dispatch_onFocus);
+		onFocusLost.add(StackPanel_Dispatch_onFocusLost);
+		onClick.add(StackPanel_Dispatch_onClick);
+		onLeftButtonDown.add(StackPanel_Dispatch_onLeftButtonDown);
+		onLeftButtonUp.add(StackPanel_Dispatch_onLeftButtonUp);
+		onRightButtonDown.add(StackPanel_Dispatch_onRightButtonDown);
+		onRightButtonUp.add(StackPanel_Dispatch_onRightButtonUp);
+		onKeyDown.add(StackPanel_Dispatch_onKeyDown);
+		onKeyUp.add(StackPanel_Dispatch_onKeyUp);
 	}
 
 

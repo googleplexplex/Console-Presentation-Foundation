@@ -25,8 +25,8 @@ public:
 		background = _foneColor;
 		textColor = _textColor;
 
-		/*onFocus += Default_System_OnFocus;
-		onKeyDown += TextBox_System_onKeyDown;*/
+		onFocus.add(Default_System_OnFocus);
+		onKeyDown.add(TextBox_System_onKeyDown);
 	}
 
 	//Drawing methods

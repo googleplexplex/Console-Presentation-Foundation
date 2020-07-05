@@ -21,8 +21,8 @@ public:
 		checkedColor = _checkedColor;
 		notCheckedColor = _notCheckedColor;
 
-		onClick += CheckBox_onClick;
-		onFocus += Default_System_OnFocus;
+		onClick.add(CheckBox_onClick);
+		onFocus.add(Default_System_OnFocus);
 	}
 
 	//Drawing methods

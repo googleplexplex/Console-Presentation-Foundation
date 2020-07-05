@@ -30,15 +30,15 @@ public:
 
 		setRowsColumnsCount(rowsCount, columnsCount);
 
-		onFocus += UniformGrid_Dispatch_onFocus;
-		onFocusLost += UniformGrid_Dispatch_onFocusLost;
-		onClick += UniformGrid_Dispatch_onClick;
-		onLeftButtonDown += UniformGrid_Dispatch_onLeftButtonDown;
-		onLeftButtonUp += UniformGrid_Dispatch_onLeftButtonUp;
-		onRightButtonDown += UniformGrid_Dispatch_onRightButtonDown;
-		onRightButtonUp += UniformGrid_Dispatch_onRightButtonUp;
-		onKeyDown += UniformGrid_Dispatch_onKeyDown;
-		onKeyUp += UniformGrid_Dispatch_onKeyUp;
+		onFocus.add(UniformGrid_Dispatch_onFocus);
+		onFocusLost.add(UniformGrid_Dispatch_onFocusLost);
+		onClick.add(UniformGrid_Dispatch_onClick);
+		onLeftButtonDown.add(UniformGrid_Dispatch_onLeftButtonDown);
+		onLeftButtonUp.add(UniformGrid_Dispatch_onLeftButtonUp);
+		onRightButtonDown.add(UniformGrid_Dispatch_onRightButtonDown);
+		onRightButtonUp.add(UniformGrid_Dispatch_onRightButtonUp);
+		onKeyDown.add(UniformGrid_Dispatch_onKeyDown);
+		onKeyUp.add(UniformGrid_Dispatch_onKeyUp);
 	}
 
 
