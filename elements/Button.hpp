@@ -18,8 +18,8 @@ public:
 		background = _foneColor;
 		textColor = _textColor;
 
-		onFocus += Default_System_OnFocus;
-		onClick += _onClick;
+		onFocus.add(Default_System_OnFocus);
+		onClick.add(_onClick);
 	}
 
 

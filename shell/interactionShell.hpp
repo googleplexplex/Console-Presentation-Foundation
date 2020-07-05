@@ -118,6 +118,7 @@ struct UserInputStruct
 		mouseConsolePos = toPoint(getMouseConsolePos());
 		mouseLeftPressed = getMouseLeftButtonState();
 		mouseRightPressed = getMouseRightButtonState();
+
 		//Keyboard
 		keyboardPress = keyboardHit();
 		if (keyboardPress)

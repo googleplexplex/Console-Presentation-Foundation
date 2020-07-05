@@ -46,10 +46,10 @@ public:
 	}
 	void setBackground(symbolColor newBackground)
 	{
-		background = newBackground;
-
 		if (background != newBackground)
 			setAllTreeInDrawQueue();
+
+		background = newBackground;
 	}
 	void setAllTreeInDrawQueue()
 	{

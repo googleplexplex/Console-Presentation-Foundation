@@ -74,6 +74,18 @@ public:
 	}
 	void addChild(controlElement& addedChild)
 	{
+		for (int i = 0; i < getRowsCount(); i++)
+		{
+			for (int j = 0; j < getColumnsCount(); j++)
+			{
+				if (childs[i][j] == (GridElement*)(emptyGridElementPtr))
+				{
+					addChild(addedChild, i, j);
+					return;
+				}
+			}
+		}
+
 		addChild(addedChild, 0, 0, 1, 1);
 	}
 

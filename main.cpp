@@ -1,7 +1,5 @@
-#include <iostream>
 #define SHOW_MOUSE
 #include "include.hpp"
-using namespace std;
 
 class eventShowClass : public ListBox
 {
@@ -80,14 +78,26 @@ public:
 	}
 };
 
+
 int main(void)
 {
-	Grid mainCont(4, 5, true);
-	mainCont.setWidth(2, 2);
-	mainCont.setAsMainContainer();
+	Grid mainGrid(4, 5, true);
+	mainGrid.setWidth(2, 2);
+	mainGrid.setAsMainContainer();
+
+	Button buttonExample((char*)"Button", [](void* elementPtr, point clickPos)
+		{
+			Button& thisObject = *((Button*)elementPtr);
+			
+			if (thisObject.background != blue)
+				thisObject.setBackground(blue);
+			else
+				thisObject.setBackground(red);
+		});
+	buttonExample.setParent(mainGrid);
 
 	eventShowClass eventShow;
-	eventShow.setParent(mainCont);
+	eventShow.setParent(mainGrid);
 
 	eventDispatcherMainLoop();
 
