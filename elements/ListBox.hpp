@@ -76,8 +76,6 @@ public:
 			rectangle listBoxDownRect = { { pos.x, pos.y + items.count }, pos + size };
 			consolePrintRect(listBoxDownRect, filledCharacter_5_5, background);
 		}
-
-		needToDraw = false;
 	}
 
 
@@ -195,7 +193,7 @@ public:
 		selectedItem = newSelectedItem;
 
 		if (selectedItem != newSelectedItem)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	void setItemTextColor(symbolColor newItemTextColor)
@@ -203,7 +201,7 @@ public:
 		itemTextColor = newItemTextColor;
 
 		if(itemTextColor != newItemTextColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	void setItemFoneColor(symbolColor newItemFoneColor)
@@ -211,7 +209,7 @@ public:
 		itemFoneColor = newItemFoneColor;
 
 		if(itemFoneColor != newItemFoneColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	void setSelectedItemTextColor(symbolColor newSelectedItemTextColor)
@@ -219,7 +217,7 @@ public:
 		selectedItemTextColor = newSelectedItemTextColor;
 
 		if(selectedItemTextColor != newSelectedItemTextColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	void setSelectedItemFoneColor(symbolColor newSelectedItemFoneColor)
@@ -227,7 +225,7 @@ public:
 		selectedItemFoneColor = newSelectedItemFoneColor;
 
 		if(selectedItemFoneColor != newSelectedItemFoneColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	unsigned int getSelectedItemIndex()

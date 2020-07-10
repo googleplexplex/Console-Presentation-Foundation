@@ -208,12 +208,20 @@ CHAR_INFO charUnderMouse = emptyCharInfo;
 symbolColor cursorColor = white;
 void showCursor(point cursorPos)
 {
-	setCharInConsoleCI(toCoord(prevCursorPos), charUnderMouse);
-	if (getTo(cursorPos))
+	if (prevCursorPos == cursorPos &&
+		(getCharFromConsoleCI(toCoord(cursorPos)).Attributes != charUnderMouse.Attributes ||
+			getCharFromConsoleCI(toCoord(cursorPos)).Char.UnicodeChar != charUnderMouse.Char.UnicodeChar))
 	{
-		prevCursorPos = cursorPos;
 		charUnderMouse = getCharFromConsoleCI(toCoord(cursorPos));
-
-		setCharInConsoleA(toCoord(cursorPos), filledCharacter_5_5, cursorColor);
 	}
+
+	charUnderMouse = getCharFromConsoleCI(toCoord(cursorPos));
+	setCharInConsoleA(toCoord(cursorPos), ' ', cursorColor);
+
+	if (getCharFromConsoleCI(toCoord(prevCursorPos)).Attributes == cursorColor)
+	{
+		setCharInConsoleCI(toCoord(prevCursorPos), charUnderMouse);
+	}
+
+	prevCursorPos = cursorPos;
 }

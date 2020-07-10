@@ -58,7 +58,7 @@ public:
 					childs[i][j]->parent = this;
 
 					updatePositions();
-					setAllTreeInDrawQueue();
+					addInRedrawQueue();
 					return;
 				}
 			}
@@ -74,7 +74,7 @@ public:
 				childs[row][column]->parent = this;
 
 				updatePositions();
-				setAllTreeInDrawQueue();
+				addInRedrawQueue();
 			}
 		}
 	}
@@ -90,7 +90,7 @@ public:
 				childs[i][findResult]->parent = NULL;
 				childs[i][findResult] = NULL;
 
-				setAllTreeInDrawQueue();
+				addInRedrawQueue();
 				return;
 			}
 		}
@@ -106,7 +106,7 @@ public:
 					childs[i][j]->parent = NULL;
 					childs[i][j] = NULL;
 
-					setAllTreeInDrawQueue();
+					addInRedrawQueue();
 				}
 			}
 		}
@@ -119,7 +119,7 @@ public:
 			childs[row][column]->parent = NULL;
 			childs[row][column] = NULL;
 
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 		}
 	}
 
@@ -161,7 +161,7 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j] != NULL && childs[i][j]->Visible && childs[i][j]->needToDraw)
+				if (childs[i][j] != NULL && childs[i][j]->Visible)
 				{
 					childs[i][j]->beforeDraw.call(childs[i][j]);
 					childs[i][j]->Draw();
@@ -169,8 +169,6 @@ public:
 				}
 			}
 		}
-
-		needToDraw = false;
 	}
 
 	void showGrid(symbolColor gridColor = blue)
@@ -255,7 +253,7 @@ public:
 		}
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addRow()
 	{
@@ -267,7 +265,7 @@ public:
 		childs.delElementIn(rowIndex);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	unsigned int getRowsCount()
@@ -287,7 +285,7 @@ public:
 		}
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addColumn()
 	{
@@ -305,7 +303,7 @@ public:
 		}
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	unsigned int getColumnsCount()
@@ -324,7 +322,7 @@ public:
 		}
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void setRowsColumnsCount(int rowsCount, int columnsCount)
 	{

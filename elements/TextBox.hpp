@@ -39,8 +39,6 @@ public:
 			consolePrintStrInRect(thisElementRect, text + textLength - sizeS, sizeS, collectColor(textColor, background), filledCharacter_5_5, background);
 		else
 			consolePrintStrInRect(thisElementRect, text, textLength, collectColor(textColor, background), filledCharacter_5_5, background);
-
-		needToDraw = false;
 	}
 };
 

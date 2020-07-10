@@ -17,55 +17,55 @@ public:
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(0, "onFocus");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onFocusLost.add([](void* elementPtr, point focusedMousePoint)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(0, "onFocusLost");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onClick.add([](void* elementPtr, point focusedMousePoint)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(1, "onClick");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onLeftButtonDown.add([](void* elementPtr, point focusedMousePoint)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(2, "onLeftButtonDown");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onLeftButtonUp.add([](void* elementPtr, point focusedMousePoint)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(2, "onLeftButtonUp");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onRightButtonDown.add([](void* elementPtr, point focusedMousePoint)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(3, "onRightButtonDown");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onRightButtonUp.add([](void* elementPtr, point focusedMousePoint)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(3, "onRightButtonUp");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onKeyDown.add([](void* elementPtr, char key)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(4, "onKeyDown");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		onKeyUp.add([](void* elementPtr, char key)
 		{
 			eventShowClass& thisObject = *((eventShowClass*)elementPtr);
 			thisObject.setItem(4, "onKeyUp");
-			thisObject.setAllTreeInDrawQueue();
+			thisObject.addInRedrawQueue();
 		});
 		afterDraw.add([](void* elementPtr)
 		{

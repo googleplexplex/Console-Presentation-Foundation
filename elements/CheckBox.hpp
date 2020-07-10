@@ -32,8 +32,6 @@ public:
 			consolePrintCharset(pos, filledCharacter_5_5, checkedColor);
 		else
 			consolePrintCharset(pos, filledCharacter_5_5, notCheckedColor);
-
-		needToDraw = false;
 	}
 
 	//Checkbox Setters/Getters
@@ -42,7 +40,7 @@ public:
 		Checked = newState;
 
 		if (Checked != newState)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	void setCheckedColor(symbolColor newCheckedColor)
@@ -50,7 +48,7 @@ public:
 		checkedColor = newCheckedColor;
 
 		if(checkedColor != newCheckedColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	void setNotCheckedColor(symbolColor newNotCheckedColor)
@@ -58,7 +56,7 @@ public:
 		notCheckedColor = newNotCheckedColor;
 
 		if(notCheckedColor != newNotCheckedColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	bool isChecked()

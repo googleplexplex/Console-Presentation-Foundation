@@ -6,6 +6,7 @@
 #include "modules\types.hpp"
 
 const unsigned int eventDispatcherDelay = 50;
+bool needToDrawAll = true;
 
 dynamicArray<controlElement*> elementsInFocus;
 void Default_System_OnFocus(void* elementPtr, point clickedPos)
@@ -79,7 +80,14 @@ void eventDispatcherMainLoop()
 		showCursor(toPoint(getMouseConsolePos()));
 #endif
 		mainContainer->beforeDraw.call(mainContainer);
-		drawAllElements();
+		if (needToDrawAll)
+		{
+			drawAllElements();
+			elementsToRedraw.clean();
+			needToDrawAll = false;
+		}
+		else
+			redrawAllElements();
 		mainContainer->afterDraw.call(mainContainer);
 
 		Sleep(eventDispatcherDelay);

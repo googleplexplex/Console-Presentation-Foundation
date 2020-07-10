@@ -30,8 +30,6 @@ public:
 		consolePrintRect(thisElementRect, filledCharacter_5_5, background);
 
 		consolePrintStr(getTextPos(), textLength, text, collectColor(textColor, background));
-
-		needToDraw = false;
 	}
 
 private:

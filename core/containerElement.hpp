@@ -38,6 +38,19 @@ void drawAllElements()
 	if (mainContainer == NULL)
 		return;
 
-	if(mainContainer->Visible && mainContainer->needToDraw)
+	if(mainContainer->Visible)
 		mainContainer->Draw();
+}
+
+void redrawAllElements()
+{
+	for (int i = 0; i < elementsToRedraw.count; i++)
+	{
+		if (elementsToRedraw[i] != NULL && elementsToRedraw[i]->Visible)
+		{
+			elementsToRedraw[i]->Draw();
+		}
+	}
+
+	elementsToRedraw.clean();
 }

@@ -43,7 +43,7 @@ public:
 		delete text;
 		text = stringCopy(settedText, textLength);
 
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void setText(char* settedText)
 	{
@@ -62,7 +62,7 @@ public:
 		textColor = settedTextColor;
 
 		if (textColor != settedTextColor)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 	void addToText(char addedCharset)
 	{
@@ -74,7 +74,7 @@ public:
 		textLength++;
 		delete oldText;
 
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addToText(char* addedString, unsigned int addedStringLength)
 	{
@@ -86,7 +86,7 @@ public:
 		textLength += addedStringLength;
 		delete oldText;
 
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void popText()
 	{
@@ -99,7 +99,7 @@ public:
 		textLength--;
 		delete oldText;
 
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	char* getText()

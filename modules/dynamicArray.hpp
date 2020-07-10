@@ -139,6 +139,10 @@ public:
 	{
 		return index < count;
 	}
+	bool isEmpty()
+	{
+		return count == 0;
+	}
 
 	void delElementIn(unsigned int index)
 	{

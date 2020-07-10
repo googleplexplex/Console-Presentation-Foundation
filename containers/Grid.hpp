@@ -64,7 +64,7 @@ public:
 				childs[row][column]->element->parent = this;
 
 				updatePositions();
-				setAllTreeInDrawQueue();
+				addInRedrawQueue();
 			}
 		}
 	}
@@ -100,7 +100,7 @@ public:
 					childs[i][j]->element->parent = NULL;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 
-					setAllTreeInDrawQueue();
+					addInRedrawQueue();
 				}
 			}
 		}
@@ -116,7 +116,7 @@ public:
 					childs[i][j]->element->parent = NULL;
 					childs[i][j] = (GridElement*)(emptyGridElementPtr);
 
-					setAllTreeInDrawQueue();
+					addInRedrawQueue();
 				}
 			}
 		}
@@ -190,7 +190,7 @@ public:
 		{
 			for (int j = 0; j < getColumnsCount(); j++)
 			{
-				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->Visible && childs[i][j]->element->needToDraw)
+				if (childs[i][j] != (GridElement*)(emptyGridElementPtr) && childs[i][j]->element->Visible)
 				{
 					childs[i][j]->element->beforeDraw.call(childs[i][j]->element);
 					childs[i][j]->element->Draw();
@@ -198,8 +198,6 @@ public:
 				}
 			}
 		}
-		
-		needToDraw = false;
 	}
 
 	void showGrid(symbolColor gridColor = blue)
@@ -281,7 +279,7 @@ public:
 		heights[elementIndex] = newHeight;
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	unsigned int getHeight(unsigned int elementIndex)
@@ -306,7 +304,7 @@ public:
 		widths[elementIndex] = newWidth;
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	unsigned int getWidth(unsigned int elementIndex)
@@ -360,7 +358,7 @@ public:
 		heights.add(size);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addRow()
 	{
@@ -387,7 +385,7 @@ public:
 		}
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addRows(unsigned int rowsCount)
 	{
@@ -400,7 +398,7 @@ public:
 		childs.delElementIn(rowIndex);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	unsigned int getRowsCount()
@@ -421,7 +419,7 @@ public:
 		widths.add(size);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addColumn()
 	{
@@ -440,7 +438,7 @@ public:
 		widths.add(columnsSize, columnsCount);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addColumns(unsigned int columnsCount)
 	{
@@ -459,7 +457,7 @@ public:
 		widths.delElementIn(columnIndex);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	unsigned int getColumnsCount()
@@ -480,7 +478,7 @@ public:
 		widths.set(size, columnsCount);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void setRowsColumnsCount(unsigned int rowsCount, unsigned int columnsCount)
 	{

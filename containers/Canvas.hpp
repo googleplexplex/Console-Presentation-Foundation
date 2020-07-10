@@ -44,7 +44,7 @@ public:
 		addedChild.parent = this;
 		addedChild.pos = pos + childPos;
 
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void addChild(controlElement& addedChild)
 	{
@@ -57,7 +57,7 @@ public:
 		deletedChild.parent = NULL;
 		deletedChild.pos = { 0, 0 };
 
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void delChild(point deletedElementPos)
 	{
@@ -88,15 +88,13 @@ public:
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			if (childs[i]->Visible && childs[i]->needToDraw)
+			if (childs[i]->Visible)
 			{
 				childs[i]->beforeDraw.call(childs[i]);
 				childs[i]->Draw();
 				childs[i]->afterDraw.call(childs[i]);
 			}
 		}
-
-		needToDraw = false;
 	}
 };
 

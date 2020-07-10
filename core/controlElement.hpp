@@ -18,7 +18,6 @@ public:
 public:
 	bool Visible = true;
 	bool Handled = true;
-	bool needToDraw = true;
 	void* parent;
 
 	onFocus_EventType onFocus;
@@ -47,17 +46,11 @@ public:
 	void setBackground(symbolColor newBackground)
 	{
 		if (background != newBackground)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 
 		background = newBackground;
 	}
-	void setAllTreeInDrawQueue()
-	{
-		needToDraw = true;
-
-		if (parent != NULL)
-			((controlElement*)parent)->setAllTreeInDrawQueue();
-	}
+	void addInRedrawQueue();
 
 	point getPos()
 	{
@@ -80,3 +73,9 @@ public:
 		return background;
 	}
 };
+
+dynamicArray<controlElement*> elementsToRedraw;
+void controlElement::addInRedrawQueue()
+{
+	elementsToRedraw.add(this);
+}

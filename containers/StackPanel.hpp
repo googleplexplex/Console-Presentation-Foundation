@@ -52,7 +52,7 @@ public:
 		addedChild.parent = this;
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 
 	void delChild(unsigned int index)
@@ -61,7 +61,7 @@ public:
 		childs.delElementIn(index);
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void delChild(controlElement& deletedChild)
 	{
@@ -69,7 +69,7 @@ public:
 		deletedChild.parent = NULL;
 
 		updatePositions();
-		setAllTreeInDrawQueue();
+		addInRedrawQueue();
 	}
 	void delChild(point childPos)
 	{
@@ -79,7 +79,7 @@ public:
 			{
 				delChild(*(childs[i]));
 
-				setAllTreeInDrawQueue();
+				addInRedrawQueue();
 				return;
 			}
 		}
@@ -103,15 +103,13 @@ public:
 
 		for (int i = 0; i < childs.count; i++)
 		{
-			if (childs[i]->Visible && childs[i]->needToDraw)
+			if (childs[i]->Visible)
 			{
 				childs[i]->beforeDraw.call(childs[i]);
 				childs[i]->Draw();
 				childs[i]->afterDraw.call(childs[i]);
 			}
 		}
-
-		needToDraw = false;
 	}
 
 

@@ -25,7 +25,5 @@ public:
 	void Draw()
 	{
 		consolePrintStr(pos, textLength, text, collectColor(textColor, background));
-
-		needToDraw = false;
 	}
 };

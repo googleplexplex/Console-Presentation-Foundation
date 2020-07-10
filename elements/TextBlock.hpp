@@ -34,8 +34,6 @@ public:
 		consolePrintRect(thisElementRect, filledCharacter_5_5, white);
 
 		consolePrintStr(getTextPos(), textLength, text, collectColor(textColor, background));
-
-		needToDraw = false;
 	}
 
 
@@ -45,14 +43,14 @@ public:
 		textOrientationX = newTextOrientationX;
 
 		if (textOrientationX != newTextOrientationX)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 	orientationYEnum setTextOrientationY(orientationYEnum newTextOrientationY)
 	{
 		return textOrientationY;
 
 		if (textOrientationY != newTextOrientationY)
-			setAllTreeInDrawQueue();
+			addInRedrawQueue();
 	}
 
 	orientationXEnum getTextOrientationX()
