@@ -15,6 +15,8 @@ void UniformGrid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void UniformGrid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void UniformGrid_Dispatch_onKeyDown(void* elementPtr, char key);
 void UniformGrid_Dispatch_onKeyUp(void* elementPtr, char key);
+void UniformGrid_Dispatch_onResize(void* elementPtr);
+void UniformGrid_Dispatch_onMoved(void* elementPtr);
 
 class UniformGrid : public containerElement {
 	dynamicArray<dynamicArray<controlElement*>> childs;
@@ -39,6 +41,8 @@ public:
 		onRightButtonUp.add(UniformGrid_Dispatch_onRightButtonUp);
 		onKeyDown.add(UniformGrid_Dispatch_onKeyDown);
 		onKeyUp.add(UniformGrid_Dispatch_onKeyUp);
+		onResize.add(UniformGrid_Dispatch_onResize);
+		onMoved.add(UniformGrid_Dispatch_onMoved);
 	}
 
 
@@ -495,4 +499,18 @@ void UniformGrid_Dispatch_onKeyUp(void* elementPtr, char key)
 			}
 		}
 	}
+}
+
+void UniformGrid_Dispatch_onResize(void* elementPtr)
+{
+	UniformGrid* resizedUniformGrid = static_cast<UniformGrid*>(elementPtr);
+
+	resizedUniformGrid->updatePositions();
+}
+
+void UniformGrid_Dispatch_onMoved(void* elementPtr)
+{
+	UniformGrid* movedUniformGrid = static_cast<UniformGrid*>(elementPtr);
+
+	movedUniformGrid->updatePositions();
 }

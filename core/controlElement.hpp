@@ -31,6 +31,8 @@ public:
 	onKeyUp_EventType onKeyUp;
 	beforeDraw_EventType beforeDraw;
 	afterDraw_EventType afterDraw;
+	onResize_EventType onResize;
+	onMoved_EventType onMoved;
 
 	virtual void Draw() = 0;
 	bool entersTheArea(point point)
@@ -38,10 +40,35 @@ public:
 		return getBorder(point.x, pos.x, pos.x + size.x - 1)
 			&& getBorder(point.y, pos.y, pos.y + size.y - 1);
 	}
+	void Erase()
+	{
+		rectangle thisElementRect = getRect();
+		consolePrintRect(thisElementRect);
+	}
 
 	void setParent(controlElement& parent)
 	{
 		_setParent(this, &parent);
+	}
+	void setPos(point newPos)
+	{
+		if (pos != newPos)
+		{
+			onMoved.call(this);
+			addInRedrawQueue();
+		}
+
+		pos = newPos;
+	}
+	void setSize(point newSize)
+	{
+		if (size != newSize)
+		{
+			onResize.call(this);
+			addInRedrawQueue();
+		}
+
+		size = newSize;
 	}
 	void setBackground(symbolColor newBackground)
 	{

@@ -15,6 +15,8 @@ void Canvas_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void Canvas_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void Canvas_Dispatch_onKeyDown(void* elementPtr, char key);
 void Canvas_Dispatch_onKeyUp(void* elementPtr, char key);
+void Canvas_Dispatch_onResize(void* elementPtr);
+void Canvas_Dispatch_onMoved(void* elementPtr);
 
 class Canvas : public containerElement {
 	dynamicArray<controlElement*> childs;
@@ -34,8 +36,14 @@ public:
 		onRightButtonUp.add(Canvas_Dispatch_onRightButtonUp);
 		onKeyDown.add(Canvas_Dispatch_onKeyDown);
 		onKeyUp.add(Canvas_Dispatch_onKeyUp);
+		onResize.add(Canvas_Dispatch_onResize);
+		onMoved.add(Canvas_Dispatch_onMoved);
 	}
 
+	void updatePositions()
+	{
+
+	}
 
 	//Standart container methods
 	void addChild(controlElement& addedChild, point childPos)
@@ -223,4 +231,18 @@ void Canvas_Dispatch_onKeyUp(void* elementPtr, char key)
 
 		presentChild->onKeyUp.call(presentChild, key);
 	}
+}
+
+void Canvas_Dispatch_onResize(void* elementPtr)
+{
+	Canvas* resizedCanvas = static_cast<Canvas*>(elementPtr);
+
+	resizedCanvas->updatePositions();
+}
+
+void Canvas_Dispatch_onMoved(void* elementPtr)
+{
+	Canvas* movedCanvas = static_cast<Canvas*>(elementPtr);
+
+	movedCanvas->updatePositions();
 }

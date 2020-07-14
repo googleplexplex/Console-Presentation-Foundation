@@ -9,6 +9,8 @@ public:
 	virtual void delChild(controlElement& deletedChild) = 0;
 	virtual unsigned int getChildsCount() = 0;
 
+	virtual void updatePositions() = 0;
+
 	friend void setMainContainer(containerElement& newMainContainer);
 	void setAsMainContainer()
 	{

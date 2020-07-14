@@ -15,6 +15,8 @@ void StackPanel_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void StackPanel_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void StackPanel_Dispatch_onKeyDown(void* elementPtr, char key);
 void StackPanel_Dispatch_onKeyUp(void* elementPtr, char key);
+void StackPanel_Dispatch_onResize(void* elementPtr);
+void StackPanel_Dispatch_onMoved(void* elementPtr);
 
 typedef enum stackPanelOrientationEnum
 {
@@ -42,8 +44,9 @@ public:
 		onRightButtonUp.add(StackPanel_Dispatch_onRightButtonUp);
 		onKeyDown.add(StackPanel_Dispatch_onKeyDown);
 		onKeyUp.add(StackPanel_Dispatch_onKeyUp);
+		onResize.add(StackPanel_Dispatch_onResize);
+		onMoved.add(StackPanel_Dispatch_onMoved);
 	}
-
 
 	//Standart container methods
 	void addChild(controlElement& addedChild)
@@ -263,4 +266,18 @@ void StackPanel_Dispatch_onKeyUp(void* elementPtr, char key)
 
 		presentChild->onKeyUp.call(presentChild, key);
 	}
+}
+
+void StackPanel_Dispatch_onResize(void* elementPtr)
+{
+	StackPanel* resizedStackPanel = static_cast<StackPanel*>(elementPtr);
+
+	resizedStackPanel->updatePositions();
+}
+
+void StackPanel_Dispatch_onMoved(void* elementPtr)
+{
+	StackPanel* movedStackPanel = static_cast<StackPanel*>(elementPtr);
+
+	movedStackPanel->updatePositions();
 }

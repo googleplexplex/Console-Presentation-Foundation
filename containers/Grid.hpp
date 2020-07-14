@@ -15,6 +15,8 @@ void Grid_Dispatch_onRightButtonDown(void* elementPtr, point clickedPos);
 void Grid_Dispatch_onRightButtonUp(void* elementPtr, point clickedPos);
 void Grid_Dispatch_onKeyDown(void* elementPtr, char key);
 void Grid_Dispatch_onKeyUp(void* elementPtr, char key);
+void Grid_Dispatch_onResize(void* elementPtr);
+void Grid_Dispatch_onMoved(void* elementPtr);
 
 struct GridElement
 {
@@ -50,6 +52,8 @@ public:
 		onRightButtonUp.add(Grid_Dispatch_onRightButtonUp);
 		onKeyDown.add(Grid_Dispatch_onKeyDown);
 		onKeyUp.add(Grid_Dispatch_onKeyUp);
+		onResize.add(Grid_Dispatch_onResize);
+		onMoved.add(Grid_Dispatch_onMoved);
 	}
 
 
@@ -647,4 +651,18 @@ void Grid_Dispatch_onKeyUp(void* elementPtr, char key)
 			presentChild->onKeyUp.call(presentChild, key);
 		}
 	}
+}
+
+void Grid_Dispatch_onResize(void* elementPtr)
+{
+	Grid* resizedGrid = static_cast<Grid*>(elementPtr);
+
+	resizedGrid->updatePositions();
+}
+
+void Grid_Dispatch_onMoved(void* elementPtr)
+{
+	Grid* movedGrid = static_cast<Grid*>(elementPtr);
+
+	movedGrid->updatePositions();
 }

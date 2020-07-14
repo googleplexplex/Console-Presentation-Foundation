@@ -33,16 +33,15 @@ POINT getConsoleFontSize()
 
 	return POINT({ FontSize.X, FontSize.Y });
 }
+point getPresentConsoleSize()
+{
+	return toPoint(getConsoleSize());
+}
 rectangle consoleSizeRectangle()
 {
 	return { { 0, 0 }, toPoint(getConsoleSize()) };
 }
-//POINT getConsoleSize()
-//{
-//	CONSOLE_SCREEN_BUFFER_INFO result;
-//	GetConsoleScreenBufferInfo(consoleHandle, &result);
-//	return toWinPoint(result.dwSize);
-//}
+
 
 const int windowUpFrameSize_px = 30;
 const int calibrationValue_px = 8;
@@ -87,6 +86,7 @@ struct UserActivityStruct
 	bool mouseRightButtonStateChanged;
 	bool mousePosChanged;
 	bool keyboardStateChanged;
+	bool consoleWindowResized;
 };
 
 struct UserInputStruct
@@ -112,23 +112,27 @@ struct UserInputStruct
 		keyboardPress = 0;
 		keyboardPressedKey = 0;
 	}
-	void getInput()
-	{
-		//Mouse
-		mouseConsolePos = toPoint(getMouseConsolePos());
-		mouseLeftPressed = getMouseLeftButtonState();
-		mouseRightPressed = getMouseRightButtonState();
-
-		//Keyboard
-		keyboardPress = keyboardHit();
-		if (keyboardPress)
-			keyboardPressedKey = getInputedChar();
-		else
-			keyboardPressedKey = 0;
-	}
 };
+UserInputStruct getInput()
+{
+	UserInputStruct result;
 
-UserActivityStruct getUserActivity(UserInputStruct& prevUserIOActions, UserInputStruct& presentUserIOActions)
+	//Mouse
+	result.mouseConsolePos = toPoint(getMouseConsolePos());
+	result.mouseLeftPressed = getMouseLeftButtonState();
+	result.mouseRightPressed = getMouseRightButtonState();
+
+	//Keyboard
+	result.keyboardPress = keyboardHit();
+	if (result.keyboardPress)
+		result.keyboardPressedKey = getInputedChar();
+	else
+		result.keyboardPressedKey = 0;
+
+	return result;
+}
+
+UserActivityStruct getUserActivity(UserInputStruct& prevUserIOActions, UserInputStruct& presentUserIOActions, point& prevConsoleSize, point& presentConsoleSize)
 {
 	UserActivityStruct result;
 
@@ -151,6 +155,11 @@ UserActivityStruct getUserActivity(UserInputStruct& prevUserIOActions, UserInput
 		result.keyboardStateChanged = true;
 	else
 		result.keyboardStateChanged = false;
+
+	if (prevConsoleSize != presentConsoleSize)
+		result.consoleWindowResized = true;
+	else
+		result.consoleWindowResized = false;
 
 	return result;
 }

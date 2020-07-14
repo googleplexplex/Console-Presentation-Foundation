@@ -24,6 +24,9 @@ typedef void(*onTextChanged_DelegateType)(void*);
 //The delegate of draw event should look like "void beforeDraw(void* element)"
 typedef void(*beforeDraw_DelegateType)(void*);
 typedef void(*afterDraw_DelegateType)(void*);
+//The delegate of position/size editing event should look like "void onResize(void* element)"
+typedef void(*onResize_DelegateType)(void*);
+typedef void(*onMoved_DelegateType)(void*);
 
 typedef event_twoDelegateArg<void*, point>	onFocus_EventType;
 typedef event_twoDelegateArg<void*, point>	onFocusLost_EventType;
@@ -37,6 +40,8 @@ typedef event_twoDelegateArg<void*, char>	onKeyUp_EventType;
 typedef event_oneDelegateArg<void*>			onTextChanged_EventType;
 typedef event_oneDelegateArg<void*>			beforeDraw_EventType;
 typedef event_oneDelegateArg<void*>			afterDraw_EventType;
+typedef event_oneDelegateArg<void*>			onResize_EventType;
+typedef event_oneDelegateArg<void*>			onMoved_EventType;
 
 
 template <typename delegateArgType>

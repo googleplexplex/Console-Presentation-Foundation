@@ -15,14 +15,16 @@ void Default_System_OnFocus(void* elementPtr, point clickedPos)
 }
 
 UserInputStruct prevDispatchUserInput;
+point prevDispathConsoleSize = emptyPoint;
 void eventDispatcherMainLoop()
 {
 	while (true)
 	{
 		//Get all user Actions
-		UserInputStruct UserInput;
-		UserInput.getInput();
-		UserActivityStruct UserActivity = getUserActivity(prevDispatchUserInput, UserInput);
+		UserInputStruct UserInput = getInput();
+		point ConsoleSize = getPresentConsoleSize();
+		UserActivityStruct UserActivity = getUserActivity(prevDispatchUserInput, UserInput, prevDispathConsoleSize, ConsoleSize);
+		prevDispathConsoleSize = ConsoleSize;
 		prevDispatchUserInput = UserInput;
 
 		if (mainContainer->Handled)
@@ -76,9 +78,15 @@ void eventDispatcherMainLoop()
 		}
 
 		//Output
-#ifdef SHOW_MOUSE
-		showCursor(toPoint(getMouseConsolePos()));
-#endif
+		if (UserActivity.consoleWindowResized)
+		{
+			rectangle consoleSizeRect = { {0,0}, ConsoleSize };
+			consoleErase(consoleSizeRect);
+
+			mainContainer->setSize(ConsoleSize);
+			needToDrawAll = true;
+		}
+
 		mainContainer->beforeDraw.call(mainContainer);
 		if (needToDrawAll)
 		{
@@ -89,6 +97,10 @@ void eventDispatcherMainLoop()
 		else
 			redrawAllElements();
 		mainContainer->afterDraw.call(mainContainer);
+
+#ifdef SHOW_MOUSE
+		showCursor(toPoint(getMouseConsolePos()));
+#endif
 
 		Sleep(eventDispatcherDelay);
 	}

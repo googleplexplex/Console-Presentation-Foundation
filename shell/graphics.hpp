@@ -155,6 +155,11 @@ void consolePrintStrInRect(rectangle& rect, char* printedStr, int printedStrSize
 	CHAR_INFO filledCharInfo = { filledChar, (WORD)filledCharColor };
 	setRectInConsoleA(srrect, printedStr, printedStrSize, printedStrColor, filledCharInfo);
 }
+void consoleErase(rectangle& rect)
+{
+	SMALL_RECT srrect = toSmallRect(rect);
+	setRectInConsoleA(srrect, ' ', (WORD)white);
+}
 
 symbolColor inline collectColor(symbolColor textColor, symbolColor backgroundColor)
 {
@@ -203,25 +208,22 @@ void consoleClearAll()
 	setAllConsoleCI();
 }
 
+bool charInfoEquals(CHAR_INFO& first, CHAR_INFO& second)
+{
+	return (first.Char.UnicodeChar == second.Char.UnicodeChar
+		&& first.Attributes == second.Attributes);
+}
+
 point prevCursorPos = emptyPoint;
-CHAR_INFO charUnderMouse = emptyCharInfo;
-symbolColor cursorColor = white;
+CHAR_INFO underMouseChar = emptyCharInfo;
+CHAR_INFO mouseChar = { filledCharacter_5_5, white };
 void showCursor(point cursorPos)
 {
-	if (prevCursorPos == cursorPos &&
-		(getCharFromConsoleCI(toCoord(cursorPos)).Attributes != charUnderMouse.Attributes ||
-			getCharFromConsoleCI(toCoord(cursorPos)).Char.UnicodeChar != charUnderMouse.Char.UnicodeChar))
+	setCharInConsoleCI(toCoord(prevCursorPos), underMouseChar);
+	if (getTo(cursorPos))
 	{
-		charUnderMouse = getCharFromConsoleCI(toCoord(cursorPos));
+		prevCursorPos = cursorPos;
+		underMouseChar = getCharFromConsoleCI(toCoord(cursorPos));
+		setCharInConsoleCI(toCoord(cursorPos), mouseChar);
 	}
-
-	charUnderMouse = getCharFromConsoleCI(toCoord(cursorPos));
-	setCharInConsoleA(toCoord(cursorPos), ' ', cursorColor);
-
-	if (getCharFromConsoleCI(toCoord(prevCursorPos)).Attributes == cursorColor)
-	{
-		setCharInConsoleCI(toCoord(prevCursorPos), charUnderMouse);
-	}
-
-	prevCursorPos = cursorPos;
 }
