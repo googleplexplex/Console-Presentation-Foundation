@@ -316,7 +316,7 @@ public:
 	}
 
 
-	void setRowsColumnsCount(int rowsCount, int columnsCount, unsigned int size)
+	void setRowsColumnsCount(int rowsCount, int columnsCount)
 	{
 		for (int i = 0; i < rowsCount; i++)
 		{
@@ -328,17 +328,13 @@ public:
 		updatePositions();
 		addInRedrawQueue();
 	}
-	void setRowsColumnsCount(int rowsCount, int columnsCount)
+	void setColumnsRowsCount(int columnsCount, int rowsCount)
 	{
-		setRowsColumnsCount(rowsCount, columnsCount, 1);
-	}
-	void setColumnsRowsCount(int columnsCount, int rowsCount, unsigned int size)
-	{
-		setRowsColumnsCount(rowsCount, columnsCount, size);
+		setRowsColumnsCount(rowsCount, columnsCount);
 	}
 	void setColumnsRowsCount(int columnsCount, int rowsCount)
 	{
-		setRowsColumnsCount(rowsCount, columnsCount, 1);
+		setRowsColumnsCount(rowsCount, columnsCount);
 	}
 
 	unsigned int getRowsColumnsCount()

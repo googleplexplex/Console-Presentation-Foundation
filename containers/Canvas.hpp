@@ -40,10 +40,7 @@ public:
 		onMoved.add(Canvas_Dispatch_onMoved);
 	}
 
-	void updatePositions()
-	{
-
-	}
+	void updatePositions() {}
 
 	//Standart container methods
 	void addChild(controlElement& addedChild, point childPos)
