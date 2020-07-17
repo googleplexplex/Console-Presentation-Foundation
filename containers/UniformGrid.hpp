@@ -332,10 +332,6 @@ public:
 	{
 		setRowsColumnsCount(rowsCount, columnsCount);
 	}
-	void setColumnsRowsCount(int columnsCount, int rowsCount)
-	{
-		setRowsColumnsCount(rowsCount, columnsCount);
-	}
 
 	unsigned int getRowsColumnsCount()
 	{

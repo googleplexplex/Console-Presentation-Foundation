@@ -5,7 +5,7 @@
 #include "modules\dynamicArray.hpp"
 #include "modules\types.hpp"
 
-const unsigned int eventDispatcherDelay = 50;
+unsigned int eventDispatcherDelay = 50;
 bool needToDrawAll = true;
 
 dynamicArray<controlElement*> elementsInFocus;
