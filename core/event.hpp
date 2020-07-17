@@ -70,7 +70,6 @@ public:
 			delegates[i](arg);
 		}
 	}
-
 	void add(void(*addedDelegate)(argType))
 	{
 		if (addedDelegate != NULL)
@@ -81,21 +80,23 @@ public:
 		delegates.del(deletedDelegate);
 	}
 
-	friend event_oneDelegateArg<argType>& operator+=(event_oneDelegateArg<argType>& left, void(*right)(argType));
-	friend event_oneDelegateArg<argType>& operator-=(event_oneDelegateArg<argType>& left, void(*right)(argType));
+	event_oneDelegateArg<argType>& operator+=(void(*right)(argType)) noexcept
+	{
+		add(right);
+		return *this;
+	}
+
+	event_oneDelegateArg<argType>& operator-=(void(*right)(argType)) noexcept
+	{
+		del(right);
+		return *this;
+	}
+
+	event_oneDelegateArg<argType>& operator()(argType arg)
+	{
+		call(arg);
+	}
 };
-template <typename argType>
-event_oneDelegateArg<argType>& operator+=(event_oneDelegateArg<argType>& left, void(*right)(argType))
-{
-	left.add(right);
-	return *this;
-}
-template <typename argType>
-event_oneDelegateArg<argType>& operator-=(event_oneDelegateArg<argType>& left, void(*right)(argType))
-{
-	left.del(right);
-	return *this;
-}
 
 template <typename fArgType, typename sArgType>
 class event_twoDelegateArg
@@ -121,18 +122,19 @@ public:
 		delegates.del(deletedDelegate);
 	}
 
-	friend event_twoDelegateArg<fArgType, sArgType>& operator+=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType));
-	friend event_twoDelegateArg<fArgType, sArgType>& operator-=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType));
+	event_twoDelegateArg<fArgType, sArgType>& operator+=(void(*right)(fArgType, sArgType)) noexcept
+	{
+		add(right);
+		return *this;
+	}
+	event_twoDelegateArg<fArgType, sArgType>& operator-=(void(*right)(fArgType, sArgType)) noexcept
+	{
+		del(right);
+		return *this;
+	}
+
+	event_twoDelegateArg<fArgType, sArgType>& operator()(fArgType arg1, sArgType arg2)
+	{
+		call(arg1, arg2);
+	}
 };
-template <typename fArgType, typename sArgType>
-event_twoDelegateArg<fArgType, sArgType>& operator+=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType))
-{
-	left.add(right);
-	return *this;
-}
-template <typename fArgType, typename sArgType>
-event_twoDelegateArg<fArgType, sArgType>& operator-=(event_twoDelegateArg<fArgType, sArgType>& left, void(*right)(fArgType, sArgType))
-{
-	left.del(right);
-	return *this;
-}
