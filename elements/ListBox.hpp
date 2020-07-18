@@ -68,7 +68,12 @@ public:
 		for (int i = 0; i < items.count && i < size.y; i++)
 		{
 			char* itemString = items[i]->ToString();
-			consolePrintStrInLine({ pos.x, pos.y + i}, size.x, itemString, strlen(itemString), itemTextColor, filledCharacter_5_5, itemFoneColor);
+			int itemStringSize = strlen(itemString);
+
+			if (itemStringSize <= size.x)
+				consolePrintStrInLine({ pos.x, pos.y + i }, size.x, itemString, itemStringSize, itemTextColor, filledCharacter_5_5, itemFoneColor);
+			else
+				consolePrintStrInLine({ pos.x, pos.y + i }, size.x, itemString, size.x, itemTextColor, filledCharacter_5_5, itemFoneColor);
 		}
 
 		if (size.y > items.count)

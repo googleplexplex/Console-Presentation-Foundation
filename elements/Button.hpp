@@ -27,16 +27,24 @@ public:
 	void Draw()
 	{
 		rectangle thisElementRect = getRect();
-		consolePrintRect(thisElementRect, filledCharacter_5_5, background);
 
-		consolePrintStr(getTextPos(), textLength, text, collectColor(textColor, background));
+		if (size.x > 0 && size.y > 0)
+			consolePrintRect(thisElementRect, filledCharacter_5_5, background);
+
+		if (size.y > 0)
+		{
+			point textPos = getTextPos();
+			if (textLength <= size.x)
+				consolePrintStr(textPos, textLength, text, collectColor(textColor, background));
+			else if (size.x != 0)
+				consolePrintStr({ 0, textPos.y }, size.x, text, collectColor(textColor, background));
+		}
 	}
 
 private:
 	point getTextPos()
 	{
 		point result = { pos.x + int(size.x / 2) - textLength / 2, pos.y + int(size.y / 2) };
-		//to validate
 		return result;
 	}
 };

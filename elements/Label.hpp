@@ -24,6 +24,12 @@ public:
 	//Drawing methods
 	void Draw()
 	{
-		consolePrintStr(pos, textLength, text, collectColor(textColor, background));
+		if (size.y > 0)
+		{
+			if (textLength <= size.x)
+				consolePrintStr(pos, textLength, text, collectColor(textColor, background));
+			else if (size.x != 0)
+				consolePrintStr(pos, size.x, text, collectColor(textColor, background));
+		}
 	}
 };
