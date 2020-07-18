@@ -4,7 +4,7 @@
 ##### Определено в одноименном файле
 
 
-###Члены класса
+### Члены класса
 
 `**point pos**` - Явная позиция элемента в консоли (В символах)
 
@@ -45,7 +45,7 @@
 `**onMoved_EventType onMoved**` - Событие, вызываемое при перемещении элемента
 
 
-###Конструктор:
+### Конструктор:
 
 `**Grid(unsigned int rowsCount = 0, unsigned int columnsCount = 0, bool showGridLines = false, symbolColor background = black)**`
 
@@ -57,7 +57,7 @@
 
 **background** - Цвет фона
 
-###Методы
+### Методы
 
 `bool entersTheArea(point point)` - Находится ли точка point внутри элемента
 
@@ -84,6 +84,6 @@
 `symbolColor getBackground()` - Возвращает цвет фона
 
 
-###Асбстрактные Методы
+### Асбстрактные Методы
 
 `Draw()` - Отрисовывает элемент, исходя из его явной позиции и размера

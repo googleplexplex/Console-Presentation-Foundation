@@ -4,7 +4,7 @@
 ##### Определено в одноименном файле
 
 
-###Члены класса
+### Члены класса
 
 `onTextChanged_EventType onTextChanged` - Событие, вызываемое при изменении текста элемента
 
@@ -13,7 +13,7 @@
 `bool ReadOnly` - Флаг возможности редактирования текста
 
 
-###Конструктор
+### Конструктор
 
 `**TextBox(char* text = (char*)"TextBox", unsigned int _maxLength = 512, bool _readOnly = false, symbolColor _textColor = white, symbolColor _foneColor = black)**`
 
@@ -28,6 +28,6 @@ textColor - Цвет текста
 foneColor - Цвет фона
 
 
-###Методы
+### Методы
 
 (Метод **Draw()** наследованный от **textControlElement**)

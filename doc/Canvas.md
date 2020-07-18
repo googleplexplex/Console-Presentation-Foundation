@@ -5,13 +5,13 @@
 
 
 
-###Конструктор:
+### Конструктор:
 
 `**Canvas(symbolColor background = black)**`
 
 **background** - Цвет фона
 
-###Методы
+### Методы
 
 (Метод **void addChild(controlElement& addedChild)** наследован от **containerElement**)
 

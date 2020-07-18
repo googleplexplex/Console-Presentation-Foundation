@@ -4,7 +4,7 @@
 ##### Определено в одноименном файле
 
 
-###Конструктор:
+### Конструктор:
 
 `CheckBox(bool _checked = false, symbolColor _checkedColor = gray, symbolColor _notCheckedColor = white)`
 
@@ -15,7 +15,7 @@ checkedColor - Цвет флага, когда он установлен в true
 notCheckedColor - Цвет флага, когда он установлен в false
 
 
-###Методы
+### Методы
 
 (Метод **Draw()** наследованный от **controlElement**)
 

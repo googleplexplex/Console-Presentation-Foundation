@@ -4,7 +4,7 @@
 ##### Определен в одноименном файле
 
 
-###Типы
+### Типы
 
 `**stackPanelOrientationEnum**` - Выравнивание элементов
 
@@ -17,14 +17,14 @@
 
 `**stackPanelOrientationEnum stackPanelOrientation**` - Выравнивание элементов внутри контейнера
 
-###Конструктор:
+### Конструктор:
 StackPanel(stackPanelOrientationEnum stackPanelOrientation = Vertical, symbolColor background = black)
 
 **stackPanelOrientation** - Начальное значение флага выравнивание элементов
 
 **background** - Цвет фона
 
-###Методы
+### Методы
 
 (Метод **void addChild(controlElement& addedChild)** наследован от **containerElement**)
 

@@ -4,10 +4,10 @@
 ##### Определен в одноименном файле
 
 
-###Члены класса
+### Члены класса
 `**bool ShowGridLines**` - Флаг, отвечающий за отрисовку сетки контейнера
 
-###Конструктор:
+### Конструктор:
 `**UniformGrid(unsigned int rowsCount = 0, unsigned int columnsCount = 0, bool showGridLines = false, symbolColor background = black)**`
 
 **rowsCount** - Количество строк
@@ -19,7 +19,7 @@
 **background** - Цвет фона
 
 
-###Методы
+### Методы
 (Метод **void addChild(controlElement& addedChild)** наследован от **containerElement**)
 
 `void addChild(controlElement& addedChild, int row, int column)` - Перегрузка addChild, где row и column - позиция элемента в контейнере

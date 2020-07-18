@@ -4,7 +4,7 @@
 ##### Определен в одноименном файле
 
 
-###Методы
+### Методы
 
 `void setText(char* settedText, unsigned int settedTextLength)` - Задает элементу текст settedText (settedTextLength - размер массива символов)
 

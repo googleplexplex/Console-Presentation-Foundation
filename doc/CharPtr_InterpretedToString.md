@@ -4,7 +4,7 @@
 ##### Определено в ListBox.hpp
 
 
-###Конструкторы:
+### Конструкторы:
 
 `CharPtr_InterpretedToString(char* string, int stringSize)`
 
@@ -20,6 +20,6 @@ string - Строковое представление класса
 
 
 
-###Методы
+### Методы
 
 (Метод **ToString()** наследованный от **IInterpretedToString**)

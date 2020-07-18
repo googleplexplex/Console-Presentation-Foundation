@@ -65,7 +65,7 @@ void callDelegate(void(*delegate)(delegateFirstArgType, delegateSecondArgType), 
 
 ### Типы
 
-##Делегаты
+## Делегаты
 
 `onFocus_DelegateType` - Делегат функции фокуса
 
@@ -107,7 +107,7 @@ void callDelegate(void(*delegate)(delegateFirstArgType, delegateSecondArgType), 
 
 (Пример функции отслеивания изменения текста - void onTextChangedFunc(void* element))
 
-##События
+## События
 
 `onFocus_EventType` - Событие фокуса
 

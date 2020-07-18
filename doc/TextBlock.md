@@ -4,7 +4,7 @@
 ##### Определено в одноименном файле
 
 
-###Конструктор:
+### Конструктор:
 
 `TextBlock(char* text = (char*)"TextBlock", point size = { 0, 0 }, orientationXEnum textOrientationX = centerX, orientationYEnum textOrientationY = centerY, symbolColor _textColor = white, symbolColor _background = black)`
 
@@ -20,7 +20,7 @@ textColor - Цвет текста
 
 background - Цвет фона
 
-###Методы
+### Методы
 
 (Метод **Draw()** наследованный от **controlElement**)
 

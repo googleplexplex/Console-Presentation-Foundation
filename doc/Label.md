@@ -4,7 +4,7 @@
 ##### Определено в одноименном файле
 
 
-###Конструктор:
+### Конструктор:
 
 `Label(char* text = (char*)"Label", symbolColor textColor = white, symbolColor background = black)`
 
@@ -15,6 +15,6 @@ textColor - Цвет надписи
 background - Цвет фона
 
 
-###Методы
+### Методы
 
 (Метод **Draw()** наследованный от **controlElement**)

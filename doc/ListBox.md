@@ -4,7 +4,7 @@
 ##### Определено в одноименном файле
 
 
-###Конструктор:
+### Конструктор:
 
 `**ListBox(symbolColor itemTextColor = white, symbolColor itemFoneColor = black, symbolColor selectedItemTextColor = black, symbolColor selectedItemFoneColor = white, symbolColor background = black)**`
 
@@ -18,11 +18,11 @@ selectedItemFoneColor - Цвет фона выделенной строки
 
 background - Цвет фона элемента
 
-###Методы
+### Методы
 
 (Метод **Draw()** наследованный от **controlElement**)
 
-##Методы взаимодействия с содержимым
+## Методы взаимодействия с содержимым
 
 `void addItem(IInterpretedToString* item)` - Добавляет в список объект, имеющий строковое представление
 
@@ -62,7 +62,7 @@ background - Цвет фона элемента
 
 `unsigned int getSelectedItemIndex()` - Возвращает индекс выделенного объекта в списке
 
-##Методы взаимодействия цветами содержимого
+## Методы взаимодействия цветами содержимого
 
 `void setItemTextColor(symbolColor newItemTextColor)` - Задает цвет текста объекта newItemTextColor
 

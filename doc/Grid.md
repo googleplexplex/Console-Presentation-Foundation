@@ -4,11 +4,11 @@
 ##### Определен в одноименном файле
 
 
-###Члены класса
+### Члены класса
 
 `**bool ShowGridLines**` - Флаг, отвечающий за отрисовку сетки контейнера
 
-###Конструктор:
+### Конструктор:
 
 `**Grid(unsigned int rowsCount = 0, unsigned int columnsCount = 0, bool showGridLines = false, symbolColor background = black)**`
 
@@ -20,7 +20,7 @@
 
 **background** - Цвет фона
 
-###Методы
+### Методы
 
 `void addChild(controlElement& element, unsigned int row, unsigned int column, unsigned int RowSpan, unsigned int ColumnSpan)` - Добавляет в ячейку row/column таблицы элемент element размером RowSpan/ColumnSpan
 
