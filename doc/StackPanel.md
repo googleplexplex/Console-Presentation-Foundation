@@ -6,7 +6,7 @@
 
 ### Типы
 
-`**stackPanelOrientationEnum**` - Выравнивание элементов
+`**stackPanelOrientationEnum**` - Перечисление выравнивания элементов
 
 **Vertical** - Вертикальное
 
@@ -15,10 +15,10 @@
 
 ###Члены класса
 
-`**stackPanelOrientationEnum stackPanelOrientation**` - Выравнивание элементов внутри контейнера
+`stackPanelOrientationEnum **stackPanelOrientation**` - Выравнивание элементов внутри контейнера
 
 ### Конструктор:
-StackPanel(stackPanelOrientationEnum stackPanelOrientation = Vertical, symbolColor background = black)
+`***StackPanel***(stackPanelOrientationEnum **stackPanelOrientation** = Vertical, symbolColor **background** = black)`
 
 **stackPanelOrientation** - Начальное значение флага выравнивание элементов
 
@@ -30,13 +30,13 @@ StackPanel(stackPanelOrientationEnum stackPanelOrientation = Vertical, symbolCol
 
 (Метод **void delChild(controlElement& deletedChild)** наследован от **containerElement**)
 
-`void delChild(unsigned int index)` - Перегрузка delChild, где index - индекс удаляемого элемента
+`void ***delChild***(unsigned int **index**)` - Перегрузка *delChild*, где **index** - индекс удаляемого элемента
 
-`void delChild(point childPos)` - Перегрузка delChild, где childPos - позиция удаляемого элемента
+`void ***delChild***(point **childPos**)` - Перегрузка *delChild*, где **childPos** - позиция удаляемого элемента
 
-`controlElement* getChild(int index)` - Возвращает элемент, индекс которого index
+`controlElement* ***getChild***(int **index**)` - Возвращает элемент, индекс которого **index**
 
-`unsigned int getChildsCount()` - Возвращает количество элементов в контейнере
+`unsigned int ***getChildsCount***()` - Возвращает количество элементов в контейнере
 
 --
 

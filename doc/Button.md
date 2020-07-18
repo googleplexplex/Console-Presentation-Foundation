@@ -6,15 +6,15 @@
 
 ### Конструктор:
 
-`Button(char* _text = (char*)"Button", onClick_DelegateType _onClick = NULL, symbolColor _textColor = white, symbolColor _foneColor = black)`
+`Button(char* **text** = (char*)"Button", onClick_DelegateType **onClick** = NULL, symbolColor **textColor** = white, symbolColor **foneColor** = black)`
 
-_text - Текст, отображенный в кнопке
+* **text** - Текст, отображенный в кнопке
 
-_onClick - Делегат, вызываемый при нажатии на кнопку
+* **onClick** - Делегат, вызываемый при нажатии на кнопку
 
-_textColor - Цвет текста
+* **textColor** - Цвет текста
 
-_foneColor - Цвет фона
+* **foneColor** - Цвет фона
 
 
 ### Методы

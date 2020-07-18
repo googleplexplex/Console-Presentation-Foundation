@@ -5,61 +5,61 @@
 
 ### Методы
 
-`template <typename delegateArgType>
-void callDelegate(void(*delegate)(delegateArgType), delegateArgType delegateArg)` - Вызов делегата delegate с аргументом delegateArg типа delegateArgType (Используется вместо delegate(), потому что проверяет delegate на ненулевое значение)
+`template <typename **delegateArgType**>
+void ***callDelegate***(void(* **delegate**)(**delegateArgType**), **delegateArgType** **delegateArg**)` - Вызов делегата **delegate** с аргументом **delegateArg** типа **delegateArgType** (Используется вместо **delegate**(), потому что проверяет **delegate** на ненулевое значение)
 
-`template <typename delegateFirstArgType, typename delegateSecondArgType>
-void callDelegate(void(*delegate)(delegateFirstArgType, delegateSecondArgType), delegateFirstArgType firstDelegateArg, delegateSecondArgType secondDelegateArg)` - Вызов делегата delegate с аргументами firstDelegateArg и secondDelegateArg типов delegateFirstArgType и delegateSecondArgType (Используется вместо delegate(), потому что проверяет delegate на ненулевое значение)
+`template <typename **delegateFirstArgType**, typename **delegateSecondArgType**>
+void callDelegate(void(* **delegate**)(**delegateFirstArgType**, **delegateSecondArgType**), **delegateFirstArgType firstDelegateArg**, **delegateSecondArgType secondDelegateArg**)` - Вызов делегата **delegate** с аргументами **firstDelegateArg** и **secondDelegateArg** типов **delegateFirstArgType** и **delegateSecondArgType** (Используется вместо **delegate**(), потому что проверяет **delegate** на ненулевое значение)
 
 
 
 ### Классы событий
 
 
-`**event_oneDelegateArg**` - Шаблонный класс события с одним аргументом (argType - тип аргумента)
+`***event_oneDelegateArg***` - Шаблонный класс события с одним аргументом (**argType** - тип аргумента)
 
 ## Члены класса
 
-`dynamicArray<void(*)(argType)> delegates` - Динамический массив вызываемых делегатов
+`dynamicArray<void(*)(**argType**)> **delegates**` - Динамический массив вызываемых делегатов
 
 ## Методы класса
 
-`void call(argType arg)` - Вызов всех делегатов с аргументом arg
+`void ***call***(**argType** **arg**)` - Вызов всех делегатов с аргументом **arg**
 
-`void add(void(*addedDelegate)(argType))` - Добавление делегата addedDelegate к массиву делегатов
+`void ***add***(void(* **addedDelegate**)(**argType**))` - Добавление делегата **addedDelegate** к массиву делегатов
 
-`void del(void(*deletedDelegate)(argType))` - Удаление делегата deletedDelegate из массива делегатов
+`void ***del***(void(* **deletedDelegate**)(**argType**))` - Удаление делегата **deletedDelegate** из массива делегатов
 
 ## Операторы класса
 
-`event_oneDelegateArg<argType>& +=(void(*right)(argType))` - Добавление делегата к массиву делегатов
+`event_oneDelegateArg<**argType**>& ***+=***(void(* **right**)(**argType**))` - Добавление делегата к массиву делегатов
 
-`event_oneDelegateArg<argType>& operator-=(void(*right)(argType))` - Удаление делегата из массива делегатов
+`event_oneDelegateArg<**argType**>& operator***-=***(void(* **right**)(**argType**))` - Удаление делегата из массива делегатов
 
-`event_oneDelegateArg<argType>& operator()(argType arg)` - Вызов всех делегатов с аргументом arg
+`event_oneDelegateArg<**argType**>& operator***()***(**argType** **arg**)` - Вызов всех делегатов с аргументом **arg**
 
 
-`**event_twoDelegateArg**` - Шаблонный класс события с двумя аргументами (fArgType и sArgType - типы аргумента)
+`***event_twoDelegateArg***` - Шаблонный класс события с двумя аргументами (**fArgType** и **sArgType** - типы аргумента)
 
 ## Члены класса
 
-`dynamicArray<void(*)(fArgType, sArgType)> delegates` - Динамический массив вызываемых делегатов
+`dynamicArray<void(*)(**fArgType**, **sArgType**)> **delegates**` - Динамический массив вызываемых делегатов
 
 ## Методы класса
 
-`void call(fArgType arg1, sArgType arg2)` - Вызов всех делегатов с аргументами arg1 и arg2
+`void ***call***(**fArgType arg1**, **sArgType arg2**)` - Вызов всех делегатов с аргументами **arg1** и **arg2**
 
-`void add(void(*addedDelegate)(fArgType, sArgType))` - Добавление делегата addedDelegate к массиву делегатов
+`void ***add***(void(*addedDelegate)(**fArgType**, **sArgType**))` - Добавление делегата **addedDelegate** к массиву делегатов
 
-`void del(void(*deletedDelegate)(fArgType, sArgType))` - Удаление делегата deletedDelegate из массива делегатов
+`void ***del***(void(*deletedDelegate)(**fArgType**, **sArgType**))` - Удаление делегата **deletedDelegate** из массива делегатов
 
 ## Операторы класса
 
-`event_twoDelegateArg<fArgType, sArgType>& operator+=(void(*right)(fArgType, sArgType))` - Добавление делегата к массиву делегатов
+`event_twoDelegateArg<**fArgType**, **sArgType**>& operator***+=***(void(* **right**)(**fArgType**, **sArgType**))` - Добавление делегата к массиву делегатов
 
-`event_twoDelegateArg<fArgType, sArgType>& operator-=(void(*right)(fArgType, sArgType))` - Удаление делегата из массива делегатов
+`event_twoDelegateArg<**fArgType**, **sArgType**>& operator***-=***(void(* **right**)(**fArgType**, **sArgType**))` - Удаление делегата из массива делегатов
 
-`event_twoDelegateArg<fArgType, sArgType>& operator()(fArgType arg1, sArgType arg2)` - Вызов всех делегатов с аргументами arg1 и arg2
+`event_twoDelegateArg<**fArgType**, **sArgType**>& operator***()***(**fArgType arg1**, **sArgType arg2**)` - Вызов всех делегатов с аргументами **arg1** и **arg2**
 
 
 

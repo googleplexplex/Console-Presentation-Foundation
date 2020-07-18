@@ -6,13 +6,13 @@
 
 ### Конструктор:
 
-`Label(char* text = (char*)"Label", symbolColor textColor = white, symbolColor background = black)`
+`***Label***(char* **text** = (char*)"Label", symbolColor **textColor** = white, symbolColor **background** = black)`
 
-text - Текст надписи
+* **text** - Текст надписи
 
-textColor - Цвет надписи
+* **textColor** - Цвет надписи
 
-background - Цвет фона
+* **background** - Цвет фона
 
 
 ### Методы
