@@ -6,7 +6,7 @@
 
 ### Конструктор:
 
-`Button(char* **text** = (char*)"Button", onClick_DelegateType **onClick** = NULL, symbolColor **textColor** = white, symbolColor **foneColor** = black)`
+*Button(char* **text** = (char*)"Button", onClick_DelegateType **onClick** = NULL, symbolColor **textColor** = white, symbolColor **foneColor** = black)*
 
 * **text** - Текст, отображенный в кнопке
 

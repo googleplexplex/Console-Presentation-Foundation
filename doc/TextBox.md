@@ -6,16 +6,16 @@
 
 ### Члены класса
 
-`onTextChanged_EventType **onTextChanged**` - Событие, вызываемое при изменении текста элемента
+*onTextChanged_EventType **onTextChanged*** - Событие, вызываемое при изменении текста элемента
 
-`unsigned int **MaxLength**` - Максимальная длинна текста
+*unsigned int **MaxLength*** - Максимальная длинна текста
 
-`bool **ReadOnly**` - Флаг возможности редактирования текста
+*bool **ReadOnly*** - Флаг возможности редактирования текста
 
 
 ### Конструктор
 
-`***TextBox***(char* **text** = (char*)"TextBox", unsigned int **maxLength** = 512, bool **readOnly** = false, symbolColor **textColor** = white, symbolColor **foneColor** = black)`
+****TextBox***(char* **text** = (char*)"TextBox", unsigned int **maxLength** = 512, bool **readOnly** = false, symbolColor **textColor** = white, symbolColor **foneColor** = black)*
 
 * **text** - Текст элемента
 

@@ -6,7 +6,7 @@
 
 ### Конструктор:
 
-`***Label***(char* **text** = (char*)"Label", symbolColor **textColor** = white, symbolColor **background** = black)`
+****Label***(char* **text** = (char*)"Label", symbolColor **textColor** = white, symbolColor **background** = black)*
 
 * **text** - Текст надписи
 
