@@ -1,4 +1,4 @@
-# InteractionShell.hpp
+# [InteractionShell.hpp](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/shell/interactionShell.hpp)
 ###### Файл с определением основных механизмов считывания активности фреймворка
 
 
@@ -15,9 +15,9 @@
 
 *POINT ***getConsoleFontSize***()* - Возвращает размер шрифта консоли
 
-*point ***getPresentConsoleSize***()* - Возвращает размер окна консоли
+*[point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) ***getPresentConsoleSize***()* - Возвращает размер окна консоли
 
-*rectangle ***consoleSizeRectangle***()* - Возвращает размер консоли в виде структуры *rectangle*
+*[rectangle](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) ***consoleSizeRectangle***()* - Возвращает размер консоли в виде структуры *rectangle*
 
 *POINT ***getMouseConsolePos***()* - Возвращает позицию мыши относительно консоли в символах
 
@@ -33,7 +33,7 @@
 
 *UserInputStruct ***getInput***()* - Возвращает структуру *UserInputStruct*, полностью заполненную вводом пользователя
 
-*UserActivityStruct ***getUserActivity***(UserInputStruct& **prevUserIOActions**, UserInputStruct& **presentUserIOActions**, point& **prevConsoleSize**, point& **presentConsoleSize**)* - Возвращает структуру *UserActivityStruct*, заполненную активностью пользователя, исходя из пользовательского ввода на нынешней и прошлой итерации
+*UserActivityStruct ***getUserActivity***(UserInputStruct& **prevUserIOActions**, UserInputStruct& **presentUserIOActions**, [point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md)& **prevConsoleSize**, [point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md)& **presentConsoleSize**)* - Возвращает структуру *UserActivityStruct*, заполненную активностью пользователя, исходя из пользовательского ввода на нынешней и прошлой итерации
 
 
 

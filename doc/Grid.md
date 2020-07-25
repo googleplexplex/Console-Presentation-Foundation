@@ -1,7 +1,7 @@
 # Grid
 ###### Контейнер-таблица с произвольным размером ячеек
-##### Наследуется от containerElement
-##### Определен в одноименном файле
+##### Наследуется от [containerElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/containerElement.md)
+##### Определен в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/containers/Grid.hpp)
 
 
 ### Члены класса
@@ -10,7 +10,7 @@
 
 ### Конструктор:
 
-****Grid***(unsigned int **rowsCount** = 0, unsigned int **columnsCount** = 0, bool **showGridLines** = false, symbolColor **background** = black)*
+****Grid***(unsigned int **rowsCount** = 0, unsigned int **columnsCount** = 0, bool **showGridLines** = false, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **background** = black)*
 
 * **rowsCount** - Количество строк
 
@@ -22,19 +22,19 @@
 
 ### Методы
 
-*void ***addChild***(controlElement& **element**, unsigned int **row**, unsigned int **column**, unsigned int **RowSpan**, unsigned int **ColumnSpan**)* - Добавляет в ячейку **row**/**column** таблицы элемент **element** размером **RowSpan**/**ColumnSpan**
+*void ***addChild***([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **element**, unsigned int **row**, unsigned int **column**, unsigned int **RowSpan**, unsigned int **ColumnSpan**)* - Добавляет в ячейку **row**/**column** таблицы элемент **element** размером **RowSpan**/**ColumnSpan**
 
-*void ***addChild***(controlElement& **element**, unsigned int **row**, unsigned int **column**)* - Добавляет в ячейку **row**/**column** таблицы элемент **element**
+*void ***addChild***([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **element**, unsigned int **row**, unsigned int **column**)* - Добавляет в ячейку **row**/**column** таблицы элемент **element**
 
-(Метод **void addChild(controlElement& addedChild)** наследован от **containerElement**)
+(Метод **void addChild([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& addedChild)** наследован от **[containerElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/containerElement.md)**)
 
-(Метод **void delChild(controlElement& deletedChild)** наследован от **containerElement**)
+(Метод **void delChild([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& deletedChild)** наследован от **[containerElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/containerElement.md)**)
 
-*void ***delChild***(point **childPos**)* - Перегрузка delChild, где **childPos** - позиция удаляемого элемента
+*void ***delChild***([point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) **childPos**)* - Перегрузка delChild, где **childPos** - позиция удаляемого элемента
 
 *void ***delChild***(int **row**, int **column**)* - Перегрузка *delChild*, где **row** и **column** - позиция элемента в контейнере
 
-*controlElement* ***getChild***(int **rowIndex**, int **columnIndex**)* - Возвращает элемент, который находится в контейнере по позиции **rowIndex**/**columnIndex**
+*[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)* ***getChild***(int **rowIndex**, int **columnIndex**)* - Возвращает элемент, который находится в контейнере по позиции **rowIndex**/**columnIndex**
 
 *unsigned int ***getChildRowSpan***(int **row**, int **column**)* - Возвращает количество занимаемых строк элементом в ячейке **row**/**column**
 
@@ -44,11 +44,11 @@
 
 --
 
-(Метод **void Draw()** наследован от **controlElement**)
+(Метод **void Draw()** наследован от **[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)**)
 
-*void ***showGrid***(symbolColor **gridColor** = blue)* - Отображает сетку контейнера, где **gridColor** - её цвет
+*void ***showGrid***([symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **gridColor** = blue)* - Отображает сетку контейнера, где **gridColor** - её цвет
 
-(Метод **void updatePositions()** наследован от **controlElement**)
+(Метод **void updatePositions()** наследован от **[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)**)
 
 *void ***setHeight***(unsigned int **elementIndex**, unsigned int **newHeight**)* - Устанавливает высоту **newHeight** строке с индексом **elementIndex** 
 

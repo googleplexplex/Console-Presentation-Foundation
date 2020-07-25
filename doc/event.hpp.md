@@ -1,4 +1,4 @@
-# event.hpp
+# [event.hpp](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/core/event.hpp)
 ###### Файл с определением типов и механизмов работы событий и делегатов фреймворка
 
 

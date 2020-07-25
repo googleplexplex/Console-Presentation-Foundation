@@ -1,12 +1,12 @@
 # Label
 ###### Класс надписи
-##### Наследуется от controlElement
-##### Определено в одноименном файле
+##### Наследуется от [controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)
+##### Определено в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/elements/Label.hpp)
 
 
 ### Конструктор:
 
-****Label***(char* **text** = (char*)"Label", symbolColor **textColor** = white, symbolColor **background** = black)*
+****Label***(char* **text** = (char*)"Label", [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **textColor** = white, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **background** = black)*
 
 * **text** - Текст надписи
 
@@ -17,4 +17,4 @@
 
 ### Методы
 
-(Метод **Draw()** наследованный от **controlElement**)
+(Метод **Draw()** наследованный от **[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)**)

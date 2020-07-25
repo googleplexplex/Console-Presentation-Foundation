@@ -1,12 +1,12 @@
 # CheckBox
 ###### Класс флага
-##### Наследуется от controlElement
-##### Определено в одноименном файле
+##### Наследуется от [controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)
+##### Определено в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/CheckBox.md)
 
 
 ### Конструктор:
 
-****CheckBox***(bool **checked** = false, symbolColor **checkedColor** = gray, symbolColor **notCheckedColor** = white)*
+****CheckBox***(bool **checked** = false, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **checkedColor** = gray, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **notCheckedColor** = white)*
 
 * **checked** - Начальное значение флага
 
@@ -17,16 +17,16 @@
 
 ### Методы
 
-(Метод **Draw()** наследованный от **controlElement**)
+(Метод **Draw()** наследованный от **[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)**)
 
 *void ***setChecked***(bool **newState**)* - Задает значение флага
 
-*void ***setCheckedColor***(symbolColor **newCheckedColor**)* - Задает цвет флага, когда он установлен в *true*
+*void ***setCheckedColor***([symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **newCheckedColor**)* - Задает цвет флага, когда он установлен в *true*
 
-*void ***setNotCheckedColor***(symbolColor **newNotCheckedColor**)* - Задает цвет флага, когда он установлен в *false*
+*void ***setNotCheckedColor***([symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **newNotCheckedColor**)* - Задает цвет флага, когда он установлен в *false*
 
 *bool ***isChecked***()* - Возвращает флаг
 
-*symbolColor ***getCheckedColor***()* - Возвращает цвет флага, когда он установлен в *true*
+*[symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) ***getCheckedColor***()* - Возвращает цвет флага, когда он установлен в *true*
 
-*symbolColor ***getNotCheckedColor***()* - Возвращает цвет флага, когда он установлен в *false*
+*[symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) ***getNotCheckedColor***()* - Возвращает цвет флага, когда он установлен в *false*

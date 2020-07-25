@@ -1,7 +1,7 @@
 # CharPtr_InterpretedToString
-###### Реализация IInterpretedToString классом с единственным массивом символов
-##### Наследуется от IInterpretedToString
-##### Определено в ListBox.hpp
+###### Реализация [IInterpretedToString](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/IInterpretedToString.md) классом с единственным массивом символов
+##### Наследуется от [IInterpretedToString](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/IInterpretedToString.md)
+##### Определено в [ListBox.hpp](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/ListBox.md)
 
 
 ### Конструкторы:
@@ -22,4 +22,4 @@
 
 ### Методы
 
-(Метод **ToString()** наследованный от **IInterpretedToString**)
+(Метод **ToString()** наследованный от **[IInterpretedToString](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/IInterpretedToString.md)**)

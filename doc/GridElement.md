@@ -1,6 +1,6 @@
 # GridElement
-###### Структура ячейки таблицы Grid
-##### Определен в Grid.hpp
+###### Структура ячейки таблицы [Grid](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Grid.md)
+##### Определен в [Grid.hpp](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/containers/Grid.hpp)
 
 
 ### Константы
@@ -11,7 +11,7 @@
 
 ### Члены структуры
 
-***controlElement* element*** - Указатель на элемент управления, находящийся в этой ячейке
+***[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)* element*** - Указатель на элемент управления, находящийся в этой ячейке
 
 ***unsigned int RowSpan*** - Размер элемента в строках
 

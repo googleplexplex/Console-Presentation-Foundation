@@ -1,4 +1,4 @@
-# eventDispathcer.hpp
+# [eventDispathcer.hpp](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/core/eventDispatcher.hpp)
 ###### Файл с определением основного механизма рампределения событий фреймворка
 
 

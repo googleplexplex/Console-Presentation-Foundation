@@ -1,14 +1,14 @@
 # UniformGrid
 ###### Контейнер с фиксированным размером ячеек
-##### Наследуется от containerElement
-##### Определен в одноименном файле
+##### Наследуется от [containerElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/containerElement.md)
+##### Определен в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/containers/UniformGrid.hpp)
 
 
 ### Члены класса
 *bool **ShowGridLines*** - Флаг, отвечающий за отрисовку сетки контейнера
 
 ### Конструктор:
-***UniformGrid***(unsigned int **rowsCount** = 0, unsigned int **columnsCount** = 0, bool **showGridLines** = false, symbolColor **background** = black)*
+***UniformGrid***(unsigned int **rowsCount** = 0, unsigned int **columnsCount** = 0, bool **showGridLines** = false, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **background** = black)*
 
 * **rowsCount** - Количество строк
 
@@ -20,11 +20,11 @@
 
 
 ### Методы
-(Метод **void addChild(controlElement& addedChild)** наследован от **containerElement**)
+(Метод **void addChild([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& addedChild)** наследован от **containerElement**)
 
-*void ***addChild***(controlElement& **addedChild**, int **row**, int **column**)* - Перегрузка **addChild**, где **row** и **column** - позиция элемента в контейнере
+*void ***addChild***([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **addedChild**, int **row**, int **column**)* - Перегрузка **addChild**, где **row** и **column** - позиция элемента в контейнере
 
-(Метод **void delChild(controlElement& **deletedChild**)** наследован от **containerElement**)
+(Метод **void delChild([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **deletedChild**)** наследован от **containerElement**)
 
 *void ***delChild***(point **childPos**)* - Перегрузка delChild, где **childPos** - позиция удаляемого элемента
 
@@ -38,9 +38,9 @@
 
 (Метод **void Draw()** наследован от **controlElement**)
 
-*void ***showGrid***(symbolColor **gridColor** = blue)* - Отображает сетку контейнера, где **gridColor** - её цвет
+*void ***showGrid***([symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **gridColor** = blue)* - Отображает сетку контейнера, где **gridColor** - её цвет
 
-(Метод **void updatePositions()** наследован от **controlElement**)
+(Метод **void updatePositions()** наследован от **[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)**)
 
 *point ***getOnePointSize***()* - Возвращает размер одной Относительной точки (*)
 

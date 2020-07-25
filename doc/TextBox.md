@@ -1,12 +1,12 @@
 # TextBox
 ###### Класс отображения текста
-##### Наследуется от textControlElement 
-##### Определено в одноименном файле
+##### Наследуется от [textControlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/textControlElement.md)
+##### Определено в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/elements/TextBox.hpp)
 
 
 ### Члены класса
 
-*onTextChanged_EventType **onTextChanged*** - Событие, вызываемое при изменении текста элемента
+*[onTextChanged_EventType]((https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md)) **onTextChanged*** - Событие, вызываемое при изменении текста элемента
 
 *unsigned int **MaxLength*** - Максимальная длинна текста
 
@@ -15,7 +15,7 @@
 
 ### Конструктор
 
-****TextBox***(char* **text** = (char*)"TextBox", unsigned int **maxLength** = 512, bool **readOnly** = false, symbolColor **textColor** = white, symbolColor **foneColor** = black)*
+****TextBox***(char* **text** = (char*)"TextBox", unsigned int **maxLength** = 512, bool **readOnly** = false, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **textColor** = white, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **foneColor** = black)*
 
 * **text** - Текст элемента
 
@@ -30,4 +30,4 @@
 
 ### Методы
 
-(Метод **Draw()** наследованный от **textControlElement**)
+(Метод **Draw()** наследованный от **[textControlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/textControlElement.md)**)

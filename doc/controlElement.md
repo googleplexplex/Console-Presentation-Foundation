@@ -1,16 +1,16 @@
 # controlElement
 ###### Абстрактный класс элемента управления
-##### Имеет наследников containerElement, CheckBox, ListBox, textControlElement
-##### Определено в одноименном файле
+##### Имеет наследников [containerElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/containerElement.md), [CheckBox](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/elements/CheckBox.hpp), [ListBox](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/elements/ListBox.hpp), [textControlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/textControlElement.md)
+##### Определено в [одноименном файле]([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md))
 
 
 ### Члены класса
 
-*point **pos*** - Явная позиция элемента в консоли (В символах)
+*[point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) **pos*** - Явная позиция элемента в консоли (В символах)
 
-*point **size*** - Явный размер элемента (В символах)
+*[point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) **size*** - Явный размер элемента (В символах)
 
-*symbolColor **background*** - Цвет фона
+*[symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **background*** - Цвет фона
 
 *bool **Visible*** - Видимость элемента
 
@@ -18,36 +18,36 @@
 
 *void* **parent*** - Указатель на контейнер
 
-*onFocus_EventType **onFocus*** - Событие фокуса
+*[onFocus_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onFocus*** - Событие фокуса
 
-*onFocusLost_EventType **onFocusLost*** - Событие потери фокуса
+*[onFocusLost_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onFocusLost*** - Событие потери фокуса
 
-*onClick_EventType **onClick*** - Событие нажатия
+*[onClick_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onClick*** - Событие нажатия
 
-*onLeftButtonDown_EventType **onLeftButtonDown*** - Событие зажатия левой кнопки мыши
+*[onLeftButtonDown_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onLeftButtonDown*** - Событие зажатия левой кнопки мыши
 
-*onLeftButtonUp_EventType **onLeftButtonUp*** - Событие отпускания левой кнопки мыши
+*[onLeftButtonUp_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onLeftButtonUp*** - Событие отпускания левой кнопки мыши
 
-*onRightButtonDown_EventType **onRightButtonDown*** - Событие зажатия правой кнопки мыши
+*[onRightButtonDown_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onRightButtonDown*** - Событие зажатия правой кнопки мыши
 
-*onRightButtonUp_EventType **onRightButtonUp*** - Событие отпускания правой кнопки мыши
+*[onRightButtonUp_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onRightButtonUp*** - Событие отпускания правой кнопки мыши
 
-*onKeyDown_EventType **onKeyDown*** - Событие зажатия клавишы
+*[onKeyDown_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onKeyDown*** - Событие зажатия клавишы
 
-*onKeyUp_EventType **onKeyUp*** - Событие отпускания клавишы
+*[onKeyUp_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onKeyUp*** - Событие отпускания клавишы
 
-*beforeDraw_EventType **beforeDraw*** - Событие, вызываемое до отрисовки элемента
+*[beforeDraw_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **beforeDraw*** - Событие, вызываемое до отрисовки элемента
 
-*afterDraw_EventType **afterDraw*** - Событие, вызываемое после отрисовки элемента
+*[afterDraw_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **afterDraw*** - Событие, вызываемое после отрисовки элемента
 
-*onResize_EventType **onResize*** - Событие, вызываемое при изменении размера элемента
+*[onResize_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onResize*** - Событие, вызываемое при изменении размера элемента
 
-*onMoved_EventType **onMoved*** - Событие, вызываемое при перемещении элемента
+*[onMoved_EventType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onMoved*** - Событие, вызываемое при перемещении элемента
 
 
 ### Конструктор:
 
-****Grid***(unsigned int **rowsCount** = 0, unsigned int **columnsCount** = 0, bool **showGridLines** = false, symbolColor **background** = black)***
+****Grid***(unsigned int **rowsCount** = 0, unsigned int **columnsCount** = 0, bool **showGridLines** = false, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **background** = black)***
 
 * **rowsCount** - Количество строк
 
@@ -60,29 +60,29 @@
 
 ### Методы
 
-*bool ***entersTheArea***(point **point**)* - Находится ли точка **point** внутри элемента
+*bool ***entersTheArea***([point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) **point**)* - Находится ли точка **point** внутри элемента
 
 *void ***Erase***()* - Закрашивает элемент
 
-*void ***setParent***(controlElement& **parent**)* - Устанавливает элементу контейнер **parent**
+*void ***setParent***([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **parent**)* - Устанавливает элементу контейнер **parent**
 
-*void ***setPos***(point **newPos**)* - Устанавливет явную позицию элемента
+*void ***setPos***([point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) **newPos**)* - Устанавливет явную позицию элемента
 
-*void ***setSize***(point **newSize**)* - Устанавливает явный размер элемента
+*void ***setSize***([point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) **newSize**)* - Устанавливает явный размер элемента
 
-*void ***setBackground***(symbolColor **newBackground**)* - Устанавливает цвет фона
+*void ***setBackground***([symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **newBackground**)* - Устанавливает цвет фона
 
 *void ***addInRedrawQueue***()* - Добавляет элемент в очередь перерисовки основного цикла событий
 
-*point ***getPos***()* - Возвращает явную позицию элемента
+*[point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) ***getPos***()* - Возвращает явную позицию элемента
 
-*point ***getSize***()* - Возвращает явный размер элемента
+*[point](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) ***getSize***()* - Возвращает явный размер элемента
 
-*rectangle ***getRect***()* - Возвращает явную позицию и размер в виде структуры *rectangle*
+*[rectangle](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Types.hpp.md) ***getRect***()* - Возвращает явную позицию и размер в виде структуры *rectangle*
 
 *void* ***getParent***()* - Возвращает указатель на контейнер
 
-*symbolColor ***getBackground***()* - Возвращает цвет фона
+*[symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) ***getBackground***()* - Возвращает цвет фона
 
 
 ### Асбстрактные Методы

@@ -1,12 +1,12 @@
 # Button
 ###### Класс кнопки
-##### Наследуется от controlElement
-##### Определено в одноименном файле
+##### Наследуется от [controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)
+##### Определено в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/elements/Button.hpp)
 
 
 ### Конструктор:
 
-*Button(char* **text** = (char*)"Button", onClick_DelegateType **onClick** = NULL, symbolColor **textColor** = white, symbolColor **foneColor** = black)*
+*Button(char* **text** = (char*)"Button", [onClick_DelegateType](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/event.hpp.md) **onClick** = NULL, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **textColor** = white, [symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **foneColor** = black)*
 
 * **text** - Текст, отображенный в кнопке
 
@@ -19,4 +19,4 @@
 
 ### Методы
 
-(Метод **Draw()** наследованный от **controlElement**)
+(Метод **Draw()** наследованный от **[controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)**)

@@ -1,7 +1,7 @@
 # textControlElement
 ###### Элемент с методами взаимодействия с текстом внутри элемента
-##### Наследуется от controlElement
-##### Определен в одноименном файле
+##### Наследуется от [controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)
+##### Определен в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/modules/textControlElement.hpp)
 
 
 ### Методы
@@ -10,7 +10,7 @@
 
 *void ***setText***(char* **settedText**)* - Задает элементу текст **settedText** (Размер массива символов вычисляется функцией *strlen()*)
 
-*void ***setTextColor***(symbolColor **settedTextColor**)* - Задает тексту цвет **symbolColor**
+*void ***setTextColor***([symbolColor](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/graphics.hpp.md) **settedTextColor**)* - Задает тексту цвет **symbolColor**
 
 *void ***addToText***(char **addedCharset**)* - Добавляет к тексту символ **addedCharset**
 

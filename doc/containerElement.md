@@ -1,7 +1,8 @@
 # containerElement
 ###### Абстрактный класс контейнера
-##### Имеет наследников Canvas, Grid, StackPanel, UniformGrid
-##### Определено в одноименном файле
+##### Наследуется от [controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)
+##### Имеет наследников [Canvas](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Canvas.md), [Grid](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/Grid.md), [StackPanel](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/StackPanel.md), [UniformGrid](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/UniformGrid.md)
+##### Определено в [одноименном файле](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/core/containerElement.hpp)
 
 
 ### Методы
@@ -11,9 +12,9 @@
 
 ### Асбстрактные Методы
 
-*void ***addChild***(controlElement& **addedElement**)* - Добавляет в этот контейнер элемент **addedElement**. Чаще всего контейнер имеет перегрузки этого метода для некоторых частных случаев, однако стандартный метод должен быть определен.
+*void ***addChild***([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **addedElement**)* - Добавляет в этот контейнер элемент **addedElement**. Чаще всего контейнер имеет перегрузки этого метода для некоторых частных случаев, однако стандартный метод должен быть определен.
 
-*void ***delChild***(controlElement& **deletedChild**) - Удаляет из этого контейнера элемент **deletedChild**
+*void ***delChild***([controlElement](https://github.com/googleplexplex/Console-Presentation-Foundation/blob/master/doc/controlElement.md)& **deletedChild**) - Удаляет из этого контейнера элемент **deletedChild**
 
 *unsigned int ***getChildsCount***() - Воозвращает количество элементов в контейнере
 
